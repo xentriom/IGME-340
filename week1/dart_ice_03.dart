@@ -33,8 +33,8 @@ void main() {
   player04['class'] = 'Scientist';
   player04['hp'] = 6000;
 
-  print("player04: $player04");
-  print("player04: ${player04.runtimeType}");
+  print('player04: $player04');
+  print('player04: ${player04.runtimeType}');
 
   var player05 = {
     'name': 'Jane Doe', 
@@ -66,15 +66,15 @@ void main() {
 
   List<Map> playerList = [player01, player02, player03, player04, player05];
 
-  print('$playerList');
+  print(playerList);
 
   print('second player name: ${playerList[1]['name']}');
 
   for (var player in playerList) {
-    print("name: ${player['name']}, class: ${player['class']}");
+    print('name: ${player['name']}, class: ${player['class']}');
   }
 
   // assuming you meant .clear not remove
   player01.clear();
-  print('$playerList');
+  print(playerList);
 }

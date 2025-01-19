@@ -9,7 +9,7 @@ void main() {
   myList2.addAll(['a', 1, 1.1, true]);
   print('$myList2');
 
-  myList2.insert(1, "IGME");
+  myList2.insert(1, 'IGME');
   print('$myList2');
 
   var myList3 = ['item1', 'item2', 'item3'];
