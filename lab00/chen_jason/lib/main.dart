@@ -1,3 +1,11 @@
+//
+// Starter dart application created with Flutter: New Project > Application
+// 
+// @auther: Jason Chen
+// @version: 1.0.0
+// @since: 2025-01-20
+// 
+
 import 'package:flutter/material.dart';
 
 void main() {
