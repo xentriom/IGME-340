@@ -1,6 +1,6 @@
 {
-    "name": "design_to_spec_project",
-    "short_name": "design_to_spec_project",
+    "name": "project1",
+    "short_name": "project1",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
