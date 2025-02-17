@@ -10,7 +10,9 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
+      title: 'Trees & Wood',
+      theme: ThemeData(scaffoldBackgroundColor: Color(0xFF686868)),
       home: MyWidget(),
     );
   }
@@ -54,7 +56,7 @@ class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
       builder: (context) => AlertDialog(
         title: Text(
           'About',
-          style: TextStyle(fontFamily: 'VT323', fontSize: 20),
+          style: TextStyle(fontFamily: 'Retro', fontSize: 20),
         ),
         content: Column(
           mainAxisSize: MainAxisSize.min,
@@ -63,24 +65,24 @@ class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
             Text(
               'Created by Dower Chin',
               style: TextStyle(
-                fontFamily: 'VT323',
-                fontSize: 16,
+                fontFamily: 'Retro',
+                fontSize: 12,
               ),
             ),
             SizedBox(height: 10),
             Text(
               'Based on the work done in 235\'s Design to Spec Homework.',
               style: TextStyle(
-                fontFamily: 'VT323',
-                fontSize: 16,
+                fontFamily: 'Retro',
+                fontSize: 12,
               ),
             ),
             SizedBox(height: 10),
             Text(
               'September 11, 2022',
               style: TextStyle(
-                fontFamily: 'VT323',
-                fontSize: 16,
+                fontFamily: 'Retro',
+                fontSize: 12,
               ),
             ),
           ],
@@ -88,10 +90,12 @@ class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
         actions: [
           TextButton(
             style: TextButton.styleFrom(
-              backgroundColor: Colors.grey[500],
+              backgroundColor: Colors.white,
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(2.5),
+                borderRadius: BorderRadius.circular(50),
               ),
+              shadowColor: Colors.black,
+              elevation: 1,
             ),
             onPressed: () {
               Navigator.of(context).pop();
@@ -99,17 +103,17 @@ class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
             child: Text(
               'OK',
               style: TextStyle(
-                fontFamily: 'VT323',
-                color: Colors.black,
+                fontFamily: 'Retro',
+                color: Colors.deepPurple,
                 fontSize: 16,
               ),
             ),
           )
         ],
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(5),
+          borderRadius: BorderRadius.circular(20),
         ),
-        backgroundColor: Colors.grey[300],
+        backgroundColor: Colors.white,
       ),
     );
   }
@@ -125,7 +129,7 @@ class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
           color: Colors.white,
         ),
       ),
-      backgroundColor: Colors.grey,
+      backgroundColor: Color(0xFFA19FA2),
       leading: Padding(
         padding: EdgeInsets.all(12),
         child: SvgPicture.asset(
@@ -223,8 +227,8 @@ class OakTreeWidget extends StatelessWidget {
           decoration: BoxDecoration(
             gradient: LinearGradient(
               colors: [
-                Color(0xFFA7C1BE).withValues(alpha: .95),
-                Color(0xFF334644),
+                Color(0xFF828C8E),
+                Color(0xFF374947),
               ],
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
@@ -255,7 +259,7 @@ class TreeInfoWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.all(16),
-      color: Colors.grey[700],
+      color: Color(0xFF686868),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -314,8 +318,8 @@ class OakCraftablesWidget extends StatelessWidget {
         title: Text(
           title,
           style: TextStyle(
-            fontFamily: 'VT323',
-            fontSize: 20,
+            fontFamily: 'Retro',
+            fontSize: 24,
             color: Colors.white,
           ),
         ),
@@ -325,7 +329,7 @@ class OakCraftablesWidget extends StatelessWidget {
           child: Column(
             children: [
               Container(
-                color: Color(0xFF334F4D),
+                color: Color(0xFF324D44),
                 width: width,
                 child: Padding(
                   padding: EdgeInsets.all(12),
@@ -337,13 +341,13 @@ class OakCraftablesWidget extends StatelessWidget {
               ),
               SizedBox(height: 8),
               SizedBox(
-                height: height * 0.37,
+                height: height * 0.36,
                 child: SingleChildScrollView(
                   child: Text(
                     '$description Lorem ipsum dolor sit amet, consectetur adipiseing elit. Morbi sed iaculis ligula. Nunc felis eros, diotum non oret ut, elenentun facilisis nulla, Vestibulun at risus tellus, Phasellus interdun nisi faucibus diotun hendrerit. Quisque interdun diam purus, vitae nattis tellus semper at. In hac habitasse platea dictumst. Aenean rutrum naximus lacus, et eleifend urna temper non. Aenean feugiat eficitur feugiat. Quisque pretiun oroi vel arou inperdiet naxinus. Quisque et nune at enim maninus sagittis ac quis ipsum. Etian ullancorper solliaitudin velit eget tincidunt. Sed ultrices, leo ac balandit vehicula, lacus metus nollis nibh, id pulvinar ipsun neque non purus. Donec a ipsum nunc. Pellentesque habitant norbi tristique senectus et netus et malesuada fanes ac turpis egestas. Nullam nollis pellentesque urna eu ullancorper. Phasellus id lacus sit anet leo aliquet eleifend.',
                     style: TextStyle(
-                      fontFamily: 'VT323',
-                      fontSize: 16,
+                      fontFamily: 'Retro',
+                      fontSize: 12,
                     ),
                   ),
                 ),
@@ -354,10 +358,12 @@ class OakCraftablesWidget extends StatelessWidget {
         actions: [
           TextButton(
             style: TextButton.styleFrom(
-              backgroundColor: Colors.grey[500],
+              backgroundColor: Colors.white,
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(2.5),
+                borderRadius: BorderRadius.circular(50),
               ),
+              shadowColor: Colors.black,
+              elevation: 1,
             ),
             onPressed: () {
               Navigator.of(context).pop();
@@ -365,17 +371,17 @@ class OakCraftablesWidget extends StatelessWidget {
             child: Text(
               'Close',
               style: TextStyle(
-                fontFamily: 'VT323',
-                fontSize: 16,
-                color: Colors.black,
+                fontFamily: 'Retro',
+                fontSize: 12,
+                color: Colors.deepPurple,
               ),
             ),
           ),
         ],
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: BorderRadius.circular(20),
         ),
-        backgroundColor: Colors.grey[600],
+        backgroundColor: Color(0xFF686868),
       ),
     );
   }
@@ -407,7 +413,7 @@ class OakCraftablesWidget extends StatelessWidget {
       String description) {
     return GestureDetector(
       child: Container(
-        color: Colors.grey[700],
+        color: Color(0xFF686868),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -416,7 +422,7 @@ class OakCraftablesWidget extends StatelessWidget {
               width: 150,
               height: 150,
               decoration: BoxDecoration(
-                color: Color(0xFF2E4E45),
+                color: Color(0xFF324D44),
                 border: Border.all(
                   color: Colors.white,
                   width: 6,
@@ -447,7 +453,7 @@ class OakCraftablesWidget extends StatelessWidget {
                 child: Text(
                   description,
                   style: TextStyle(
-                      fontFamily: 'VT323', fontSize: 18, color: Colors.white),
+                      fontFamily: 'Retro', fontSize: 12, color: Colors.white),
                 ),
               ),
             ),
