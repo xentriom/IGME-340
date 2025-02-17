@@ -388,7 +388,7 @@ class OakCraftablesWidget extends StatelessWidget {
       child: Column(
         children: [
           buildItemCard(context, 'Planks', 'assets/images/planks.png',
-              'Planks are common blocks used as building blocks and in crafting recipes. They are one of the first things that a player can craft in'),
+              'Planks are common blocks used as building blocks and in crafting recipes. They are one of the first things that a player can craft in Survival and Adventure modes. Two categories of plank can be differentiated: flammable Overworld planks made from tree logs, and nonflammable Nether planks made from huge fungus stems.'),
           SizedBox(height: 16),
           buildItemCard(context, 'Sticks', 'assets/images/stick.png',
               'A stick is an item used for crfting many tools and items.'),
@@ -439,8 +439,10 @@ class OakCraftablesWidget extends StatelessWidget {
                 ],
               ),
             ),
-            Expanded(
-              child: Container(
+            SizedBox(
+              width: 230,
+              height: 150,
+              child: SingleChildScrollView(
                 padding: EdgeInsets.all(8),
                 child: Text(
                   description,
@@ -448,7 +450,7 @@ class OakCraftablesWidget extends StatelessWidget {
                       fontFamily: 'VT323', fontSize: 18, color: Colors.white),
                 ),
               ),
-            )
+            ),
           ],
         ),
       ),
