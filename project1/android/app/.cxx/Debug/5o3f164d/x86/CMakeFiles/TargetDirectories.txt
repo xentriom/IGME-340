@@ -1,2 +1,0 @@
-/Users/jasonchen/Desktop/IGME-340/project1/android/app/.cxx/Debug/5o3f164d/x86/CMakeFiles/edit_cache.dir
-/Users/jasonchen/Desktop/IGME-340/project1/android/app/.cxx/Debug/5o3f164d/x86/CMakeFiles/rebuild_cache.dir
