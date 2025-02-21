@@ -273,7 +273,10 @@ class _HomeWidgetState extends State<HomeWidget> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
-              padding: const EdgeInsets.only(bottom: 8),
+              padding: const EdgeInsets.only(
+                top: 8,
+                bottom: 8,
+              ), // Fixed 'custom' syntax
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
@@ -284,63 +287,121 @@ class _HomeWidgetState extends State<HomeWidget> {
                 ],
               ),
             ),
-            GridView.builder(
-              shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics(),
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                crossAxisSpacing: 8,
-                mainAxisSpacing: 8,
-                childAspectRatio: 1,
-              ),
-              itemCount: _gifs.length,
-              itemBuilder: (context, index) {
-                // Gif URL and Media URL
-                final String gifUrl = _gifs[index]['url'];
-                final dynamic gifMediaUrl =
-                    _gifs[index]['images']['fixed_height']['url'];
-                return Stack(
-                  children: [
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(12),
-                      child: AspectRatio(
-                        aspectRatio: 1,
-                        child: Image.network(
-                          gifMediaUrl,
-                          fit: BoxFit.cover,
-                          width: double.infinity,
-                          height: double.infinity,
-                        ),
-                      ),
-                    ),
-                    Positioned(
-                      top: 8,
-                      right: 8,
-                      child: GestureDetector(
-                        onTap: () async {
-                          Uri url = Uri.parse(gifUrl);
-                          await launchUrl(url);
-                        },
-                        child: Container(
-                          padding: EdgeInsets.all(6),
-                          decoration: BoxDecoration(
-                            color: Colors.black54,
-                            shape: BoxShape.circle,
-                          ),
-                          child: Icon(
-                            Icons.launch,
-                            color: Colors.white,
-                            size: 20,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                );
-              },
-            ),
+            _buildGifBody(),
           ],
         );
+  }
+
+  /// Widget to display the GIFs in a grid view.
+  /// Enlarged view on tap.
+  /// Open in browser on tapping the launch icon.
+  Widget _buildGifBody() {
+    return GridView.builder(
+      shrinkWrap: true,
+      physics: NeverScrollableScrollPhysics(),
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 2,
+        crossAxisSpacing: 8,
+        mainAxisSpacing: 8,
+        childAspectRatio: 1,
+      ),
+      itemCount: _gifs.length,
+      itemBuilder: (context, index) {
+        // Gif URL and Media URL
+        final String gifUrl = _gifs[index]['url'];
+        final dynamic gifMediaUrl =
+            _gifs[index]['images']['fixed_height']['url'];
+
+        return GestureDetector(
+          // Enlarged view on tap
+          onTap: () {
+            showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return Dialog(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: Stack(
+                    children: [
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(12),
+                        child: AspectRatio(
+                          aspectRatio: 1,
+                          child: Image.network(
+                            gifMediaUrl,
+                            fit: BoxFit.cover,
+                            width: double.infinity,
+                            height: double.infinity,
+                          ),
+                        ),
+                      ),
+                      Positioned(
+                        top: 8,
+                        right: 8,
+                        child: GestureDetector(
+                          onTap: () async {
+                            final Uri url = Uri.parse(gifUrl);
+                            await launchUrl(url);
+                          },
+                          child: Container(
+                            padding: EdgeInsets.all(6),
+                            decoration: BoxDecoration(
+                              color: Colors.black54,
+                              shape: BoxShape.circle,
+                            ),
+                            child: Icon(
+                              Icons.launch,
+                              color: Colors.white,
+                              size: 20,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+              },
+            );
+          },
+          // Gif Image
+          child: Stack(
+            children: [
+              ClipRRect(
+                borderRadius: BorderRadius.circular(12),
+                child: AspectRatio(
+                  aspectRatio: 1,
+                  child: Image.network(
+                    gifMediaUrl,
+                    fit: BoxFit.cover,
+                    width: double.infinity,
+                    height: double.infinity,
+                  ),
+                ),
+              ),
+              Positioned(
+                top: 8,
+                right: 8,
+                child: GestureDetector(
+                  onTap: () async {
+                    Uri url = Uri.parse(gifUrl);
+                    await launchUrl(url);
+                  },
+                  child: Container(
+                    padding: EdgeInsets.all(6),
+                    decoration: BoxDecoration(
+                      color: Colors.black54,
+                      shape: BoxShape.circle,
+                    ),
+                    child: Icon(Icons.launch, color: Colors.white, size: 20),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
   }
 }
 
