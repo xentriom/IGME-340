@@ -1,5 +1,6 @@
 class Constants {
-  Map<String, String> Paths = {
+  /// Codebase to Readable
+  Map<String, String> paths = {
     'Warlock': 'Nihility',
     'Shaman': 'Harmony',
     'Mage': 'Erudition',
@@ -10,7 +11,8 @@ class Constants {
     'Memory': 'Rememberance',
   };
 
-  Map<String, String> PathsIcon = {
+  /// Codebase to Icon
+  Map<String, String> pathsIcon = {
     'Warlock': 'IconProfessionWarlockSmall',
     'Shaman': 'IconProfessionShamanSmall',
     'Mage': 'IconProfessionMageSmall',
@@ -21,7 +23,19 @@ class Constants {
     'Memory': 'IconProfessionMemorySmall',
   };
 
-  Map<String, String> TypesIcon = {
+  /// Codebase to Readable
+  Map<String, String> types = {
+    'Imaginary': 'Imaginary',
+    'Thunder': 'Lightning',
+    'Quantum': 'Quantum',
+    'Fire': 'Fire',
+    'Ice': 'Ice',
+    'Wind': 'Wind',
+    'Physical': 'Physical',
+  };
+
+  /// Codebase to Icon
+  Map<String, String> typesIcon = {
     'Imaginary': 'IconAttributeImaginary',
     'Thunder': 'IconAttributeThunder',
     'Quantum': 'IconAttributeQuantum',

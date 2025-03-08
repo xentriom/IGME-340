@@ -13,14 +13,35 @@ class _ExploreScreenState extends State<ExploreScreen> {
   final Constants constants = Constants();
   final Yatta yatta = Yatta();
   List<dynamic> characters = [];
+  List<dynamic> filteredCharacters = [];
   bool isLoading = false;
 
-  String? selectedType = 'All';
-  String? selectedPath = 'All';
+  String searchQuery = '';
+  String? selectedType = 'Elements';
+  String? selectedPath = 'Paths';
   bool isListView = true;
 
-  final List<String> types = ['All', 'Fire', 'Water', 'Earth', 'Air'];
-  final List<String> paths = ['All', 'Sword', 'Bow', 'Staff', 'Axe'];
+  final List<String> types = [
+    'Elements',
+    'Physical',
+    'Fire',
+    'Ice',
+    'Lightning',
+    'Wind',
+    'Quantum',
+    'Imaginary',
+  ];
+  final List<String> paths = [
+    'Paths',
+    'Destruction',
+    'The Hunt',
+    'Erudition',
+    'Harmony',
+    'Nihility',
+    'Preservation',
+    'Abundance',
+    'Rememberance',
+  ];
 
   @override
   void initState() {
@@ -35,13 +56,38 @@ class _ExploreScreenState extends State<ExploreScreen> {
 
       setState(() {
         characters = data;
+        _filterCharacters();
         isLoading = false;
       });
     } catch (e) {
       setState(() => isLoading = false);
-      // Handle error (e.g., show dialog)
-      print('Failed to fetch characters: $e');
     }
+  }
+
+  void _filterCharacters() {
+    setState(() {
+      filteredCharacters =
+          characters.where((character) {
+            // Filter by search query
+            final name = character['name'].toString().toLowerCase();
+            final matchesSearch =
+                searchQuery.isEmpty || name.contains(searchQuery.toLowerCase());
+
+            // Filter by type
+            final type = character['types']['combatType'];
+            final convertedType = constants.types[type];
+            final matchesType =
+                selectedType == 'Elements' || convertedType == selectedType;
+
+            // Filter by path
+            final path = character['types']['pathType'];
+            final convertedPath = constants.paths[path];
+            final matchesPath =
+                selectedPath == 'Paths' || convertedPath == selectedPath;
+
+            return matchesSearch && matchesType && matchesPath;
+          }).toList();
+    });
   }
 
   @override
@@ -59,7 +105,10 @@ class _ExploreScreenState extends State<ExploreScreen> {
               child: CupertinoSearchTextField(
                 placeholder: 'Search...',
                 onChanged: (value) {
-                  print('Search query: $value');
+                  setState(() {
+                    searchQuery = value;
+                    _filterCharacters();
+                  });
                 },
               ),
             ),
@@ -73,7 +122,10 @@ class _ExploreScreenState extends State<ExploreScreen> {
                     child: _buildDropdownButton(context, selectedType!, types, (
                       value,
                     ) {
-                      setState(() => selectedType = value);
+                      setState(() {
+                        selectedType = value;
+                        _filterCharacters();
+                      });
                     }),
                   ),
                   const SizedBox(width: 8),
@@ -81,7 +133,10 @@ class _ExploreScreenState extends State<ExploreScreen> {
                     child: _buildDropdownButton(context, selectedPath!, paths, (
                       value,
                     ) {
-                      setState(() => selectedPath = value);
+                      setState(() {
+                        selectedPath = value;
+                        _filterCharacters();
+                      });
                     }),
                   ),
                   const SizedBox(width: 8),
@@ -190,14 +245,14 @@ class _ExploreScreenState extends State<ExploreScreen> {
       return const Center(child: CupertinoActivityIndicator());
     }
 
-    if (characters.isEmpty) {
+    if (filteredCharacters.isEmpty) {
       return const Center(child: Text('No characters found.'));
     }
 
     return ListView.builder(
-      itemCount: characters.length,
+      itemCount: filteredCharacters.length,
       itemBuilder: (context, index) {
-        final character = characters[index];
+        final character = filteredCharacters[index];
         final id = character['id'].toString();
         final name = character['name'];
         final rarity = character['rank'];
@@ -294,9 +349,12 @@ class _ExploreScreenState extends State<ExploreScreen> {
 
   /// Helper method to build badge
   Widget _buildBadge(String type, String data) {
-    final label = type == 'path' ? constants.Paths[data] ?? data : data;
+    final label =
+        type == 'path'
+            ? constants.paths[data] ?? data
+            : constants.types[data] ?? data;
     final iconLabel =
-        type == 'path' ? constants.PathsIcon[data] : constants.TypesIcon[data];
+        type == 'path' ? constants.pathsIcon[data] : constants.typesIcon[data];
     final iconUrl =
         type == 'path'
             ? yatta.getPathIcon(iconLabel ?? '')
@@ -313,7 +371,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
           Image.network(iconUrl, width: 16, height: 16),
           const SizedBox(width: 4),
           Text(
-            label!,
+            label,
             style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
           ),
         ],
@@ -327,7 +385,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
       return const Center(child: CupertinoActivityIndicator());
     }
 
-    if (characters.isEmpty) {
+    if (filteredCharacters.isEmpty) {
       return const Center(child: Text('No characters found.'));
     }
 
