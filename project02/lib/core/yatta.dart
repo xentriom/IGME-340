@@ -4,7 +4,7 @@ import 'package:http/http.dart' as http;
 class Yatta {
   static const String _baseUrl = 'https://sr.yatta.moe/';
   static const String _apiPath = 'api/v2/en/';
-  static const String _assetPath = 'assets/UI/avatar/';
+  static const String _assetPath = 'hsr/assets/UI//avatar';
 
   static const String _charactersEndpoint = '${_apiPath}avatar';
   static const String _statsEndpoint = '${_apiPath}manualAvatar';
@@ -12,20 +12,18 @@ class Yatta {
   /// Fetch the list of characters
   Future<List<dynamic>> getCharacters() async {
     final url = Uri.parse('$_baseUrl$_charactersEndpoint');
-    print(url);
+
     try {
       final response = await http.get(url);
-      print("hello 123");
-      print(response);
+
       if (response.statusCode == 200) {
-        final data = jsonDecode(response.body);
-        print(data);
-        return data['data']['items'] ?? [];
+        final data = jsonDecode(utf8.decode(response.bodyBytes));
+        final characterMap = data['data']['items'] as Map<String, dynamic>;
+        return characterMap.values.toList();
       } else {
         throw Exception('Failed to load characters: ${response.statusCode}');
       }
-    } catch (e) {
-      print('Error fetching characters: $e');
+    } catch (error) {
       rethrow;
     }
   }
@@ -44,18 +42,27 @@ class Yatta {
         );
       }
     } catch (e) {
-      print('Error fetching character detail: $e');
       rethrow;
     }
   }
 
-  /// Get URL for character avatar icon (medium size)
+  /// Get URL for character avatar icon
   String getAvatarIconUrl(String id) {
-    return '$_baseUrl$_assetPath}medium/$id.png';
+    return '$_baseUrl$_assetPath/medium/$id.png';
   }
 
-  /// Get URL for character gacha icon (large size)
+  /// Get URL for character gacha icon
   String getGachaIconUrl(String id) {
-    return '$_baseUrl$_assetPath}large/$id.png';
+    return '$_baseUrl$_assetPath/large/$id.png';
+  }
+
+  /// Get URL for character profession icon (paths)
+  String getPathIcon(String name) {
+    return '${_baseUrl}hsr/assets/UI/profession/$name.png';
+  }
+
+  /// Get URL for character type icon (combative)
+  String getTypeIcon(String name) {
+    return '${_baseUrl}hsr/assets/UI/attribute/$name.png';
   }
 }

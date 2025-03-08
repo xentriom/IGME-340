@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:project02/core/constants.dart';
 import 'package:project02/core/yatta.dart';
 
 class ExploreScreen extends StatefulWidget {
@@ -9,6 +10,7 @@ class ExploreScreen extends StatefulWidget {
 }
 
 class _ExploreScreenState extends State<ExploreScreen> {
+  final Constants constants = Constants();
   final Yatta yatta = Yatta();
   List<dynamic> characters = [];
   bool isLoading = false;
@@ -30,7 +32,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
     try {
       setState(() => isLoading = true);
       final data = await yatta.getCharacters();
-      print(data);
+
       setState(() {
         characters = data;
         isLoading = false;
@@ -61,6 +63,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
                 },
               ),
             ),
+            const SizedBox(height: 8),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
               child: Row(
@@ -86,16 +89,13 @@ class _ExploreScreenState extends State<ExploreScreen> {
                 ],
               ),
             ),
-            const SizedBox(height: 8),
             Expanded(
               child: Padding(
                 padding: const EdgeInsets.symmetric(
                   horizontal: 16,
                   vertical: 8,
                 ),
-                child: SingleChildScrollView(
-                  child: isListView ? _buildListView() : _buildGridView(),
-                ),
+                child: isListView ? _buildListView() : _buildGridView(),
               ),
             ),
           ],
@@ -184,7 +184,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
     );
   }
 
-  /// List view, 20 placeholder items
+  /// List view
   Widget _buildListView() {
     if (isLoading) {
       return const Center(child: CupertinoActivityIndicator());
@@ -194,31 +194,143 @@ class _ExploreScreenState extends State<ExploreScreen> {
       return const Center(child: Text('No characters found.'));
     }
 
-    return Column(
-      children:
-          characters.map((character) {
-            final id = character['id'].toString();
-            final name = character['name'];
-            return Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8.0),
-              child: SizedBox(
-                width: double.infinity,
-                child: CupertinoButton.filled(
-                  onPressed: () async {
-                    final detail = await yatta.getCharacterDetail(id);
-                    print('Character detail: $detail');
-                  },
-                  padding: const EdgeInsets.symmetric(vertical: 12.0),
-                  child: Text(name),
+    return ListView.builder(
+      itemCount: characters.length,
+      itemBuilder: (context, index) {
+        final character = characters[index];
+        final id = character['id'].toString();
+        final name = character['name'];
+        final rarity = character['rank'];
+        final path = character['types']['pathType'];
+        final type = character['types']['combatType'];
+
+        return GestureDetector(
+          onTap: () {
+            Navigator.pushNamed(context, '/character/$id');
+          },
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8.0),
+            child: Stack(
+              children: [
+                Container(
+                  height: 96,
+                  decoration: BoxDecoration(
+                    color: CupertinoColors.systemGrey6,
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(8),
+                        child: Image.network(
+                          yatta.getAvatarIconUrl(id),
+                          width: 96,
+                          height: 96,
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              name,
+                              style: const TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                            const SizedBox(height: 2),
+                            Row(
+                              children: List.generate(
+                                rarity,
+                                (index) => Icon(
+                                  CupertinoIcons.star_fill,
+                                  color:
+                                      rarity == 4
+                                          ? CupertinoColors.systemPurple
+                                          : CupertinoColors.systemYellow,
+                                  size: 16,
+                                ),
+                              ),
+                            ),
+                            const SizedBox(height: 6),
+                            Row(
+                              children: [
+                                _buildBadge('path', path),
+                                const SizedBox(width: 8),
+                                _buildBadge('type', type),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-            );
-          }).toList(),
+                Positioned(
+                  top: 6,
+                  right: 6,
+                  child: GestureDetector(
+                    onTap: () {
+                      // Add to favorites
+                    },
+                    child: const Icon(
+                      CupertinoIcons.heart,
+                      color: CupertinoColors.systemRed,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  /// Helper method to build badge
+  Widget _buildBadge(String type, String data) {
+    final label = type == 'path' ? constants.Paths[data] ?? data : data;
+    final iconLabel =
+        type == 'path' ? constants.PathsIcon[data] : constants.TypesIcon[data];
+    final iconUrl =
+        type == 'path'
+            ? yatta.getPathIcon(iconLabel ?? '')
+            : yatta.getTypeIcon(iconLabel ?? '');
+
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+      decoration: BoxDecoration(
+        color: CupertinoColors.systemGrey5,
+        borderRadius: BorderRadius.circular(8),
+      ),
+      child: Row(
+        children: [
+          Image.network(iconUrl, width: 16, height: 16),
+          const SizedBox(width: 4),
+          Text(
+            label!,
+            style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
+          ),
+        ],
+      ),
     );
   }
 
   /// Grid view, 20 placeholder items
   Widget _buildGridView() {
+    if (isLoading) {
+      return const Center(child: CupertinoActivityIndicator());
+    }
+
+    if (characters.isEmpty) {
+      return const Center(child: Text('No characters found.'));
+    }
+
     return GridView.builder(
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),

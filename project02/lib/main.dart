@@ -6,7 +6,7 @@ import 'package:project02/route.dart';
 
 ///
 /// Main App
-/// 
+///
 /// @author: Jason Chen
 /// @version: 1.0.0
 /// @since: 2025-03-07
@@ -23,7 +23,7 @@ class MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return CupertinoApp(
       debugShowCheckedModeBanner: false,
-      theme: CupertinoThemeData(primaryColor: CupertinoColors.systemPurple),
+      theme: CupertinoThemeData(primaryColor: CupertinoColors.activeBlue),
       onGenerateRoute: RouteGenerator.generateRoute,
       home: CupertinoTabScaffold(
         tabBar: CupertinoTabBar(
