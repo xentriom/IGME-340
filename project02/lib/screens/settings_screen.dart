@@ -224,7 +224,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 ),
               ),
               GestureDetector(
-                onTap: () => setState(() => _showLogin = false),
+                onTap:
+                    () => setState(() {
+                      _showLogin = false;
+                      _passwordController.clear();
+                    }),
                 child: Text(
                   "Sign up",
                   style: TextStyle(
@@ -325,7 +329,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 ),
               ),
               GestureDetector(
-                onTap: () => setState(() => _showLogin = true),
+                onTap:
+                    () => setState(() {
+                      _showLogin = true;
+                      _agreeToTerms = false;
+                      _passwordController.clear();
+                    }),
                 child: Text(
                   "Sign in",
                   style: TextStyle(
