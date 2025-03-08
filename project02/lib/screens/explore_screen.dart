@@ -405,7 +405,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
         crossAxisSpacing: 12,
-        mainAxisSpacing: 12,
+        mainAxisSpacing: 0,
         childAspectRatio: 1,
       ),
       itemCount: filteredCharacters.length,
@@ -421,90 +421,93 @@ class _ExploreScreenState extends State<ExploreScreen> {
           onTap: () {
             Navigator.pushNamed(context, '/character/$id');
           },
-          child: Container(
-            decoration: BoxDecoration(
-              color: CupertinoColors.systemGrey6,
-              borderRadius: BorderRadius.circular(12),
-              image: DecorationImage(
-                image: NetworkImage(yatta.getAvatarIconUrl(id)),
-                fit: BoxFit.cover,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8.0),
+            child: Container(
+              decoration: BoxDecoration(
+                color: CupertinoColors.systemGrey6,
+                borderRadius: BorderRadius.circular(12),
+                image: DecorationImage(
+                  image: NetworkImage(yatta.getAvatarIconUrl(id)),
+                  fit: BoxFit.cover,
+                ),
               ),
-            ),
-            child: Stack(
-              children: [
-                Positioned(
-                  bottom: 0,
-                  left: 0,
-                  right: 0,
-                  child: Container(
-                    height: 72,
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        begin: Alignment.topCenter,
-                        end: Alignment.bottomCenter,
-                        colors: [
-                          CupertinoColors.white.withValues(alpha: 0),
-                          rarity == 4
-                              ? CupertinoColors.systemPurple.withOpacity(0.8)
-                              : CupertinoColors.systemYellow.withOpacity(0.8),
-                        ],
+              child: Stack(
+                children: [
+                  Positioned(
+                    bottom: 0,
+                    left: 0,
+                    right: 0,
+                    child: Container(
+                      height: 72,
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                          colors: [
+                            CupertinoColors.white.withValues(alpha: 0),
+                            rarity == 4
+                                ? CupertinoColors.systemPurple.withOpacity(0.8)
+                                : CupertinoColors.systemYellow.withOpacity(0.8),
+                          ],
+                        ),
                       ),
                     ),
                   ),
-                ),
-                Positioned(
-                  bottom: 8,
-                  left: 8,
-                  right: 8,
-                  child: Center(
-                    child: Text(
-                      name,
-                      style: const TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w600,
-                        color: CupertinoColors.darkBackgroundGray,
+                  Positioned(
+                    bottom: 8,
+                    left: 8,
+                    right: 8,
+                    child: Center(
+                      child: Text(
+                        name,
+                        style: const TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w600,
+                          color: CupertinoColors.darkBackgroundGray,
+                        ),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
                       ),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
                     ),
                   ),
-                ),
-                Positioned(
-                  top: 8,
-                  left: 8,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Image(
-                        width: 24,
-                        height: 24,
-                        fit: BoxFit.cover,
-                        image: NetworkImage(
-                          yatta.getTypeIcon(constants.typesIcon[type] ?? ''),
+                  Positioned(
+                    top: 8,
+                    left: 8,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Image(
+                          width: 24,
+                          height: 24,
+                          fit: BoxFit.cover,
+                          image: NetworkImage(
+                            yatta.getTypeIcon(constants.typesIcon[type] ?? ''),
+                          ),
                         ),
-                      ),
-                      const SizedBox(height: 4),
-                      Image(
-                        width: 24,
-                        height: 24,
-                        fit: BoxFit.cover,
-                        image: NetworkImage(
-                          yatta.getPathIcon(constants.pathsIcon[path] ?? ''),
+                        const SizedBox(height: 4),
+                        Image(
+                          width: 24,
+                          height: 24,
+                          fit: BoxFit.cover,
+                          image: NetworkImage(
+                            yatta.getPathIcon(constants.pathsIcon[path] ?? ''),
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                ),
-                Positioned(
-                  top: 8,
-                  right: 8,
-                  child: FavoriteIcon(
-                    id: id,
-                    sharedPref: sharedPref,
-                    onFavoriteChanged: () => setState(() {}),
+                  Positioned(
+                    top: 8,
+                    right: 8,
+                    child: FavoriteIcon(
+                      id: id,
+                      sharedPref: sharedPref,
+                      onFavoriteChanged: () => setState(() {}),
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         );
