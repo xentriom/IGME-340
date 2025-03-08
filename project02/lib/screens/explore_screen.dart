@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:project02/core/constants.dart';
 import 'package:project02/core/yatta.dart';
 import 'package:project02/core/shared_pref.dart';
+import 'package:project02/widgets/favorite_icon.dart';
 
 ///
 /// Explore Screen
@@ -341,33 +342,12 @@ class _ExploreScreenState extends State<ExploreScreen> {
                   ),
                 ),
                 Positioned(
-                  top: 6,
-                  right: 6,
-                  child: FutureBuilder(
-                    future: sharedPref.isFavorite(id),
-                    builder: (context, snapshot) {
-                      if (snapshot.connectionState == ConnectionState.waiting) {
-                        return const SizedBox(
-                          width: 24,
-                          height: 24,
-                          child: CupertinoActivityIndicator(radius: 10),
-                        );
-                      }
-
-                      final isFavorite = snapshot.data ?? false;
-                      return GestureDetector(
-                        onTap: () async {
-                          await sharedPref.setFavorite(id);
-                          setState(() {});
-                        },
-                        child: Icon(
-                          isFavorite
-                              ? CupertinoIcons.heart_fill
-                              : CupertinoIcons.heart,
-                          color: CupertinoColors.systemRed,
-                        ),
-                      );
-                    },
+                  top: 8,
+                  right: 8,
+                  child: FavoriteIcon(
+                    id: id,
+                    sharedPref: sharedPref,
+                    onFavoriteChanged: () => setState(() {}),
                   ),
                 ),
               ],
@@ -518,32 +498,10 @@ class _ExploreScreenState extends State<ExploreScreen> {
                 Positioned(
                   top: 8,
                   right: 8,
-                  child: FutureBuilder(
-                    future: sharedPref.isFavorite(id),
-                    builder: (context, snapshot) {
-                      if (snapshot.connectionState == ConnectionState.waiting) {
-                        return const SizedBox(
-                          width: 24,
-                          height: 24,
-                          child: CupertinoActivityIndicator(radius: 10),
-                        );
-                      }
-                      final isFavorite = snapshot.data ?? false;
-
-                      return GestureDetector(
-                        onTap: () async {
-                          await sharedPref.setFavorite(id);
-                          setState(() {});
-                        },
-                        child: Icon(
-                          isFavorite
-                              ? CupertinoIcons.heart_fill
-                              : CupertinoIcons.heart,
-                          color: CupertinoColors.systemRed,
-                          size: 24,
-                        ),
-                      );
-                    },
+                  child: FavoriteIcon(
+                    id: id,
+                    sharedPref: sharedPref,
+                    onFavoriteChanged: () => setState(() {}),
                   ),
                 ),
               ],
