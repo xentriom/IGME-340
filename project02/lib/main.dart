@@ -1,0 +1,70 @@
+import 'package:flutter/cupertino.dart';
+import 'package:project02/screens/explore_screen.dart';
+import 'package:project02/screens/favorites_screen.dart';
+import 'package:project02/screens/settings_screen.dart';
+import 'package:project02/route.dart';
+
+///
+/// Main App
+/// 
+/// @author: Jason Chen
+/// @version: 1.0.0
+/// @since: 2025-03-07
+///
+
+void main() {
+  runApp(const MainApp());
+}
+
+class MainApp extends StatelessWidget {
+  const MainApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return CupertinoApp(
+      debugShowCheckedModeBanner: false,
+      theme: CupertinoThemeData(primaryColor: CupertinoColors.systemPurple),
+      onGenerateRoute: RouteGenerator.generateRoute,
+      home: CupertinoTabScaffold(
+        tabBar: CupertinoTabBar(
+          items: const <BottomNavigationBarItem>[
+            BottomNavigationBarItem(
+              icon: Icon(CupertinoIcons.search),
+              label: 'Explore',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(CupertinoIcons.heart),
+              label: 'Favorites',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(CupertinoIcons.settings),
+              label: 'Settings',
+            ),
+          ],
+        ),
+        tabBuilder: (context, index) {
+          switch (index) {
+            case 0:
+              return CupertinoTabView(
+                builder: (context) {
+                  return CupertinoPageScaffold(child: ExploreScreen());
+                },
+              );
+            case 1:
+              return CupertinoTabView(
+                builder: (context) {
+                  return CupertinoPageScaffold(child: FavoritesScreen());
+                },
+              );
+            default:
+              return CupertinoTabView(
+                builder: (context) {
+                  return CupertinoPageScaffold(child: SettingsScreen());
+                },
+              );
+          }
+        },
+      ),
+    );
+  }
+}
