@@ -89,7 +89,7 @@ class SharedPref {
   }
 
   /// Add a favorite for the logged-in user
-  Future<void> addFavorite(String favorite) async {
+  Future<void> setFavorite(String favorite) async {
     final prefs = await SharedPreferences.getInstance();
 
     // Get the current user
@@ -108,7 +108,31 @@ class SharedPref {
     if (!favorites.contains(favorite)) {
       favorites.add(favorite);
       userData['favorites'] = favorites;
-      await prefs.setString(currentUser, jsonEncode(userData));
+    } else {
+      favorites.remove(favorite);
+      userData['favorites'] = favorites;
     }
+
+    await prefs.setString(currentUser, jsonEncode(userData));
+  }
+
+  /// Check if a character is a favorite for the logged-in user
+  Future<bool> isFavorite(String favorite) async {
+    final prefs = await SharedPreferences.getInstance();
+
+    // Get the current user
+    final String? currentUser = await getUsername();
+    if (currentUser == null) return false;
+
+    // Get the user data
+    final String? userDataJson = prefs.getString(currentUser);
+    if (userDataJson == null) return false;
+
+    // Parse favorites from JSON
+    final userData = jsonDecode(userDataJson) as Map<String, dynamic>;
+    final favorites = List<String>.from(userData['favorites'] as List);
+
+    // Check if the favorite exists
+    return favorites.contains(favorite);
   }
 }

@@ -1,6 +1,18 @@
 import 'package:flutter/cupertino.dart';
 import 'package:project02/core/constants.dart';
 import 'package:project02/core/yatta.dart';
+import 'package:project02/core/shared_pref.dart';
+
+///
+/// Explore Screen
+/// Displays Honkai: Star Rail characters
+/// Filter by search query, type, and path
+/// Toggle between list and grid view
+///
+/// @author: Jason Chen
+/// @version: 1.0.0
+/// @since: 2025-03-08
+///
 
 class ExploreScreen extends StatefulWidget {
   const ExploreScreen({super.key});
@@ -12,6 +24,8 @@ class ExploreScreen extends StatefulWidget {
 class _ExploreScreenState extends State<ExploreScreen> {
   final Constants constants = Constants();
   final Yatta yatta = Yatta();
+  final SharedPref sharedPref = SharedPref();
+
   List<dynamic> characters = [];
   List<dynamic> filteredCharacters = [];
   bool isLoading = false;
@@ -329,14 +343,31 @@ class _ExploreScreenState extends State<ExploreScreen> {
                 Positioned(
                   top: 6,
                   right: 6,
-                  child: GestureDetector(
-                    onTap: () {
-                      // Add to favorites
+                  child: FutureBuilder(
+                    future: sharedPref.isFavorite(id),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return const SizedBox(
+                          width: 24,
+                          height: 24,
+                          child: CupertinoActivityIndicator(radius: 10),
+                        );
+                      }
+
+                      final isFavorite = snapshot.data ?? false;
+                      return GestureDetector(
+                        onTap: () async {
+                          await sharedPref.setFavorite(id);
+                          setState(() {});
+                        },
+                        child: Icon(
+                          isFavorite
+                              ? CupertinoIcons.heart_fill
+                              : CupertinoIcons.heart,
+                          color: CupertinoColors.systemRed,
+                        ),
+                      );
                     },
-                    child: const Icon(
-                      CupertinoIcons.heart,
-                      color: CupertinoColors.systemRed,
-                    ),
                   ),
                 ),
               ],
@@ -391,19 +422,135 @@ class _ExploreScreenState extends State<ExploreScreen> {
 
     return GridView.builder(
       shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
-        crossAxisSpacing: 8.0,
-        mainAxisSpacing: 8.0,
-        childAspectRatio: 1.0,
+        crossAxisSpacing: 12,
+        mainAxisSpacing: 12,
+        childAspectRatio: 1,
       ),
-      itemCount: 20,
-      itemBuilder:
-          (context, index) => CupertinoButton.filled(
-            onPressed: () {},
-            child: Text('Item $index'),
+      itemCount: filteredCharacters.length,
+      itemBuilder: (context, index) {
+        final character = filteredCharacters[index];
+        final id = character['id'].toString();
+        final name = character['name'];
+        final rarity = character['rank'];
+        final path = character['types']['pathType'];
+        final type = character['types']['combatType'];
+
+        return GestureDetector(
+          onTap: () {
+            Navigator.pushNamed(context, '/character/$id');
+          },
+          child: Container(
+            decoration: BoxDecoration(
+              color: CupertinoColors.systemGrey6,
+              borderRadius: BorderRadius.circular(12),
+              image: DecorationImage(
+                image: NetworkImage(yatta.getAvatarIconUrl(id)),
+                fit: BoxFit.cover,
+              ),
+            ),
+            child: Stack(
+              children: [
+                Positioned(
+                  bottom: 0,
+                  left: 0,
+                  right: 0,
+                  child: Container(
+                    height: 72,
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        colors: [
+                          CupertinoColors.white.withValues(alpha: 0),
+                          rarity == 4
+                              ? CupertinoColors.systemPurple.withOpacity(0.8)
+                              : CupertinoColors.systemYellow.withOpacity(0.8),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+                Positioned(
+                  bottom: 8,
+                  left: 8,
+                  right: 8,
+                  child: Center(
+                    child: Text(
+                      name,
+                      style: const TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w600,
+                        color: CupertinoColors.darkBackgroundGray,
+                      ),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+                ),
+                Positioned(
+                  top: 8,
+                  left: 8,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Image(
+                        width: 24,
+                        height: 24,
+                        fit: BoxFit.cover,
+                        image: NetworkImage(
+                          yatta.getTypeIcon(constants.typesIcon[type] ?? ''),
+                        ),
+                      ),
+                      const SizedBox(height: 4),
+                      Image(
+                        width: 24,
+                        height: 24,
+                        fit: BoxFit.cover,
+                        image: NetworkImage(
+                          yatta.getPathIcon(constants.pathsIcon[path] ?? ''),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Positioned(
+                  top: 8,
+                  right: 8,
+                  child: FutureBuilder(
+                    future: sharedPref.isFavorite(id),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return const SizedBox(
+                          width: 24,
+                          height: 24,
+                          child: CupertinoActivityIndicator(radius: 10),
+                        );
+                      }
+                      final isFavorite = snapshot.data ?? false;
+
+                      return GestureDetector(
+                        onTap: () async {
+                          await sharedPref.setFavorite(id);
+                          setState(() {});
+                        },
+                        child: Icon(
+                          isFavorite
+                              ? CupertinoIcons.heart_fill
+                              : CupertinoIcons.heart,
+                          color: CupertinoColors.systemRed,
+                          size: 24,
+                        ),
+                      );
+                    },
+                  ),
+                ),
+              ],
+            ),
           ),
+        );
+      },
     );
   }
 }
