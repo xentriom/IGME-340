@@ -1,6 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:project02/core/shared_pref.dart';
 
+///
+/// Settings Screen
+/// Handles login, registration, settings
+///
+/// @author: Jason Chen
+/// @version: 1.0.0
+/// @since: 2025-03-07
+///
+
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
 
@@ -15,6 +24,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   bool _isLoggedIn = false;
   bool _isLoading = false;
+  bool _showLogin = true;
+  bool _agreeToTerms = false;
   String? _username;
 
   @override
@@ -103,7 +114,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
       context: context,
       builder:
           (context) => CupertinoAlertDialog(
-            title: const Text("Error"),
             content: Text(message),
             actions: [
               CupertinoDialogAction(
@@ -125,7 +135,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 ? const Center(child: CupertinoActivityIndicator())
                 : _isLoggedIn
                 ? _buildLoggedInUI()
-                : _buildLoginRegisterUI(),
+                : _showLogin
+                ? _buildLoginUI()
+                : _buildRegisterUI(),
       ),
     );
   }
@@ -147,32 +159,168 @@ class _SettingsScreenState extends State<SettingsScreen> {
     );
   }
 
-  /// UI for login/register form
-  Widget _buildLoginRegisterUI() {
+  /// UI for login form
+  Widget _buildLoginUI() {
     return Padding(
-      padding: const EdgeInsets.all(16.0),
+      padding: const EdgeInsets.symmetric(horizontal: 24.0),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
+          const Text(
+            "Login",
+            style: TextStyle(
+              fontSize: 28,
+              fontWeight: FontWeight.bold,
+              color: CupertinoColors.black,
+            ),
+          ),
+          const SizedBox(height: 8),
+          const Text(
+            "Please sign in to continue",
+            style: TextStyle(fontSize: 16, color: CupertinoColors.systemGrey),
+          ),
+          const SizedBox(height: 24),
           CupertinoTextField(
             controller: _usernameController,
             placeholder: "Username",
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+            decoration: BoxDecoration(
+              border: Border.all(color: CupertinoColors.systemGrey4),
+              borderRadius: BorderRadius.circular(8),
+            ),
           ),
-          const SizedBox(height: 10),
+          const SizedBox(height: 12),
           CupertinoTextField(
             controller: _passwordController,
             placeholder: "Password",
             obscureText: true,
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+            decoration: BoxDecoration(
+              border: Border.all(color: CupertinoColors.systemGrey4),
+              borderRadius: BorderRadius.circular(8),
+            ),
           ),
-          const SizedBox(height: 20),
+          const SizedBox(height: 24),
           CupertinoButton.filled(
             onPressed: _handleLogin,
-            child: const Text("Login"),
+            padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 12),
+            child: const Text("Login", style: TextStyle(fontSize: 16)),
           ),
-          const SizedBox(height: 10),
-          CupertinoButton(
-            onPressed: _handleRegister,
-            child: const Text("Register"),
+          const SizedBox(height: 16),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Text(
+                "Don't have an account? ",
+                style: TextStyle(
+                  fontSize: 14,
+                  color: CupertinoColors.systemGrey,
+                ),
+              ),
+              GestureDetector(
+                onTap: () => setState(() => _showLogin = false),
+                child: const Text(
+                  "Sign up",
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: CupertinoColors.activeBlue,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  /// UI for register form
+  Widget _buildRegisterUI() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 24.0),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          const Text(
+            "Create Account",
+            style: TextStyle(
+              fontSize: 28,
+              fontWeight: FontWeight.bold,
+              color: CupertinoColors.black,
+            ),
+          ),
+          const SizedBox(height: 24),
+          CupertinoTextField(
+            controller: _usernameController,
+            placeholder: "Username",
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+            decoration: BoxDecoration(
+              border: Border.all(color: CupertinoColors.systemGrey4),
+              borderRadius: BorderRadius.circular(8),
+            ),
+          ),
+          const SizedBox(height: 12),
+          CupertinoTextField(
+            controller: _passwordController,
+            placeholder: "Password",
+            obscureText: true,
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+            decoration: BoxDecoration(
+              border: Border.all(color: CupertinoColors.systemGrey4),
+              borderRadius: BorderRadius.circular(8),
+            ),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              CupertinoCheckbox(
+                value: _agreeToTerms,
+                onChanged:
+                    (bool? value) =>
+                        setState(() => _agreeToTerms = value ?? false),
+                activeColor: CupertinoColors.activeBlue,
+              ),
+              const Text(
+                "I agree to our Terms and Services",
+                style: TextStyle(fontSize: 14, color: CupertinoColors.black),
+              ),
+            ],
+          ),
+          const SizedBox(height: 16),
+          CupertinoButton.filled(
+            onPressed:
+                _agreeToTerms
+                    ? _handleRegister
+                    : null, // Disabled if not checked
+            padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 12),
+            child: const Text("Sign up", style: TextStyle(fontSize: 16)),
+          ),
+          const SizedBox(height: 16),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Text(
+                "Already have an account? ",
+                style: TextStyle(
+                  fontSize: 14,
+                  color: CupertinoColors.systemGrey,
+                ),
+              ),
+              GestureDetector(
+                onTap: () => setState(() => _showLogin = true),
+                child: const Text(
+                  "Sign in",
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: CupertinoColors.activeBlue,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ),
+            ],
           ),
         ],
       ),
