@@ -128,7 +128,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
   @override
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
-      navigationBar: const CupertinoNavigationBar(middle: Text('Settings')),
+      navigationBar: CupertinoNavigationBar(
+        middle: Text(_isLoggedIn ? "Settings" : " "),
+      ),
       child: SafeArea(
         child:
             _isLoading
@@ -172,7 +174,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
             style: TextStyle(
               fontSize: 28,
               fontWeight: FontWeight.bold,
-              color: CupertinoColors.black,
+              color: CupertinoColors.darkBackgroundGray,
             ),
           ),
           const SizedBox(height: 8),
@@ -202,12 +204,15 @@ class _SettingsScreenState extends State<SettingsScreen> {
             ),
           ),
           const SizedBox(height: 24),
-          CupertinoButton.filled(
-            onPressed: _handleLogin,
-            padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 12),
-            child: const Text("Login", style: TextStyle(fontSize: 16)),
+          SizedBox(
+            width: double.infinity,
+            child: CupertinoButton.filled(
+              onPressed: _handleLogin,
+              padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 12),
+              child: const Text("Login", style: TextStyle(fontSize: 16)),
+            ),
           ),
-          const SizedBox(height: 16),
+          const SizedBox(height: 12),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -220,11 +225,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
               ),
               GestureDetector(
                 onTap: () => setState(() => _showLogin = false),
-                child: const Text(
+                child: Text(
                   "Sign up",
                   style: TextStyle(
                     fontSize: 14,
-                    color: CupertinoColors.activeBlue,
+                    color: CupertinoTheme.of(context).primaryColor,
                     fontWeight: FontWeight.w600,
                   ),
                 ),
@@ -244,12 +249,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          const Text(
+          Text(
             "Create Account",
             style: TextStyle(
               fontSize: 28,
               fontWeight: FontWeight.bold,
-              color: CupertinoColors.black,
+              color: CupertinoTheme.of(context).textTheme.textStyle.color,
             ),
           ),
           const SizedBox(height: 24),
@@ -275,30 +280,40 @@ class _SettingsScreenState extends State<SettingsScreen> {
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              CupertinoCheckbox(
-                value: _agreeToTerms,
-                onChanged:
-                    (bool? value) =>
-                        setState(() => _agreeToTerms = value ?? false),
-                activeColor: CupertinoColors.activeBlue,
+              SizedBox(
+                width: 20,
+                child: CupertinoCheckbox(
+                  value: _agreeToTerms,
+                  onChanged:
+                      (bool? value) =>
+                          setState(() => _agreeToTerms = value ?? false),
+                  activeColor: CupertinoTheme.of(context).primaryColor,
+                ),
               ),
-              const Text(
-                "I agree to our Terms and Services",
-                style: TextStyle(fontSize: 14, color: CupertinoColors.black),
+              const SizedBox(width: 8),
+              Flexible(
+                child: Text(
+                  "By proceeding, you acknowledge that all data stored using shared preferences is not secure.",
+                  style: const TextStyle(
+                    fontSize: 14,
+                    color: CupertinoColors.systemGrey,
+                  ),
+                ),
               ),
             ],
           ),
-          const SizedBox(height: 16),
-          CupertinoButton.filled(
-            onPressed:
-                _agreeToTerms
-                    ? _handleRegister
-                    : null, // Disabled if not checked
-            padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 12),
-            child: const Text("Sign up", style: TextStyle(fontSize: 16)),
+          const SizedBox(height: 12),
+          SizedBox(
+            width: double.infinity,
+            child: CupertinoButton.filled(
+              onPressed: _agreeToTerms ? _handleRegister : null,
+              padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 12),
+              child: const Text("Sign up", style: TextStyle(fontSize: 16)),
+            ),
           ),
-          const SizedBox(height: 16),
+          const SizedBox(height: 8),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -311,11 +326,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
               ),
               GestureDetector(
                 onTap: () => setState(() => _showLogin = true),
-                child: const Text(
+                child: Text(
                   "Sign in",
                   style: TextStyle(
                     fontSize: 14,
-                    color: CupertinoColors.activeBlue,
+                    color: CupertinoTheme.of(context).primaryColor,
                     fontWeight: FontWeight.w600,
                   ),
                 ),
