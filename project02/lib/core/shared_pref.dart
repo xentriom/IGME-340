@@ -24,7 +24,11 @@ class SharedPref {
   }
 
   /// Register a new account
-  Future<String?> register(String username, String password) async {
+  Future<String?> register(
+    String username,
+    String password, {
+    List<String>? favorites,
+  }) async {
     final prefs = await SharedPreferences.getInstance();
 
     // Check if an account already exists
@@ -33,7 +37,10 @@ class SharedPref {
     }
 
     // Create a new account
-    final userData = {'password': password, 'favorites': <String>[]};
+    final userData = {
+      'password': password,
+      'favorites': favorites ?? <String>[],
+    };
     await prefs.setString(username, jsonEncode(userData));
 
     // Log in the new user

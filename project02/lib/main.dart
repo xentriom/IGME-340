@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:project02/route.dart';
+import 'package:project02/core/shared_pref.dart';
 import 'package:project02/core/shared_state.dart';
 import 'package:project02/screens/explore_screen.dart';
 import 'package:project02/screens/favorites_screen.dart';
@@ -17,8 +18,34 @@ import 'package:project02/screens/settings_screen.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await SharedState.loadInitialState();
+  await _initializeDummyUsers();
 
   runApp(const MainApp());
+}
+
+/// Initialize dummy users (lore accurate)
+Future<void> _initializeDummyUsers() async {
+  final SharedPref sharedPref = SharedPref();
+  final List<Map<String, dynamic>> dummyUsers = [
+    {
+      'username': 'xentriom',
+      'password': 'hello123',
+      'favorites': ['1006', '1307', '1402'],
+    },
+    {
+      'username': 'phainon',
+      'password': 'mydei',
+      'favorites': ['1404'],
+    },
+  ];
+
+  for (var user in dummyUsers) {
+    await sharedPref.register(
+      user['username']!,
+      user['password']!,
+      favorites: user['favorites'],
+    );
+  }
 }
 
 class MainApp extends StatelessWidget {
