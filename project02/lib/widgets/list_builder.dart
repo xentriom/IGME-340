@@ -1,8 +1,21 @@
 import 'package:flutter/cupertino.dart';
+import 'package:project02/core/constants.dart';
 import 'package:project02/core/shared_pref.dart';
 import 'package:project02/core/yatta.dart';
 import 'package:project02/widgets/favorite_icon.dart';
-import 'package:project02/core/constants.dart';
+
+///
+/// BuildListView class
+/// Helper to display characters in list view
+///
+/// @param filteredCharacters: list of characters to display
+/// @param isLoading: loading state
+/// @return BuildListView widget
+///
+/// @author: Jason Chen
+/// @version: 1.0.0
+/// @since: 2025-03-09
+///
 
 class BuildListView extends StatelessWidget {
   final List<dynamic> filteredCharacters;
@@ -32,13 +45,16 @@ class BuildListView extends StatelessWidget {
       itemBuilder: (context, index) {
         final character = filteredCharacters[index];
         final id = character['id'].toString();
-        final name = character['name'] ?? 'Unknown';
-        final rarity = character['rank'] ?? 0;
-        final path = character['types']?['pathType'] ?? 'Unknown';
-        final type = character['types']?['combatType'] ?? 'Unknown';
+
+        final name = character['name'];
+        final rarity = character['rank'];
+        final path = character['types']?['pathType'];
+        final type = character['types']?['combatType'];
 
         return GestureDetector(
           onTap: () {
+            // Curtesy of ChatGPT, my failed version below:
+            // Navigator.pushNamed('/character', arguments: id);
             Navigator.of(
               context,
               rootNavigator: true,
@@ -110,6 +126,7 @@ class BuildListView extends StatelessWidget {
                     ],
                   ),
                 ),
+                // Bookmark icon
                 Positioned(
                   top: 8,
                   right: 8,
@@ -123,6 +140,7 @@ class BuildListView extends StatelessWidget {
     );
   }
 
+  /// Helper method to build badge
   Widget _buildBadge(String type, String data, Yatta yatta) {
     final Constants constants = Constants();
 

@@ -1,8 +1,21 @@
 import 'package:flutter/cupertino.dart';
+import 'package:project02/core/constants.dart';
 import 'package:project02/core/shared_pref.dart';
 import 'package:project02/core/yatta.dart';
 import 'package:project02/widgets/favorite_icon.dart';
-import 'package:project02/core/constants.dart';
+
+///
+/// BuildGridView class
+/// Helper to display characters in grid view
+///
+/// @param filteredCharacters: list of characters to display
+/// @param isLoading: loading state
+/// @return BuildGridView widget
+///
+/// @author: Jason Chen
+/// @version: 1.0.0
+/// @since: 2025-03-09
+///
 
 class BuildGridView extends StatelessWidget {
   final List<dynamic> filteredCharacters;
@@ -40,6 +53,7 @@ class BuildGridView extends StatelessWidget {
       itemBuilder: (context, index) {
         final character = filteredCharacters[index];
         final id = character['id'].toString();
+
         final name = character['name'];
         final rarity = character['rank'];
         final path = character['types']['pathType'];
@@ -47,12 +61,12 @@ class BuildGridView extends StatelessWidget {
 
         return GestureDetector(
           onTap: () {
-            // Curtsy of ChatGPT, my broken version is commented below
+            // Curtesy of ChatGPT, my failed version below:
+            // Navigator.pushNamed('/character', arguments: id);
             Navigator.of(
               context,
               rootNavigator: true,
             ).pushNamed('/character', arguments: id);
-            // Navigator.pushNamed(context, '/character', arguments: id);
           },
           child: Padding(
             padding: const EdgeInsets.symmetric(vertical: 4),
@@ -129,6 +143,7 @@ class BuildGridView extends StatelessWidget {
                       ],
                     ),
                   ),
+                  // Bookmark icon
                   Positioned(
                     top: 8,
                     right: 8,

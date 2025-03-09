@@ -25,6 +25,7 @@ class FavoriteIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<bool>(
+      // Check login state
       future: sharedPref.isLoggedIn(),
       builder: (context, loginSnapshot) {
         if (loginSnapshot.connectionState == ConnectionState.waiting) {
@@ -41,6 +42,7 @@ class FavoriteIcon extends StatelessWidget {
         }
 
         return ValueListenableBuilder<List<String>>(
+          // Listen to changes in favoriteIds
           valueListenable: SharedState.favoriteIds,
           builder: (context, favoriteIds, child) {
             final isFavorite = favoriteIds.contains(id);
