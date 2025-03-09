@@ -32,8 +32,8 @@ class BuildGridView extends StatelessWidget {
       shrinkWrap: true,
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
-        crossAxisSpacing: 12,
-        mainAxisSpacing: 0,
+        crossAxisSpacing: 8,
+        mainAxisSpacing: 4,
         childAspectRatio: 1,
       ),
       itemCount: filteredCharacters.length,
@@ -55,7 +55,7 @@ class BuildGridView extends StatelessWidget {
             // Navigator.pushNamed(context, '/character', arguments: id);
           },
           child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 8),
+            padding: const EdgeInsets.symmetric(vertical: 4),
             child: Container(
               decoration: BoxDecoration(
                 color: CupertinoColors.systemGrey6,
@@ -96,11 +96,10 @@ class BuildGridView extends StatelessWidget {
                         name,
                         style: const TextStyle(
                           fontSize: 18,
-                          fontWeight: FontWeight.w600,
+                          fontWeight: FontWeight.w500,
                           color: CupertinoColors.darkBackgroundGray,
                         ),
                         maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
                       ),
                     ),
                   ),
