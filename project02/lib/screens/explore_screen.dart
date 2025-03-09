@@ -115,10 +115,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
         child: Column(
           children: [
             Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 16,
-                vertical: 8,
-              ),
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
               child: CupertinoSearchTextField(
                 placeholder: 'Search...',
                 onChanged: (value) {
@@ -278,7 +275,12 @@ class _ExploreScreenState extends State<ExploreScreen> {
 
         return GestureDetector(
           onTap: () {
-            Navigator.pushNamed(context, '/character/$id');
+            // Curtsy of ChatGPT, my broken version is commented below
+            Navigator.of(
+              context,
+              rootNavigator: true,
+            ).pushNamed('/character', arguments: id);
+            // Navigator.pushNamed(context, '/character', arguments: id);
           },
           child: Padding(
             padding: const EdgeInsets.symmetric(vertical: 8),
@@ -421,7 +423,12 @@ class _ExploreScreenState extends State<ExploreScreen> {
 
         return GestureDetector(
           onTap: () {
-            Navigator.pushNamed(context, '/character/$id');
+            // Curtsy of ChatGPT, my broken version is commented below
+            Navigator.of(
+              context,
+              rootNavigator: true,
+            ).pushNamed('/character', arguments: id);
+            // Navigator.pushNamed(context, '/character', arguments: id);
           },
           child: Padding(
             padding: const EdgeInsets.symmetric(vertical: 8),
