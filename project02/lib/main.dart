@@ -1,8 +1,9 @@
 import 'package:flutter/cupertino.dart';
+import 'package:project02/route.dart';
+import 'package:project02/core/shared_state.dart';
 import 'package:project02/screens/explore_screen.dart';
 import 'package:project02/screens/favorites_screen.dart';
 import 'package:project02/screens/settings_screen.dart';
-import 'package:project02/route.dart';
 
 ///
 /// Main App
@@ -13,7 +14,10 @@ import 'package:project02/route.dart';
 /// @since: 2025-03-07
 ///
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await SharedState.loadInitialState();
+
   runApp(const MainApp());
 }
 

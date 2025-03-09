@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:project02/core/shared_pref.dart';
+import 'package:project02/core/shared_state.dart';
 
 ///
 /// Settings Screen
@@ -65,13 +66,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
     }
 
     setState(() => _isLoading = true);
-    final String? error = await _sharedPred.login(username, password);
+    final String? error = await SharedState.login(username, password);
     setState(() => _isLoading = false);
 
     if (error == null) {
       _usernameController.clear();
       _passwordController.clear();
-      await _checkLoginStatus();
     } else {
       _showError(error);
     }
@@ -88,13 +88,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
     }
 
     setState(() => _isLoading = true);
-    final String? error = await _sharedPred.register(username, password);
+    final String? error = await SharedState.register(username, password);
     setState(() => _isLoading = false);
 
     if (error == null) {
       _usernameController.clear();
       _passwordController.clear();
-      await _checkLoginStatus();
     } else {
       _showError(error);
     }
@@ -103,8 +102,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   /// Handle logout
   Future<void> _handleLogout() async {
     setState(() => _isLoading = true);
-    await _sharedPred.logout();
-    await _checkLoginStatus();
+    await SharedState.logout();
     setState(() => _isLoading = false);
   }
 
@@ -132,14 +130,20 @@ class _SettingsScreenState extends State<SettingsScreen> {
         middle: Text(_isLoggedIn ? "Settings" : " "),
       ),
       child: SafeArea(
-        child:
-            _isLoading
+        child: ValueListenableBuilder(
+          valueListenable: SharedState.currentUser,
+          builder: (context, username, child) {
+            _username = username;
+            _isLoggedIn = username != null;
+            return _isLoading
                 ? const Center(child: CupertinoActivityIndicator())
                 : _isLoggedIn
                 ? _buildLoggedInUI()
                 : _showLogin
                 ? _buildLoginUI()
-                : _buildRegisterUI(),
+                : _buildRegisterUI();
+          },
+        ),
       ),
     );
   }

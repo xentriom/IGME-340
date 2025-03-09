@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:project02/core/shared_pref.dart';
+import 'package:project02/core/shared_state.dart';
 
 ///
 /// FavoriteIcon widget
@@ -8,7 +9,6 @@ import 'package:project02/core/shared_pref.dart';
 ///
 /// @param id: character ID
 /// @param sharedPref: SharedPref instance
-/// @param onFavoriteChanged: callback function when favorite status changes
 /// @return FavoriteIcon widget
 ///
 /// @author: Jason Chen
@@ -19,18 +19,12 @@ import 'package:project02/core/shared_pref.dart';
 class FavoriteIcon extends StatelessWidget {
   final String id;
   final SharedPref sharedPref;
-  final VoidCallback onFavoriteChanged;
 
-  const FavoriteIcon({
-    required this.id,
-    required this.sharedPref,
-    required this.onFavoriteChanged,
-    super.key,
-  });
+  const FavoriteIcon({required this.id, required this.sharedPref, super.key});
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
+    return FutureBuilder<bool>(
       future: sharedPref.isLoggedIn(),
       builder: (context, loginSnapshot) {
         if (loginSnapshot.connectionState == ConnectionState.waiting) {
@@ -46,22 +40,13 @@ class FavoriteIcon extends StatelessWidget {
           return const SizedBox.shrink();
         }
 
-        return FutureBuilder(
-          future: sharedPref.isFavorite(id),
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return const SizedBox(
-                width: 24,
-                height: 24,
-                child: CupertinoActivityIndicator(radius: 10),
-              );
-            }
-
-            final isFavorite = snapshot.data ?? false;
+        return ValueListenableBuilder<List<String>>(
+          valueListenable: SharedState.favoriteIds,
+          builder: (context, favoriteIds, child) {
+            final isFavorite = favoriteIds.contains(id);
             return GestureDetector(
               onTap: () async {
-                await sharedPref.setFavorite(id);
-                onFavoriteChanged();
+                await SharedState.toggleFavorite(id);
               },
               child: Icon(
                 isFavorite ? CupertinoIcons.heart_fill : CupertinoIcons.heart,

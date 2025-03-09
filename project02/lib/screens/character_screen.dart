@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
-import 'package:project02/core/yatta.dart';
 import 'package:project02/core/shared_pref.dart';
+import 'package:project02/core/yatta.dart';
 import 'package:project02/widgets/favorite_icon.dart';
 
 class CharacterScreen extends StatefulWidget {
@@ -45,13 +45,7 @@ class _CharacterScreenState extends State<CharacterScreen> {
     return CupertinoPageScaffold(
       navigationBar: CupertinoNavigationBar(
         middle: Text(characterDetail['name'] ?? 'Character'),
-        trailing: FavoriteIcon(
-          id: widget.id,
-          sharedPref: sharedPref,
-          onFavoriteChanged: () {
-            setState(() {});
-          },
-        ),
+        trailing: FavoriteIcon(id: widget.id, sharedPref: sharedPref),
       ),
       child: SafeArea(
         child:

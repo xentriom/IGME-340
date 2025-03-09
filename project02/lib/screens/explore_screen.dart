@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:project02/core/constants.dart';
-import 'package:project02/core/yatta.dart';
 import 'package:project02/core/shared_pref.dart';
+import 'package:project02/core/yatta.dart';
 import 'package:project02/widgets/favorite_icon.dart';
 
 ///
@@ -348,11 +348,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
                 Positioned(
                   top: 8,
                   right: 8,
-                  child: FavoriteIcon(
-                    id: id,
-                    sharedPref: sharedPref,
-                    onFavoriteChanged: () => setState(() {}),
-                  ),
+                  child: FavoriteIcon(id: id, sharedPref: sharedPref),
                 ),
               ],
             ),
@@ -394,7 +390,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
     );
   }
 
-  /// Grid view, 20 placeholder items
+  /// Grid view
   Widget _buildGridView() {
     if (isLoading) {
       return const Center(child: CupertinoActivityIndicator());
@@ -509,11 +505,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
                   Positioned(
                     top: 8,
                     right: 8,
-                    child: FavoriteIcon(
-                      id: id,
-                      sharedPref: sharedPref,
-                      onFavoriteChanged: () => setState(() {}),
-                    ),
+                    child: FavoriteIcon(id: id, sharedPref: sharedPref),
                   ),
                 ],
               ),
