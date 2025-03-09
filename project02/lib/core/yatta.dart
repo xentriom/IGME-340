@@ -21,7 +21,7 @@ class Yatta {
         final characterMap = data['data']['items'] as Map<String, dynamic>;
         return characterMap.values.toList();
       } else {
-        throw Exception('Failed to load characters: ${response.statusCode}');
+        throw Exception('[${response.statusCode}] Failed to load characters');
       }
     } catch (error) {
       rethrow;
@@ -38,10 +38,26 @@ class Yatta {
         return data['data'] ?? {};
       } else {
         throw Exception(
-          'Failed to load character detail: ${response.statusCode}',
+          '[${response.statusCode}] Failed to load character detail for $id',
         );
       }
-    } catch (e) {
+    } catch (error) {
+      rethrow;
+    }
+  }
+
+  /// Fetch stat name and icon name
+  Future<Map<String, dynamic>> getStatName() async {
+    final url = Uri.parse('$_baseUrl$_statsEndpoint');
+    try {
+      final response = await http.get(url);
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+        return data['data'] ?? {};
+      } else {
+        throw Exception('[${response.statusCode}] Failed to load stat JSON');
+      }
+    } catch (error) {
       rethrow;
     }
   }
