@@ -49,8 +49,10 @@ class FavoriteIcon extends StatelessWidget {
                 await SharedState.toggleFavorite(id);
               },
               child: Icon(
-                isFavorite ? CupertinoIcons.heart_fill : CupertinoIcons.heart,
-                color: CupertinoColors.systemRed,
+                isFavorite
+                    ? CupertinoIcons.bookmark_fill
+                    : CupertinoIcons.bookmark,
+                color: CupertinoTheme.of(context).primaryColor,
               ),
             );
           },

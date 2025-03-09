@@ -28,12 +28,7 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return CupertinoPageScaffold(
-      navigationBar: const CupertinoNavigationBar(
-        middle: Text('Interastral Guide'),
-      ),
-      child: SafeArea(child: _buildContent()),
-    );
+    return CupertinoPageScaffold(child: SafeArea(child: _buildContent()));
   }
 
   Widget _buildContent() {
@@ -43,7 +38,7 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
         if (user == null) {
           return _buildMessage(
             assetUrl: 'assets/images/AglaeaCross.jpeg',
-            message: 'Log in to view your favorite characters.',
+            message: 'Log in to view your bookmarks.',
           );
         }
 
@@ -53,7 +48,7 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
             if (favorites.isEmpty) {
               return _buildMessage(
                 assetUrl: 'assets/images/ThertaHat.jpeg',
-                message: 'No characters saved yet. Start adding favorites!',
+                message: 'No bookmarks found.',
               );
             }
             return _buildFavoritesList(favorites);
@@ -63,6 +58,7 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
     );
   }
 
+  /// Helper method to build a message with an image
   Widget _buildMessage({required String assetUrl, required String message}) {
     return Center(
       child: Column(

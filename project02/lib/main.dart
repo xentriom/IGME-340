@@ -34,12 +34,12 @@ class MainApp extends StatelessWidget {
         tabBar: CupertinoTabBar(
           items: const <BottomNavigationBarItem>[
             BottomNavigationBarItem(
-              icon: Icon(CupertinoIcons.search),
+              icon: Icon(CupertinoIcons.compass),
               label: 'Explore',
             ),
             BottomNavigationBarItem(
-              icon: Icon(CupertinoIcons.heart),
-              label: 'Favorites',
+              icon: Icon(CupertinoIcons.bookmark),
+              label: 'Bookmarks',
             ),
             BottomNavigationBarItem(
               icon: Icon(CupertinoIcons.settings),

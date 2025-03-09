@@ -126,9 +126,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
   @override
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
-      navigationBar: CupertinoNavigationBar(
-        middle: Text(_isLoggedIn ? "Settings" : " "),
-      ),
       child: SafeArea(
         child: ValueListenableBuilder(
           valueListenable: SharedState.currentUser,
