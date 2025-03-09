@@ -3,11 +3,11 @@ import 'package:http/http.dart' as http;
 
 class Yatta {
   static const String _baseUrl = 'https://sr.yatta.moe/';
-  static const String _apiPath = 'api/v2/en/';
-  static const String _assetPath = 'hsr/assets/UI//avatar';
+  static const String _apiPath = 'api/v2/en';
+  static const String _assetPath = 'hsr/assets/UI';
 
-  static const String _charactersEndpoint = '${_apiPath}avatar';
-  static const String _statsEndpoint = '${_apiPath}manualAvatar';
+  static const String _charactersEndpoint = '$_apiPath/avatar';
+  static const String _statsEndpoint = '$_apiPath/manualAvatar';
 
   /// Fetch the list of characters
   Future<List<dynamic>> getCharacters() async {
@@ -30,7 +30,7 @@ class Yatta {
 
   /// Fetch details for a specific character by ID
   Future<Map<String, dynamic>> getCharacterDetail(String id) async {
-    final url = Uri.parse('$_baseUrl$_apiPath}avatar/$id');
+    final url = Uri.parse('$_baseUrl$_apiPath/avatar/$id');
     try {
       final response = await http.get(url);
       if (response.statusCode == 200) {
@@ -48,21 +48,21 @@ class Yatta {
 
   /// Get URL for character avatar icon
   String getAvatarIconUrl(String id) {
-    return '$_baseUrl$_assetPath/medium/$id.png';
+    return '$_baseUrl$_assetPath//avatar/medium/$id.png';
   }
 
   /// Get URL for character gacha icon
   String getGachaIconUrl(String id) {
-    return '$_baseUrl$_assetPath/large/$id.png';
+    return '$_baseUrl$_assetPath//avatar/large/$id.png';
   }
 
   /// Get URL for character profession icon (paths)
   String getPathIcon(String name) {
-    return '${_baseUrl}hsr/assets/UI/profession/$name.png';
+    return '$_baseUrl$_assetPath/profession/$name.png';
   }
 
   /// Get URL for character type icon (combative)
   String getTypeIcon(String name) {
-    return '${_baseUrl}hsr/assets/UI/attribute/$name.png';
+    return '$_baseUrl$_assetPath/attribute/$name.png';
   }
 }
