@@ -51,9 +51,11 @@ class _ExploreScreenState extends State<ExploreScreen> {
 
       setState(() {
         characters = data;
-        _filterCharacters();
+        filteredCharacters = data;
         isLoading = false;
       });
+
+      _filterCharacters();
     } catch (e) {
       setState(() => isLoading = false);
     }
@@ -63,19 +65,16 @@ class _ExploreScreenState extends State<ExploreScreen> {
     setState(() {
       filteredCharacters =
           characters.where((character) {
-            // Filter by search query
             final name = character['name'].toString().toLowerCase();
             final matchesSearch =
                 searchQuery.isEmpty || name.contains(searchQuery.toLowerCase());
 
-            // Filter by type
-            final type = character['types']['combatType'];
+            final type = character['types']['combatType'] as String;
             final convertedType = constants.typesMap[type];
             final matchesType =
                 selectedType == 'Elements' || convertedType == selectedType;
 
-            // Filter by path
-            final path = character['types']['pathType'];
+            final path = character['types']['pathType'] as String;
             final convertedPath = constants.pathsMap[path];
             final matchesPath =
                 selectedPath == 'Paths' || convertedPath == selectedPath;
@@ -142,7 +141,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
                   ),
                   ToggleViewButtons(
                     isListView: isListView,
-                    onToggle: (value) => {setState(() => isListView = value)},
+                    onToggle: (value) => setState(() => isListView = value),
                   ),
                 ],
               ),

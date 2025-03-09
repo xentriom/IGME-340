@@ -6,6 +6,17 @@ import 'package:project02/widgets/view_toggle.dart';
 import 'package:project02/widgets/grid_builder.dart';
 import 'package:project02/widgets/list_builder.dart';
 
+///
+/// Favorites Screen
+/// Displays user's favorite characters
+/// Filter by search query
+/// Toggle between list and grid view
+///
+/// author: Jason Chen
+/// version: 1.0.0
+/// since: 2025-03-09
+///
+
 class FavoritesScreen extends StatefulWidget {
   const FavoritesScreen({super.key});
 
@@ -47,12 +58,12 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
       setState(() {
         SharedState.currentUser.value = username;
         SharedState.favoriteIds.value = favs;
+
         allCharacters = characters;
         _filterFavorites();
         isLoading = false;
       });
     } catch (error) {
-      print('Error fetching characters: $error');
       setState(() => isLoading = false);
     }
   }
@@ -81,7 +92,9 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
       navigationBar: CupertinoNavigationBar(
-        middle: Text(SharedState.currentUser.value != null ? 'Bookmarks' : ''),
+        middle: Text(
+          SharedState.currentUser.value != null ? 'Interastral Guide' : '',
+        ),
       ),
       child: SafeArea(child: _buildContent()),
     );
@@ -114,6 +127,7 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
     );
   }
 
+  /// Helper to display message with image
   Widget _buildMessage({required String assetUrl, required String message}) {
     return Center(
       child: Column(
@@ -133,6 +147,7 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
     );
   }
 
+  /// Helper to build favorites list
   Widget _buildFavoritesList() {
     return Column(
       spacing: 8,
