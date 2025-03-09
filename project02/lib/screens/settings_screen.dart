@@ -126,6 +126,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
   @override
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
+      navigationBar: CupertinoNavigationBar(
+        middle: Text(_isLoggedIn ? 'Interastral Guide' : ''),
+      ),
       child: SafeArea(
         child: ValueListenableBuilder(
           // Listen to changes in currentUser
@@ -153,17 +156,221 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   /// UI for logged-in user
   Widget _buildLoggedInUI() {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text("Welcome, $_username!", style: const TextStyle(fontSize: 20)),
-          const SizedBox(height: 20),
-          CupertinoButton.filled(
-            onPressed: _handleLogout,
-            child: const Text("Logout"),
-          ),
-        ],
+    return Container(
+      color: CupertinoColors.systemGroupedBackground,
+      child: Padding(
+        padding: const EdgeInsets.all(18),
+        child: ListView(
+          children: [
+            // Profile Header (Rounded)
+            Container(
+              padding: const EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                color: CupertinoColors.white,
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Row(
+                children: [
+                  Container(
+                    width: 60,
+                    height: 60,
+                    decoration: const BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: CupertinoColors.systemGrey,
+                    ),
+                    child: Center(
+                      child: Text(
+                        _username![0].toUpperCase(),
+                        style: const TextStyle(
+                          fontSize: 24,
+                          color: CupertinoColors.white,
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 16),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        _username ?? 'Guest',
+                        style: const TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                          color: CupertinoColors.black,
+                        ),
+                      ),
+                      Text(
+                        'Interastral Guide Account',
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: CupertinoColors.secondaryLabel,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 32),
+            Container(
+              decoration: BoxDecoration(borderRadius: BorderRadius.circular(8)),
+              child: CupertinoListSection.insetGrouped(
+                margin: EdgeInsets.zero,
+                backgroundColor: CupertinoColors.systemGroupedBackground,
+                children: [
+                  CupertinoListTile(
+                    leading: Container(
+                      width: double.infinity,
+                      height: double.infinity,
+                      decoration: BoxDecoration(
+                        color: CupertinoColors.systemGrey,
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                      child: const Icon(
+                        CupertinoIcons.book_fill,
+                        color: CupertinoColors.white,
+                      ),
+                    ),
+                    title: const Text('About'),
+                    trailing: const CupertinoListTileChevron(),
+                    onTap: () {},
+                  ),
+                  CupertinoListTile(
+                    leading: Container(
+                      width: double.infinity,
+                      height: double.infinity,
+                      decoration: BoxDecoration(
+                        color: CupertinoColors.systemRed,
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                      child: const Icon(
+                        CupertinoIcons.bell_fill,
+                        color: CupertinoColors.white,
+                      ),
+                    ),
+                    title: const Text('Notifications'),
+                    trailing: const CupertinoListTileChevron(),
+                    onTap: () {},
+                  ),
+                  CupertinoListTile(
+                    leading: Container(
+                      width: double.infinity,
+                      height: double.infinity,
+                      decoration: BoxDecoration(
+                        color: CupertinoColors.activeBlue,
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                      child: const Icon(
+                        CupertinoIcons.sun_max_fill,
+                        color: CupertinoColors.white,
+                      ),
+                    ),
+                    title: const Text('Display & Brightness'),
+                    trailing: const CupertinoListTileChevron(),
+                    onTap: () {},
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 32),
+            Container(
+              decoration: BoxDecoration(borderRadius: BorderRadius.circular(8)),
+              child: CupertinoListSection.insetGrouped(
+                margin: EdgeInsets.zero,
+                backgroundColor: CupertinoColors.systemGroupedBackground,
+                children: [
+                  CupertinoListTile(
+                    leading: Container(
+                      width: double.infinity,
+                      height: double.infinity,
+                      decoration: BoxDecoration(
+                        color: CupertinoColors.systemGrey,
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                      child: const Icon(
+                        CupertinoIcons.doc_fill,
+                        color: CupertinoColors.white,
+                      ),
+                    ),
+                    title: const Text('Legal & Regulatory'),
+                    trailing: const CupertinoListTileChevron(),
+                    onTap: () {},
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 32),
+            Column(
+              spacing: 16,
+              children: [
+                CupertinoButton(
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 12,
+                    horizontal: 16,
+                  ),
+                  color: CupertinoColors.white,
+                  borderRadius: BorderRadius.circular(10),
+                  onPressed: () {},
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Reset Bookmarks',
+                        style: TextStyle(
+                          fontSize: 17,
+                          color: CupertinoTheme.of(context).primaryColor,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                CupertinoButton(
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 12,
+                    horizontal: 16,
+                  ),
+                  color: CupertinoColors.white,
+                  borderRadius: BorderRadius.circular(10),
+                  onPressed: () {},
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: const [
+                      Text(
+                        'Delete Account',
+                        style: TextStyle(
+                          fontSize: 17,
+                          color: CupertinoColors.destructiveRed,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                CupertinoButton(
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 12,
+                    horizontal: 16,
+                  ),
+                  color: CupertinoColors.white,
+                  borderRadius: BorderRadius.circular(10),
+                  onPressed: _handleLogout,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: const [
+                      Text(
+                        'Log Out',
+                        style: TextStyle(
+                          fontSize: 17,
+                          color: CupertinoColors.destructiveRed,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -272,6 +479,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
           CupertinoTextField(
             controller: _usernameController,
             placeholder: "Username",
+            maxLength: 8,
             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
             decoration: BoxDecoration(
               border: Border.all(color: CupertinoColors.systemGrey4),
@@ -283,6 +491,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
             controller: _passwordController,
             placeholder: "Password",
             obscureText: true,
+            maxLength: 12,
             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
             decoration: BoxDecoration(
               border: Border.all(color: CupertinoColors.systemGrey4),

@@ -67,7 +67,7 @@ class BuildListView extends StatelessWidget {
                 Container(
                   height: 96,
                   decoration: BoxDecoration(
-                    color: CupertinoColors.systemGrey6,
+                    color: CupertinoColors.systemBackground,
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Row(
@@ -160,7 +160,7 @@ class BuildListView extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 4),
       decoration: BoxDecoration(
-        color: CupertinoColors.systemGrey5,
+        color: CupertinoColors.secondarySystemBackground,
         borderRadius: BorderRadius.circular(4),
       ),
       child: Row(
@@ -169,7 +169,7 @@ class BuildListView extends StatelessWidget {
           type == 'path'
               ? ColorFiltered(
                 colorFilter: const ColorFilter.mode(
-                  CupertinoColors.darkBackgroundGray,
+                  CupertinoColors.label,
                   BlendMode.srcIn,
                 ),
                 child: Image.network(iconUrl, width: 16, height: 16),

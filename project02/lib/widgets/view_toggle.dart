@@ -37,9 +37,10 @@ class _ToggleViewButtonsState extends State<ToggleViewButtons> {
           onTap: () => _toggleView(true),
           child: Icon(
             CupertinoIcons.list_bullet,
-            color: isListView
-                ? CupertinoTheme.of(context).primaryColor
-                : CupertinoColors.systemGrey,
+            color:
+                isListView
+                    ? CupertinoTheme.of(context).primaryColor
+                    : CupertinoColors.systemGrey,
           ),
         ),
         const SizedBox(width: 8),
@@ -47,9 +48,10 @@ class _ToggleViewButtonsState extends State<ToggleViewButtons> {
           onTap: () => _toggleView(false),
           child: Icon(
             CupertinoIcons.square_grid_2x2,
-            color: !isListView
-                ? CupertinoTheme.of(context).primaryColor
-                : CupertinoColors.systemGrey,
+            color:
+                !isListView
+                    ? CupertinoTheme.of(context).primaryColor
+                    : CupertinoColors.systemGrey,
           ),
         ),
       ],

@@ -149,50 +149,54 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
 
   /// Helper to build favorites list
   Widget _buildFavoritesList() {
-    return Column(
-      spacing: 8,
-      children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: Row(
-            spacing: 8,
-            children: [
-              Expanded(
-                child: CupertinoSearchTextField(
-                  placeholder: 'Search',
-                  onChanged: (value) {
-                    setState(() {
-                      searchQuery = value;
-                      _filterFavorites();
-                    });
+    return Container(
+      color: CupertinoColors.systemGroupedBackground,
+      child: Column(
+        spacing: 8,
+        children: [
+          const SizedBox(height: 6),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: Row(
+              spacing: 8,
+              children: [
+                Expanded(
+                  child: CupertinoSearchTextField(
+                    placeholder: 'Search',
+                    onChanged: (value) {
+                      setState(() {
+                        searchQuery = value;
+                        _filterFavorites();
+                      });
+                    },
+                  ),
+                ),
+                ToggleViewButtons(
+                  isListView: isListView,
+                  onToggle: (value) {
+                    setState(() => isListView = value);
                   },
                 ),
-              ),
-              ToggleViewButtons(
-                isListView: isListView,
-                onToggle: (value) {
-                  setState(() => isListView = value);
-                },
-              ),
-            ],
+              ],
+            ),
           ),
-        ),
-        Expanded(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child:
-                isListView
-                    ? BuildListView(
-                      filteredCharacters: filteredFavoriteCharacters,
-                      isLoading: isLoading,
-                    )
-                    : BuildGridView(
-                      filteredCharacters: filteredFavoriteCharacters,
-                      isLoading: isLoading,
-                    ),
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child:
+                  isListView
+                      ? BuildListView(
+                        filteredCharacters: filteredFavoriteCharacters,
+                        isLoading: isLoading,
+                      )
+                      : BuildGridView(
+                        filteredCharacters: filteredFavoriteCharacters,
+                        isLoading: isLoading,
+                      ),
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

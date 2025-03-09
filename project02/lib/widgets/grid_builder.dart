@@ -72,7 +72,7 @@ class BuildGridView extends StatelessWidget {
             padding: const EdgeInsets.symmetric(vertical: 4),
             child: Container(
               decoration: BoxDecoration(
-                color: CupertinoColors.systemGrey6,
+                color: CupertinoColors.systemBackground,
                 borderRadius: BorderRadius.circular(12),
                 image: DecorationImage(
                   image: NetworkImage(yatta.getAvatarIconUrl(id)),

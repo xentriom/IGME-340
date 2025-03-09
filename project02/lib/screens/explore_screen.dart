@@ -91,78 +91,82 @@ class _ExploreScreenState extends State<ExploreScreen> {
         middle: Text('Interastral Guide'),
       ),
       child: SafeArea(
-        child: Column(
-          spacing: 2,
-          children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: CupertinoSearchTextField(
-                placeholder: 'Search...',
-                onChanged: (value) {
-                  setState(() {
-                    searchQuery = value;
-                    _filterCharacters();
-                  });
-                },
-              ),
-            ),
-            const SizedBox(height: 8),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                spacing: 8,
-                children: [
-                  Expanded(
-                    child: _buildDropdownButton(
-                      context,
-                      selectedType!,
-                      constants.types,
-                      (value) {
-                        setState(() {
-                          selectedType = value;
-                          _filterCharacters();
-                        });
-                      },
-                    ),
-                  ),
-                  Expanded(
-                    child: _buildDropdownButton(
-                      context,
-                      selectedPath!,
-                      constants.paths,
-                      (value) {
-                        setState(() {
-                          selectedPath = value;
-                          _filterCharacters();
-                        });
-                      },
-                    ),
-                  ),
-                  ToggleViewButtons(
-                    isListView: isListView,
-                    onToggle: (value) => setState(() => isListView = value),
-                  ),
-                ],
-              ),
-            ),
-            const SizedBox(height: 4),
-            Expanded(
-              child: Padding(
+        child: Container(
+          color: CupertinoColors.systemGroupedBackground,
+          child: Column(
+            spacing: 2,
+            children: [
+              SizedBox(height: 10),
+              Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
-                child:
-                    isListView
-                        ? BuildListView(
-                          filteredCharacters: filteredCharacters,
-                          isLoading: isLoading,
-                        )
-                        : BuildGridView(
-                          filteredCharacters: filteredCharacters,
-                          isLoading: isLoading,
-                        ),
+                child: CupertinoSearchTextField(
+                  placeholder: 'Search...',
+                  onChanged: (value) {
+                    setState(() {
+                      searchQuery = value;
+                      _filterCharacters();
+                    });
+                  },
+                ),
               ),
-            ),
-          ],
+              const SizedBox(height: 8),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  spacing: 8,
+                  children: [
+                    Expanded(
+                      child: _buildDropdownButton(
+                        context,
+                        selectedType!,
+                        constants.types,
+                        (value) {
+                          setState(() {
+                            selectedType = value;
+                            _filterCharacters();
+                          });
+                        },
+                      ),
+                    ),
+                    Expanded(
+                      child: _buildDropdownButton(
+                        context,
+                        selectedPath!,
+                        constants.paths,
+                        (value) {
+                          setState(() {
+                            selectedPath = value;
+                            _filterCharacters();
+                          });
+                        },
+                      ),
+                    ),
+                    ToggleViewButtons(
+                      isListView: isListView,
+                      onToggle: (value) => setState(() => isListView = value),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 4),
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child:
+                      isListView
+                          ? BuildListView(
+                            filteredCharacters: filteredCharacters,
+                            isLoading: isLoading,
+                          )
+                          : BuildGridView(
+                            filteredCharacters: filteredCharacters,
+                            isLoading: isLoading,
+                          ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
