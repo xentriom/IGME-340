@@ -89,6 +89,8 @@ class _ExploreScreenState extends State<ExploreScreen> {
     return CupertinoPageScaffold(
       navigationBar: const CupertinoNavigationBar(
         middle: Text('Interastral Guide'),
+        backgroundColor: CupertinoColors.secondarySystemBackground,
+        border: null,
       ),
       child: SafeArea(
         child: Container(

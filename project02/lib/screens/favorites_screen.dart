@@ -93,8 +93,13 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
     return CupertinoPageScaffold(
       navigationBar: CupertinoNavigationBar(
         middle: Text(
-          SharedState.currentUser.value != null ? 'Interastral Guide' : '',
+          SharedState.currentUser.value != null &&
+                  SharedState.favoriteIds.value.isNotEmpty
+              ? 'Interastral Guide'
+              : '',
         ),
+        backgroundColor: CupertinoColors.secondarySystemBackground,
+        border: null,
       ),
       child: SafeArea(child: _buildContent()),
     );
@@ -118,7 +123,7 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
         if (SharedState.favoriteIds.value.isEmpty) {
           return _buildMessage(
             assetUrl: 'assets/images/ThertaHat.jpeg',
-            message: 'No bookmarks found.',
+            message: 'No bookmarks found~',
           );
         }
 
