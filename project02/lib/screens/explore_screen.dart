@@ -37,28 +37,6 @@ class _ExploreScreenState extends State<ExploreScreen> {
   String? selectedPath = 'Paths';
   bool isListView = true;
 
-  final List<String> types = [
-    'Elements',
-    'Physical',
-    'Fire',
-    'Ice',
-    'Lightning',
-    'Wind',
-    'Quantum',
-    'Imaginary',
-  ];
-  final List<String> paths = [
-    'Paths',
-    'Destruction',
-    'The Hunt',
-    'Erudition',
-    'Harmony',
-    'Nihility',
-    'Preservation',
-    'Abundance',
-    'Rememberance',
-  ];
-
   @override
   void initState() {
     super.initState();
@@ -91,13 +69,13 @@ class _ExploreScreenState extends State<ExploreScreen> {
 
             // Filter by type
             final type = character['types']['combatType'];
-            final convertedType = constants.types[type];
+            final convertedType = constants.typesMap[type];
             final matchesType =
                 selectedType == 'Elements' || convertedType == selectedType;
 
             // Filter by path
             final path = character['types']['pathType'];
-            final convertedPath = constants.paths[path];
+            final convertedPath = constants.pathsMap[path];
             final matchesPath =
                 selectedPath == 'Paths' || convertedPath == selectedPath;
 
@@ -135,24 +113,30 @@ class _ExploreScreenState extends State<ExploreScreen> {
                 spacing: 8,
                 children: [
                   Expanded(
-                    child: _buildDropdownButton(context, selectedType!, types, (
-                      value,
-                    ) {
-                      setState(() {
-                        selectedType = value;
-                        _filterCharacters();
-                      });
-                    }),
+                    child: _buildDropdownButton(
+                      context,
+                      selectedType!,
+                      constants.types,
+                      (value) {
+                        setState(() {
+                          selectedType = value;
+                          _filterCharacters();
+                        });
+                      },
+                    ),
                   ),
                   Expanded(
-                    child: _buildDropdownButton(context, selectedPath!, paths, (
-                      value,
-                    ) {
-                      setState(() {
-                        selectedPath = value;
-                        _filterCharacters();
-                      });
-                    }),
+                    child: _buildDropdownButton(
+                      context,
+                      selectedPath!,
+                      constants.paths,
+                      (value) {
+                        setState(() {
+                          selectedPath = value;
+                          _filterCharacters();
+                        });
+                      },
+                    ),
                   ),
                   _buildToggleButtons(),
                 ],

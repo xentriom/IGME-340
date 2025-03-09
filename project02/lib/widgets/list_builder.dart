@@ -146,10 +146,12 @@ class BuildListView extends StatelessWidget {
 
     final label =
         type == 'path'
-            ? constants.paths[data] ?? data
-            : constants.types[data] ?? data;
+            ? constants.pathsMap[data] ?? data
+            : constants.typesMap[data] ?? data;
     final iconLabel =
-        type == 'path' ? constants.pathsIcon[data] : constants.typesIcon[data];
+        type == 'path'
+            ? constants.pathsIconMap[data]
+            : constants.typesIconMap[data];
     final iconUrl =
         type == 'path'
             ? yatta.getPathIcon(iconLabel ?? '')

@@ -129,7 +129,9 @@ class BuildGridView extends StatelessWidget {
                           height: 24,
                           fit: BoxFit.cover,
                           image: NetworkImage(
-                            yatta.getTypeIcon(constants.typesIcon[type] ?? ''),
+                            yatta.getTypeIcon(
+                              constants.typesIconMap[type] ?? '',
+                            ),
                           ),
                         ),
                         Image(
@@ -137,7 +139,9 @@ class BuildGridView extends StatelessWidget {
                           height: 24,
                           fit: BoxFit.cover,
                           image: NetworkImage(
-                            yatta.getPathIcon(constants.pathsIcon[path] ?? ''),
+                            yatta.getPathIcon(
+                              constants.pathsIconMap[path] ?? '',
+                            ),
                           ),
                         ),
                       ],

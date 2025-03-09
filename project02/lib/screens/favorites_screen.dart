@@ -33,8 +33,10 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
 
   Widget _buildContent() {
     return ValueListenableBuilder<String?>(
+      // Listen to changes in currentUser
       valueListenable: SharedState.currentUser,
       builder: (context, user, child) {
+        // Not logged in, display a message
         if (user == null) {
           return _buildMessage(
             assetUrl: 'assets/images/AglaeaCross.jpeg',
@@ -43,14 +45,18 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
         }
 
         return ValueListenableBuilder<List<String>>(
+          // Listen to changes in favoriteIds
           valueListenable: SharedState.favoriteIds,
           builder: (context, favorites, child) {
+            // No favorites, display a message
             if (favorites.isEmpty) {
               return _buildMessage(
                 assetUrl: 'assets/images/ThertaHat.jpeg',
                 message: 'No bookmarks found.',
               );
             }
+
+            // Display the list of favorites
             return _buildFavoritesList(favorites);
           },
         );
@@ -78,6 +84,7 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
     );
   }
 
+  /// Helper method to build the list of favorites
   Widget _buildFavoritesList(List<String> favorites) {
     return Column(
       children: [Text('${favorites.length.toString()} characters saved.')],

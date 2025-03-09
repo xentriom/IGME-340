@@ -1,6 +1,19 @@
 class Constants {
+  /// List of paths
+  List<String> paths = [
+    'Paths',
+    'Destruction',
+    'The Hunt',
+    'Erudition',
+    'Harmony',
+    'Nihility',
+    'Preservation',
+    'Abundance',
+    'Rememberance',
+  ];
+
   /// Codebase to Readable
-  Map<String, String> paths = {
+  Map<String, String> pathsMap = {
     'Warlock': 'Nihility',
     'Shaman': 'Harmony',
     'Mage': 'Erudition',
@@ -12,7 +25,7 @@ class Constants {
   };
 
   /// Codebase to Icon
-  Map<String, String> pathsIcon = {
+  Map<String, String> pathsIconMap = {
     'Warlock': 'IconProfessionWarlockSmall',
     'Shaman': 'IconProfessionShamanSmall',
     'Mage': 'IconProfessionMageSmall',
@@ -23,8 +36,20 @@ class Constants {
     'Memory': 'IconProfessionMemorySmall',
   };
 
+  /// List of types
+  List<String> types = [
+    'Elements',
+    'Physical',
+    'Fire',
+    'Ice',
+    'Lightning',
+    'Wind',
+    'Quantum',
+    'Imaginary',
+  ];
+
   /// Codebase to Readable
-  Map<String, String> types = {
+  Map<String, String> typesMap = {
     'Imaginary': 'Imaginary',
     'Thunder': 'Lightning',
     'Quantum': 'Quantum',
@@ -35,7 +60,7 @@ class Constants {
   };
 
   /// Codebase to Icon
-  Map<String, String> typesIcon = {
+  Map<String, String> typesIconMap = {
     'Imaginary': 'IconAttributeImaginary',
     'Thunder': 'IconAttributeThunder',
     'Quantum': 'IconAttributeQuantum',

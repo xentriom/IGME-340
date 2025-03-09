@@ -128,10 +128,16 @@ class _SettingsScreenState extends State<SettingsScreen> {
     return CupertinoPageScaffold(
       child: SafeArea(
         child: ValueListenableBuilder(
+          // Listen to changes in currentUser
           valueListenable: SharedState.currentUser,
           builder: (context, username, child) {
             _username = username;
             _isLoggedIn = username != null;
+
+            // Loading? Display loading indicator
+            // Logged in? Display logged in UI
+            // Show login? Display login form
+            // Show register? Display register form
             return _isLoading
                 ? const Center(child: CupertinoActivityIndicator())
                 : _isLoggedIn
