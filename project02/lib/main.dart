@@ -6,6 +6,7 @@ import 'package:project02/route.dart';
 
 ///
 /// Main App
+/// https://github.com/xentriom/IGME-340/tree/main/project02
 ///
 /// @author: Jason Chen
 /// @version: 1.0.0
