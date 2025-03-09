@@ -166,7 +166,15 @@ class BuildListView extends StatelessWidget {
       child: Row(
         spacing: 4,
         children: [
-          Image.network(iconUrl, width: 16, height: 16),
+          type == 'path'
+              ? ColorFiltered(
+                colorFilter: const ColorFilter.mode(
+                  CupertinoColors.darkBackgroundGray,
+                  BlendMode.srcIn,
+                ),
+                child: Image.network(iconUrl, width: 16, height: 16),
+              )
+              : Image.network(iconUrl, width: 16, height: 16),
           Text(
             label,
             style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w500),

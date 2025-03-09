@@ -134,13 +134,19 @@ class BuildGridView extends StatelessWidget {
                             ),
                           ),
                         ),
-                        Image(
-                          width: 24,
-                          height: 24,
-                          fit: BoxFit.cover,
-                          image: NetworkImage(
-                            yatta.getPathIcon(
-                              constants.pathsIconMap[path] ?? '',
+                        ColorFiltered(
+                          colorFilter: const ColorFilter.mode(
+                            CupertinoColors.darkBackgroundGray,
+                            BlendMode.srcIn,
+                          ),
+                          child: Image(
+                            width: 24,
+                            height: 24,
+                            fit: BoxFit.cover,
+                            image: NetworkImage(
+                              yatta.getPathIcon(
+                                constants.pathsIconMap[path] ?? '',
+                              ),
                             ),
                           ),
                         ),
