@@ -45,7 +45,7 @@ class BuildListView extends StatelessWidget {
             ).pushNamed('/character', arguments: id);
           },
           child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 8),
+            padding: const EdgeInsets.symmetric(vertical: 4),
             child: Stack(
               children: [
                 Container(
@@ -74,7 +74,7 @@ class BuildListView extends StatelessWidget {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.start,
-                          spacing: 4,
+                          spacing: 6,
                           children: [
                             Text(
                               name,
@@ -138,10 +138,10 @@ class BuildListView extends StatelessWidget {
             : yatta.getTypeIcon(iconLabel ?? '');
 
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+      padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 4),
       decoration: BoxDecoration(
         color: CupertinoColors.systemGrey5,
-        borderRadius: BorderRadius.circular(8),
+        borderRadius: BorderRadius.circular(4),
       ),
       child: Row(
         spacing: 4,

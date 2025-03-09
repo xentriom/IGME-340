@@ -203,7 +203,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
   /// Toggle buttons for list and grid view
   Widget _buildToggleButtons() {
     return Row(
-      spacing: 8,
+      spacing: 4,
       children: [
         GestureDetector(
           onTap: () => setState(() => isListView = true),
