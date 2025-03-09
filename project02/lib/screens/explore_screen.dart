@@ -4,6 +4,7 @@ import 'package:project02/core/shared_pref.dart';
 import 'package:project02/core/yatta.dart';
 import 'package:project02/widgets/grid_builder.dart';
 import 'package:project02/widgets/list_builder.dart';
+import 'package:project02/widgets/view_toggle.dart';
 
 ///
 /// Explore Screen
@@ -92,10 +93,10 @@ class _ExploreScreenState extends State<ExploreScreen> {
       ),
       child: SafeArea(
         child: Column(
-          spacing: 8,
+          spacing: 2,
           children: [
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              padding: const EdgeInsets.symmetric(horizontal: 16),
               child: CupertinoSearchTextField(
                 placeholder: 'Search...',
                 onChanged: (value) {
@@ -106,6 +107,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
                 },
               ),
             ),
+            const SizedBox(height: 8),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: Row(
@@ -138,10 +140,14 @@ class _ExploreScreenState extends State<ExploreScreen> {
                       },
                     ),
                   ),
-                  _buildToggleButtons(),
+                  ToggleViewButtons(
+                    isListView: isListView,
+                    onToggle: (value) => {setState(() => isListView = value)},
+                  ),
                 ],
               ),
             ),
+            const SizedBox(height: 4),
             Expanded(
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -181,35 +187,6 @@ class _ExploreScreenState extends State<ExploreScreen> {
         ],
       ),
       onPressed: () => _showPicker(context, options, onSelected),
-    );
-  }
-
-  /// Toggle buttons for list and grid view
-  Widget _buildToggleButtons() {
-    return Row(
-      spacing: 4,
-      children: [
-        GestureDetector(
-          onTap: () => setState(() => isListView = true),
-          child: Icon(
-            CupertinoIcons.list_bullet,
-            color:
-                isListView
-                    ? CupertinoTheme.of(context).primaryColor
-                    : CupertinoColors.systemGrey,
-          ),
-        ),
-        GestureDetector(
-          onTap: () => setState(() => isListView = false),
-          child: Icon(
-            CupertinoIcons.square_grid_2x2,
-            color:
-                !isListView
-                    ? CupertinoTheme.of(context).primaryColor
-                    : CupertinoColors.systemGrey,
-          ),
-        ),
-      ],
     );
   }
 

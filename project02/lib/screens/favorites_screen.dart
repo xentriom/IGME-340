@@ -1,6 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:project02/core/shared_pref.dart';
 import 'package:project02/core/shared_state.dart';
+import 'package:project02/core/yatta.dart';
+import 'package:project02/widgets/view_toggle.dart';
+import 'package:project02/widgets/grid_builder.dart';
+import 'package:project02/widgets/list_builder.dart';
 
 class FavoritesScreen extends StatefulWidget {
   const FavoritesScreen({super.key});
@@ -11,32 +15,82 @@ class FavoritesScreen extends StatefulWidget {
 
 class _FavoritesScreenState extends State<FavoritesScreen> {
   final SharedPref sharedPref = SharedPref();
-  String? user;
+  final Yatta yatta = Yatta();
+
+  List<dynamic> allCharacters = [];
+  List<dynamic> filteredFavoriteCharacters = [];
+  bool isLoading = false;
+
+  String searchQuery = '';
+  bool isListView = true;
 
   @override
   void initState() {
     super.initState();
-    _loadUser();
+    _fetchCharactersAndFavorites();
+    SharedState.favoriteIds.addListener(_filterFavorites);
   }
 
-  void _loadUser() async {
-    final username = await sharedPref.getUsername();
+  @override
+  void dispose() {
+    SharedState.favoriteIds.removeListener(_filterFavorites);
+    super.dispose();
+  }
+
+  Future<void> _fetchCharactersAndFavorites() async {
+    try {
+      setState(() => isLoading = true);
+      final username = await sharedPref.getUsername();
+      final characters = await yatta.getCharacters();
+      final favs = await sharedPref.getFavorites();
+
+      setState(() {
+        SharedState.currentUser.value = username;
+        SharedState.favoriteIds.value = favs;
+        allCharacters = characters;
+        _filterFavorites();
+        isLoading = false;
+      });
+    } catch (error) {
+      print('Error fetching characters: $error');
+      setState(() => isLoading = false);
+    }
+  }
+
+  void _filterFavorites() {
     setState(() {
-      user = username;
+      filteredFavoriteCharacters =
+          allCharacters
+              .where(
+                (character) => SharedState.favoriteIds.value.contains(
+                  character['id'].toString(),
+                ),
+              )
+              .where(
+                (character) =>
+                    searchQuery.isEmpty ||
+                    character['name'].toString().toLowerCase().contains(
+                      searchQuery.toLowerCase(),
+                    ),
+              )
+              .toList();
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    return CupertinoPageScaffold(child: SafeArea(child: _buildContent()));
+    return CupertinoPageScaffold(
+      navigationBar: CupertinoNavigationBar(
+        middle: Text(SharedState.currentUser.value != null ? 'Bookmarks' : ''),
+      ),
+      child: SafeArea(child: _buildContent()),
+    );
   }
 
   Widget _buildContent() {
     return ValueListenableBuilder<String?>(
-      // Listen to changes in currentUser
       valueListenable: SharedState.currentUser,
       builder: (context, user, child) {
-        // Not logged in, display a message
         if (user == null) {
           return _buildMessage(
             assetUrl: 'assets/images/AglaeaCross.jpeg',
@@ -44,27 +98,22 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
           );
         }
 
-        return ValueListenableBuilder<List<String>>(
-          // Listen to changes in favoriteIds
-          valueListenable: SharedState.favoriteIds,
-          builder: (context, favorites, child) {
-            // No favorites, display a message
-            if (favorites.isEmpty) {
-              return _buildMessage(
-                assetUrl: 'assets/images/ThertaHat.jpeg',
-                message: 'No bookmarks found.',
-              );
-            }
+        if (isLoading) {
+          return const Center(child: CupertinoActivityIndicator());
+        }
 
-            // Display the list of favorites
-            return _buildFavoritesList(favorites);
-          },
-        );
+        if (SharedState.favoriteIds.value.isEmpty) {
+          return _buildMessage(
+            assetUrl: 'assets/images/ThertaHat.jpeg',
+            message: 'No bookmarks found.',
+          );
+        }
+
+        return _buildFavoritesList();
       },
     );
   }
 
-  /// Helper method to build a message with an image
   Widget _buildMessage({required String assetUrl, required String message}) {
     return Center(
       child: Column(
@@ -84,10 +133,51 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
     );
   }
 
-  /// Helper method to build the list of favorites
-  Widget _buildFavoritesList(List<String> favorites) {
+  Widget _buildFavoritesList() {
     return Column(
-      children: [Text('${favorites.length.toString()} characters saved.')],
+      spacing: 8,
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: Row(
+            spacing: 8,
+            children: [
+              Expanded(
+                child: CupertinoSearchTextField(
+                  placeholder: 'Search',
+                  onChanged: (value) {
+                    setState(() {
+                      searchQuery = value;
+                      _filterFavorites();
+                    });
+                  },
+                ),
+              ),
+              ToggleViewButtons(
+                isListView: isListView,
+                onToggle: (value) {
+                  setState(() => isListView = value);
+                },
+              ),
+            ],
+          ),
+        ),
+        Expanded(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child:
+                isListView
+                    ? BuildListView(
+                      filteredCharacters: filteredFavoriteCharacters,
+                      isLoading: isLoading,
+                    )
+                    : BuildGridView(
+                      filteredCharacters: filteredFavoriteCharacters,
+                      isLoading: isLoading,
+                    ),
+          ),
+        ),
+      ],
     );
   }
 }
