@@ -108,14 +108,16 @@ class _ExploreScreenState extends State<ExploreScreen> {
   @override
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
-      navigationBar: const CupertinoNavigationBar(middle: Text('Explore')),
+      navigationBar: const CupertinoNavigationBar(
+        middle: Text('Interastral Guide'),
+      ),
       child: SafeArea(
         child: Column(
           children: [
             Padding(
               padding: const EdgeInsets.symmetric(
-                horizontal: 16.0,
-                vertical: 8.0,
+                horizontal: 16,
+                vertical: 8,
               ),
               child: CupertinoSearchTextField(
                 placeholder: 'Search...',
@@ -129,7 +131,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
             ),
             const SizedBox(height: 8),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              padding: const EdgeInsets.symmetric(horizontal: 16),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -182,7 +184,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
     Function(String) onSelected,
   ) {
     return CupertinoButton(
-      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+      padding: const EdgeInsets.symmetric(horizontal: 8),
       color: CupertinoColors.systemGrey5,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -238,7 +240,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
               SizedBox(
                 height: 200,
                 child: CupertinoPicker(
-                  itemExtent: 32.0,
+                  itemExtent: 32,
                   onSelectedItemChanged: (index) {
                     onSelected(options[index]);
                   },
@@ -279,7 +281,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
             Navigator.pushNamed(context, '/character/$id');
           },
           child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 8.0),
+            padding: const EdgeInsets.symmetric(vertical: 8),
             child: Stack(
               children: [
                 Container(
@@ -422,7 +424,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
             Navigator.pushNamed(context, '/character/$id');
           },
           child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 8.0),
+            padding: const EdgeInsets.symmetric(vertical: 8),
             child: Container(
               decoration: BoxDecoration(
                 color: CupertinoColors.systemGrey6,

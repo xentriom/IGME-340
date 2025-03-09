@@ -7,7 +7,7 @@ class FavoritesScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
       navigationBar: const CupertinoNavigationBar(
-        middle: Text('Favorites Screen'),
+        middle: Text('Interastral Guide'),
       ),
       child: SafeArea(
         child: Center(
