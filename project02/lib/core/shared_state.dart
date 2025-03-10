@@ -46,8 +46,8 @@ class SharedState {
     final result = await _sharedPref.login(username, password);
     if (result == null) {
       currentUser.value = username;
-      final favorites = await _sharedPref.getFavorites();
-      favoriteIds.value = favorites;
+      favoriteIds.value = await _sharedPref.getFavorites();
+      theme.value = await _sharedPref.getTheme();
     }
     return result;
   }
@@ -67,6 +67,7 @@ class SharedState {
     await _sharedPref.logout();
     currentUser.value = null;
     favoriteIds.value = [];
+    theme.value = ThemeMode.system;
   }
 
   /// SharedPref toggleFavorite wrapper with ValueNotifier updates

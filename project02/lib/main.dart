@@ -35,6 +35,12 @@ Future<void> _initializeDummyUsers() async {
       'theme': ThemeMode.dark,
     },
     {
+      'username': 'galactic baseballer',
+      'password': 'password',
+      'favorites': ['1001', '1002', '1003', '1004'],
+      'theme': ThemeMode.system,
+    },
+    {
       'username': 'phainon',
       'password': 'mydei',
       'favorites': ['1404'],
@@ -44,10 +50,10 @@ Future<void> _initializeDummyUsers() async {
 
   for (var user in dummyUsers) {
     await sharedPref.register(
-      user['username']!,
-      user['password']!,
-      favorites: user['favorites'],
-      theme: user['theme'],
+      user['username'] as String,
+      user['password'] as String,
+      favorites: user['favorites'] as List<String>?,
+      theme: user['theme'] as ThemeMode?,
     );
   }
 }
@@ -64,7 +70,11 @@ class MainApp extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           theme: CupertinoThemeData(
             brightness:
-                theme == ThemeMode.dark ? Brightness.dark : Brightness.light,
+                theme == ThemeMode.system
+                    ? MediaQuery.of(context).platformBrightness
+                    : theme == ThemeMode.dark
+                    ? Brightness.dark
+                    : Brightness.light,
             primaryColor: CupertinoColors.activeBlue,
             scaffoldBackgroundColor: CupertinoColors.systemBackground,
             barBackgroundColor: CupertinoColors.systemGrey6,

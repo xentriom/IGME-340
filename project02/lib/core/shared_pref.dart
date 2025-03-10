@@ -44,6 +44,7 @@ class SharedPref {
       'favorites': favorites ?? <String>[],
       'theme': theme?.name ?? 'system',
     };
+
     await prefs.setString(username, jsonEncode(userData));
 
     // Log in the new user
