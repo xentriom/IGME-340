@@ -1,5 +1,4 @@
 import 'package:flutter/cupertino.dart';
-import 'package:project02/core/shared_pref.dart';
 import 'package:project02/core/shared_state.dart';
 
 ///
@@ -19,20 +18,16 @@ class SettingsScreen extends StatefulWidget {
 }
 
 class _SettingsScreenState extends State<SettingsScreen> {
-  final SharedPref _sharedPred = SharedPref();
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
-  bool _isLoggedIn = false;
   bool _isLoading = false;
   bool _showLogin = true;
   bool _agreeToTerms = false;
-  String? _username;
 
   @override
   void initState() {
     super.initState();
-    _checkLoginStatus();
   }
 
   @override
@@ -40,19 +35,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
     _usernameController.dispose();
     _passwordController.dispose();
     super.dispose();
-  }
-
-  /// Check if the user is logged in
-  Future<void> _checkLoginStatus() async {
-    setState(() => _isLoading = true);
-    final bool loggedIn = await _sharedPred.isLoggedIn();
-    final String? username = await _sharedPred.getUsername();
-
-    setState(() {
-      _isLoggedIn = loggedIn;
-      _username = username;
-      _isLoading = false;
-    });
   }
 
   /// Handle login
@@ -127,23 +109,20 @@ class _SettingsScreenState extends State<SettingsScreen> {
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
       navigationBar: CupertinoNavigationBar(
-        middle: Text(_isLoggedIn ? 'Interastral Guide' : ''),
-      ),
-      child: SafeArea(
-        child: ValueListenableBuilder(
-          // Listen to changes in currentUser
+        middle: ValueListenableBuilder<String?>(
           valueListenable: SharedState.currentUser,
           builder: (context, username, child) {
-            _username = username;
-            _isLoggedIn = username != null;
-
-            // Loading? Display loading indicator
-            // Logged in? Display logged in UI
-            // Show login? Display login form
-            // Show register? Display register form
+            return Text(username != null ? 'Interastral Guide' : '');
+          },
+        ),
+      ),
+      child: SafeArea(
+        child: ValueListenableBuilder<String?>(
+          valueListenable: SharedState.currentUser,
+          builder: (context, username, child) {
             return _isLoading
                 ? const Center(child: CupertinoActivityIndicator())
-                : _isLoggedIn
+                : username != null
                 ? _buildLoggedInUI()
                 : _showLogin
                 ? _buildLoginUI()
@@ -162,7 +141,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
         padding: const EdgeInsets.all(18),
         child: ListView(
           children: [
-            // Profile Header (Rounded)
             Container(
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
@@ -180,7 +158,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     ),
                     child: Center(
                       child: Text(
-                        _username![0].toUpperCase(),
+                        SharedState.currentUser.value![0].toUpperCase(),
                         style: const TextStyle(
                           fontSize: 24,
                           color: CupertinoColors.white,
@@ -193,7 +171,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        _username ?? 'Guest',
+                        SharedState.currentUser.value ?? 'Guest',
                         style: const TextStyle(
                           fontSize: 24,
                           fontWeight: FontWeight.bold,
@@ -241,23 +219,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       width: double.infinity,
                       height: double.infinity,
                       decoration: BoxDecoration(
-                        color: CupertinoColors.systemRed,
-                        borderRadius: BorderRadius.circular(5),
-                      ),
-                      child: const Icon(
-                        CupertinoIcons.bell_fill,
-                        color: CupertinoColors.white,
-                      ),
-                    ),
-                    title: const Text('Notifications'),
-                    trailing: const CupertinoListTileChevron(),
-                    onTap: () {},
-                  ),
-                  CupertinoListTile(
-                    leading: Container(
-                      width: double.infinity,
-                      height: double.infinity,
-                      decoration: BoxDecoration(
                         color: CupertinoColors.activeBlue,
                         borderRadius: BorderRadius.circular(5),
                       ),
@@ -267,33 +228,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       ),
                     ),
                     title: const Text('Display & Brightness'),
-                    trailing: const CupertinoListTileChevron(),
-                    onTap: () {},
-                  ),
-                ],
-              ),
-            ),
-            const SizedBox(height: 32),
-            Container(
-              decoration: BoxDecoration(borderRadius: BorderRadius.circular(8)),
-              child: CupertinoListSection.insetGrouped(
-                margin: EdgeInsets.zero,
-                backgroundColor: CupertinoColors.systemGroupedBackground,
-                children: [
-                  CupertinoListTile(
-                    leading: Container(
-                      width: double.infinity,
-                      height: double.infinity,
-                      decoration: BoxDecoration(
-                        color: CupertinoColors.systemGrey,
-                        borderRadius: BorderRadius.circular(5),
-                      ),
-                      child: const Icon(
-                        CupertinoIcons.doc_fill,
-                        color: CupertinoColors.white,
-                      ),
-                    ),
-                    title: const Text('Legal & Regulatory'),
                     trailing: const CupertinoListTileChevron(),
                     onTap: () {},
                   ),
@@ -311,7 +245,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   ),
                   color: CupertinoColors.white,
                   borderRadius: BorderRadius.circular(10),
-                  onPressed: () {},
+                  onPressed: () async {},
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [

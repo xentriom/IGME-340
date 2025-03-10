@@ -1,4 +1,4 @@
-import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:project02/core/shared_pref.dart';
 
 ///
@@ -11,13 +11,15 @@ import 'package:project02/core/shared_pref.dart';
 ///
 
 class SharedState {
-  static final ValueNotifier<List<String>> favoriteIds =
-      ValueNotifier<List<String>>([]);
+  static final SharedPref _sharedPref = SharedPref();
   static final ValueNotifier<String?> currentUser = ValueNotifier<String?>(
     null,
   );
-
-  static final SharedPref _sharedPref = SharedPref();
+  static final ValueNotifier<List<String>> favoriteIds =
+      ValueNotifier<List<String>>([]);
+  static final ValueNotifier<ThemeMode> theme = ValueNotifier<ThemeMode>(
+    ThemeMode.system,
+  );
 
   /// Load initial state from SharedPref
   static Future<void> loadInitialState() async {
@@ -25,11 +27,18 @@ class SharedState {
     currentUser.value = user;
 
     if (user != null) {
-      final favorites = await _sharedPref.getFavorites();
-      favoriteIds.value = favorites;
+      favoriteIds.value = await _sharedPref.getFavorites();
+
+      theme.value = await _sharedPref.getTheme();
     } else {
       favoriteIds.value = [];
+      theme.value = ThemeMode.light;
     }
+  }
+
+  static Future<void> setTheme(ThemeMode themeMode) async {
+    theme.value = themeMode;
+    await _sharedPref.setTheme(themeMode);
   }
 
   /// SharedPref login wrapper with ValueNotifier updates
@@ -71,5 +80,19 @@ class SharedState {
   // SharedPref isFavorite wrapper
   static Future<bool> isFavorite(String id) async {
     return _sharedPref.isFavorite(id);
+  }
+
+  static Future<void> clearFavorites() async {
+    if (currentUser.value == null) return;
+    await _sharedPref.clearFavorites();
+    favoriteIds.value = [];
+  }
+
+  static Future<void> clearUsername() async {
+    if (currentUser.value == null) return;
+    await _sharedPref.clearUsername();
+    currentUser.value = null;
+    favoriteIds.value = [];
+    theme.value = ThemeMode.system;
   }
 }

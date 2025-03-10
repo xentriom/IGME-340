@@ -12,9 +12,9 @@ import 'package:project02/widgets/list_builder.dart';
 /// Filter by search query
 /// Toggle between list and grid view
 ///
-/// author: Jason Chen
-/// version: 1.0.0
-/// since: 2025-03-09
+/// @author: Jason Chen
+/// @version: 1.0.1
+/// @since: 2025-03-09
 ///
 
 class FavoritesScreen extends StatefulWidget {
@@ -39,13 +39,6 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
   void initState() {
     super.initState();
     _fetchCharactersAndFavorites();
-    SharedState.favoriteIds.addListener(_filterFavorites);
-  }
-
-  @override
-  void dispose() {
-    SharedState.favoriteIds.removeListener(_filterFavorites);
-    super.dispose();
   }
 
   Future<void> _fetchCharactersAndFavorites() async {
@@ -58,7 +51,6 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
       setState(() {
         SharedState.currentUser.value = username;
         SharedState.favoriteIds.value = favs;
-
         allCharacters = characters;
         _filterFavorites();
         isLoading = false;
@@ -69,23 +61,21 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
   }
 
   void _filterFavorites() {
-    setState(() {
-      filteredFavoriteCharacters =
-          allCharacters
-              .where(
-                (character) => SharedState.favoriteIds.value.contains(
-                  character['id'].toString(),
-                ),
-              )
-              .where(
-                (character) =>
-                    searchQuery.isEmpty ||
-                    character['name'].toString().toLowerCase().contains(
-                      searchQuery.toLowerCase(),
-                    ),
-              )
-              .toList();
-    });
+    filteredFavoriteCharacters =
+        allCharacters
+            .where(
+              (character) => SharedState.favoriteIds.value.contains(
+                character['id'].toString(),
+              ),
+            )
+            .where(
+              (character) =>
+                  searchQuery.isEmpty ||
+                  character['name'].toString().toLowerCase().contains(
+                    searchQuery.toLowerCase(),
+                  ),
+            )
+            .toList();
   }
 
   @override
@@ -116,18 +106,24 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
           );
         }
 
-        if (isLoading) {
-          return const Center(child: CupertinoActivityIndicator());
-        }
+        return ValueListenableBuilder<List<String>>(
+          valueListenable: SharedState.favoriteIds,
+          builder: (context, favoriteIds, child) {
+            if (isLoading) {
+              return const Center(child: CupertinoActivityIndicator());
+            }
 
-        if (SharedState.favoriteIds.value.isEmpty) {
-          return _buildMessage(
-            assetUrl: 'assets/images/ThertaHat.jpeg',
-            message: 'No bookmarks found~',
-          );
-        }
+            if (favoriteIds.isEmpty) {
+              return _buildMessage(
+                assetUrl: 'assets/images/ThertaHat.jpeg',
+                message: 'No bookmarks found~',
+              );
+            }
 
-        return _buildFavoritesList();
+            _filterFavorites();
+            return _buildFavoritesList();
+          },
+        );
       },
     );
   }

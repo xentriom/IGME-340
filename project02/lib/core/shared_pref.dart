@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'dart:async';
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -28,6 +29,7 @@ class SharedPref {
     String username,
     String password, {
     List<String>? favorites,
+    ThemeMode? theme,
   }) async {
     final prefs = await SharedPreferences.getInstance();
 
@@ -40,6 +42,7 @@ class SharedPref {
     final userData = {
       'password': password,
       'favorites': favorites ?? <String>[],
+      'theme': theme?.name ?? 'system',
     };
     await prefs.setString(username, jsonEncode(userData));
 
@@ -74,6 +77,18 @@ class SharedPref {
   /// Logout, removes pref so it returns null
   Future<void> logout() async {
     final prefs = await SharedPreferences.getInstance();
+    await prefs.remove('currentUser');
+    await prefs.remove('isLoggedIn');
+  }
+
+  Future<void> clearUsername() async {
+    final prefs = await SharedPreferences.getInstance();
+    final String? currentUser = await getUsername();
+
+    if (currentUser != null) {
+      await prefs.remove(currentUser);
+    }
+
     await prefs.remove('currentUser');
     await prefs.remove('isLoggedIn');
   }
@@ -114,32 +129,77 @@ class SharedPref {
     // Add the favorite if it doesn't exist
     if (!favorites.contains(favorite)) {
       favorites.add(favorite);
-      userData['favorites'] = favorites;
     } else {
       favorites.remove(favorite);
-      userData['favorites'] = favorites;
     }
 
+    userData['favorites'] = favorites;
     await prefs.setString(currentUser, jsonEncode(userData));
   }
 
-  /// Check if a character is a favorite for the logged-in user
+  Future<void> clearFavorites() async {
+    final prefs = await SharedPreferences.getInstance();
+    final String? currentUser = await getUsername();
+    if (currentUser == null) return;
+
+    final String? userDataJson = prefs.getString(currentUser);
+    if (userDataJson == null) return;
+
+    final userData = jsonDecode(userDataJson) as Map<String, dynamic>;
+    userData['favorites'] = <String>[];
+    await prefs.setString(currentUser, jsonEncode(userData));
+  }
+
+  /// Check if a character is a favorite
   Future<bool> isFavorite(String favorite) async {
+    final favorites = await getFavorites();
+    return favorites.contains(favorite);
+  }
+
+  Future<void> setTheme(ThemeMode themeMode) async {
     final prefs = await SharedPreferences.getInstance();
 
     // Get the current user
     final String? currentUser = await getUsername();
-    if (currentUser == null) return false;
+    if (currentUser == null) return;
 
     // Get the user data
     final String? userDataJson = prefs.getString(currentUser);
-    if (userDataJson == null) return false;
+    if (userDataJson == null) return;
 
     // Parse favorites from JSON
     final userData = jsonDecode(userDataJson) as Map<String, dynamic>;
-    final favorites = List<String>.from(userData['favorites'] as List);
+    userData['theme'] = themeMode.name;
+    await prefs.setString(currentUser, jsonEncode(userData));
+  }
 
-    // Check if the favorite exists
-    return favorites.contains(favorite);
+  Future<ThemeMode> getTheme() async {
+    final prefs = await SharedPreferences.getInstance();
+
+    // Get the current user
+    final String? currentUser = await getUsername();
+    if (currentUser == null) return ThemeMode.system;
+
+    // Get the user data
+    final String? userDataJson = prefs.getString(currentUser);
+    if (userDataJson == null) return ThemeMode.system;
+
+    // Parse favorites from JSON
+    final userData = jsonDecode(userDataJson) as Map<String, dynamic>;
+    final themeString = userData['theme'] as String? ?? 'system';
+    return _parseThemeMode(themeString);
+  }
+
+  /// Parse string to ThemeMode
+  ThemeMode _parseThemeMode(String themeString) {
+    switch (themeString.toLowerCase()) {
+      case 'light':
+        return ThemeMode.light;
+      case 'dark':
+        return ThemeMode.dark;
+      case 'system':
+      default:
+        return ThemeMode.system;
+    }
   }
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:project02/route.dart';
 import 'package:project02/core/shared_pref.dart';
 import 'package:project02/core/shared_state.dart';
@@ -31,11 +32,13 @@ Future<void> _initializeDummyUsers() async {
       'username': 'xentriom',
       'password': 'hello123',
       'favorites': ['1006', '1307', '1402'],
+      'theme': ThemeMode.dark,
     },
     {
       'username': 'phainon',
       'password': 'mydei',
       'favorites': ['1404'],
+      'theme': ThemeMode.light,
     },
   ];
 
@@ -44,6 +47,7 @@ Future<void> _initializeDummyUsers() async {
       user['username']!,
       user['password']!,
       favorites: user['favorites'],
+      theme: user['theme'],
     );
   }
 }
@@ -53,50 +57,66 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CupertinoApp(
-      debugShowCheckedModeBanner: false,
-      theme: CupertinoThemeData(primaryColor: CupertinoColors.activeBlue),
-      onGenerateRoute: RouteGenerator.generateRoute,
-      home: CupertinoTabScaffold(
-        tabBar: CupertinoTabBar(
-          items: const <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
-              icon: Icon(CupertinoIcons.compass),
-              label: 'Explore',
+    return ValueListenableBuilder<ThemeMode>(
+      valueListenable: SharedState.theme,
+      builder: (context, theme, child) {
+        return CupertinoApp(
+          debugShowCheckedModeBanner: false,
+          theme: CupertinoThemeData(
+            brightness:
+                theme == ThemeMode.dark ? Brightness.dark : Brightness.light,
+            primaryColor: CupertinoColors.activeBlue,
+            scaffoldBackgroundColor: CupertinoColors.systemBackground,
+            barBackgroundColor: CupertinoColors.systemGrey6,
+            textTheme: CupertinoTextThemeData(
+              textStyle: TextStyle(color: CupertinoColors.label),
             ),
-            BottomNavigationBarItem(
-              icon: Icon(CupertinoIcons.bookmark),
-              label: 'Bookmarks',
+          ),
+          onGenerateRoute: RouteGenerator.generateRoute,
+          home: CupertinoTabScaffold(
+            tabBar: CupertinoTabBar(
+              items: <BottomNavigationBarItem>[
+                BottomNavigationBarItem(
+                  icon: Icon(CupertinoIcons.compass),
+                  label: 'Explore',
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(CupertinoIcons.bookmark),
+                  label: 'Bookmarks',
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(CupertinoIcons.settings),
+                  label: 'Settings',
+                ),
+              ],
             ),
-            BottomNavigationBarItem(
-              icon: Icon(CupertinoIcons.settings),
-              label: 'Settings',
-            ),
-          ],
-        ),
-        tabBuilder: (context, index) {
-          switch (index) {
-            case 0:
-              return CupertinoTabView(
-                builder: (context) {
-                  return CupertinoPageScaffold(child: ExploreScreen());
-                },
-              );
-            case 1:
-              return CupertinoTabView(
-                builder: (context) {
-                  return CupertinoPageScaffold(child: FavoritesScreen());
-                },
-              );
-            default:
-              return CupertinoTabView(
-                builder: (context) {
-                  return CupertinoPageScaffold(child: SettingsScreen());
-                },
-              );
-          }
-        },
-      ),
+            tabBuilder: (context, index) {
+              switch (index) {
+                case 0:
+                  return CupertinoTabView(
+                    builder:
+                        (context) =>
+                            const CupertinoPageScaffold(child: ExploreScreen()),
+                  );
+                case 1:
+                  return CupertinoTabView(
+                    builder:
+                        (context) => const CupertinoPageScaffold(
+                          child: FavoritesScreen(),
+                        ),
+                  );
+                default:
+                  return CupertinoTabView(
+                    builder:
+                        (context) => const CupertinoPageScaffold(
+                          child: SettingsScreen(),
+                        ),
+                  );
+              }
+            },
+          ),
+        );
+      },
     );
   }
 }
