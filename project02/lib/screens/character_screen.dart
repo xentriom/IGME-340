@@ -39,6 +39,56 @@ class _CharacterScreenState extends State<CharacterScreen> {
     }
   }
 
+  RichText formatDescription(String description, List<dynamic>? params) {
+    if (params != null && params.isNotEmpty) {
+      final regex = RegExp(r'<unbreak>#(\d+)\[i\]</unbreak>');
+      description = description.replaceAllMapped(regex, (match) {
+        final paramIndex = int.parse(match.group(1)!) - 1;
+        if (paramIndex >= 0 && paramIndex < params.length) {
+          return params[paramIndex].toString();
+        }
+        return match[0]!;
+      });
+    }
+
+    description = description.replaceAll(RegExp(r'<unbreak>.*?</unbreak>'), '');
+
+    final lines = description.split('\n');
+    final List<TextSpan> spans = [];
+
+    for (final line in lines) {
+      final parts = line.split(RegExp(r'(<u>.*?</u>)'));
+      for (final part in parts) {
+        if (part.startsWith('<u>') && part.endsWith('</u>')) {
+          final text = part.substring(3, part.length - 4);
+          spans.add(
+            TextSpan(
+              text: text,
+              style: const TextStyle(decoration: TextDecoration.underline),
+            ),
+          );
+        } else {
+          spans.add(TextSpan(text: part));
+        }
+      }
+
+      if (line != lines.last) {
+        spans.add(const TextSpan(text: '\n'));
+      }
+    }
+
+    return RichText(
+      text: TextSpan(
+        style: const TextStyle(
+          fontSize: 14,
+          height: 1.4,
+          color: CupertinoColors.secondaryLabel,
+        ),
+        children: spans,
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final SharedPref sharedPref = SharedPref();
@@ -160,7 +210,7 @@ class _CharacterScreenState extends State<CharacterScreen> {
     final characterName = characterDetail['name'];
     final characterFaction = characterDetail['fetter']['faction'];
     final characterDescription = characterDetail['fetter']['description'];
-    print(characterDetail);
+    final characterEidolons = characterDetail['eidolons'];
 
     switch (_selectedTab) {
       case 0:
@@ -188,7 +238,49 @@ class _CharacterScreenState extends State<CharacterScreen> {
       case 2:
         return const Text("Skills");
       case 3:
-        return const Text("Eidolons");
+        return Column(
+          children:
+              characterEidolons.entries.map<Widget>((entry) {
+                final eidolon = entry.value;
+                final name = eidolon['name'];
+                final description = formatDescription(
+                  eidolon['description'],
+                  eidolon['params'],
+                );
+
+                return Container(
+                  margin: const EdgeInsets.only(bottom: 12),
+                  padding: const EdgeInsets.all(12),
+                  decoration: BoxDecoration(
+                    color: CupertinoColors.systemGrey6,
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Icon(CupertinoIcons.star, size: 40),
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              name,
+                              style: const TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            const SizedBox(height: 4),
+                            description,
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+              }).toList(),
+        );
       default:
         return const SizedBox();
     }
