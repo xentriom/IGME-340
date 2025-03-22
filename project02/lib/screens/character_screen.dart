@@ -39,54 +39,87 @@ class _CharacterScreenState extends State<CharacterScreen> {
     }
   }
 
-  RichText formatDescription(String description, List<dynamic>? params) {
-    if (params != null && params.isNotEmpty) {
-      final regex = RegExp(r'<unbreak>#(\d+)\[i\]</unbreak>');
-      description = description.replaceAllMapped(regex, (match) {
-        final paramIndex = int.parse(match.group(1)!) - 1;
-        if (paramIndex >= 0 && paramIndex < params.length) {
-          return params[paramIndex].toString();
-        }
-        return match[0]!;
-      });
-    }
-
-    description = description.replaceAll(RegExp(r'<unbreak>.*?</unbreak>'), '');
-
-    final lines = description.split('\n');
+  RichText formatDescription(
+    String description,
+    List<dynamic>? params, {
+    TextStyle baseStyle = const TextStyle(
+      fontSize: 14,
+      height: 1.4,
+      color: CupertinoColors.secondaryLabel,
+    ),
+  }) {
+    // split by newlines
+    final lines = description.split('\\n');
     final List<TextSpan> spans = [];
 
-    for (final line in lines) {
-      final parts = line.split(RegExp(r'(<u>.*?</u>)'));
-      for (final part in parts) {
-        if (part.startsWith('<u>') && part.endsWith('</u>')) {
-          final text = part.substring(3, part.length - 4);
-          spans.add(
-            TextSpan(
-              text: text,
-              style: const TextStyle(decoration: TextDecoration.underline),
-            ),
-          );
-        } else {
-          spans.add(TextSpan(text: part));
-        }
-      }
+    for (var i = 0; i < lines.length; i++) {
+      final line = lines[i];
+      _addUnderlinedText(line, spans);
 
-      if (line != lines.last) {
+      // add newline except for the last line
+      if (i < lines.length - 1) {
         spans.add(const TextSpan(text: '\n'));
       }
     }
 
     return RichText(
       text: TextSpan(
-        style: const TextStyle(
-          fontSize: 14,
-          height: 1.4,
-          color: CupertinoColors.secondaryLabel,
-        ),
-        children: spans,
+        style: baseStyle,
+        children: _processParamsAndCleanTags(spans, params),
       ),
     );
+  }
+
+  /// Add underlined text to spans
+  void _addUnderlinedText(String line, List<TextSpan> spans) {
+    final parts = line.split(RegExp(r'(<u>.*?</u>)'));
+    for (final part in parts) {
+      if (part.startsWith('<u>') && part.endsWith('</u>')) {
+        final text = part.substring(3, part.length - 4);
+        spans.add(
+          TextSpan(
+            text: text,
+            style: const TextStyle(decoration: TextDecoration.underline),
+          ),
+        );
+      } else {
+        spans.add(TextSpan(text: part));
+      }
+    }
+  }
+
+  List<TextSpan> _processParamsAndCleanTags(
+    List<TextSpan> spans,
+    List<dynamic>? params,
+  ) {
+    final resultSpans = <TextSpan>[];
+
+    for (final span in spans) {
+      String text = span.text ?? '';
+      final spanStyle = span.style;
+
+      // replace <unbreak>#\d+[i]</unbreak> with params
+      if (params != null && params.isNotEmpty) {
+        final regex = RegExp(r'<unbreak>#(\d+)\[i\]</unbreak>');
+        text = text.replaceAllMapped(regex, (match) {
+          final paramIndex = int.parse(match.group(1)!) - 1;
+          if (paramIndex >= 0 && paramIndex < params.length) {
+            return params[paramIndex].toString();
+          }
+          return match[0]!;
+        });
+      }
+
+      // remove <unbreak></unbreak> tags, keep content
+      text = text.replaceAllMapped(
+        RegExp(r'<unbreak>(.*?)</unbreak>'),
+        (match) => match.group(1) ?? '',
+      );
+
+      resultSpans.add(TextSpan(text: text, style: spanStyle));
+    }
+
+    return resultSpans;
   }
 
   @override
