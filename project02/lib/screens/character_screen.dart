@@ -16,6 +16,7 @@ class _CharacterScreenState extends State<CharacterScreen> {
   final Yatta yatta = Yatta();
   bool isLoading = true;
   Map<String, dynamic> characterDetail = {};
+  int _selectedTab = 0;
 
   @override
   void initState() {
@@ -41,10 +42,11 @@ class _CharacterScreenState extends State<CharacterScreen> {
   @override
   Widget build(BuildContext context) {
     final SharedPref sharedPref = SharedPref();
+    final characterName = characterDetail['name'] ?? 'Character';
 
     return CupertinoPageScaffold(
       navigationBar: CupertinoNavigationBar(
-        middle: Text(characterDetail['name'] ?? 'Character'),
+        middle: Text(characterName),
         trailing: FavoriteIcon(id: widget.id, sharedPref: sharedPref),
       ),
       child: SafeArea(
@@ -52,17 +54,143 @@ class _CharacterScreenState extends State<CharacterScreen> {
             isLoading
                 ? const Center(child: CupertinoActivityIndicator())
                 : SingleChildScrollView(
-                  child: Padding(
-                    padding: const EdgeInsets.all(12),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Image.network(yatta.getGachaIconUrl(widget.id)),
-                      ],
-                    ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Center(
+                        child: Padding(
+                          padding: const EdgeInsets.all(16),
+                          child: Image.network(
+                            yatta.getGachaIconUrl(widget.id),
+                            fit: BoxFit.contain,
+                            errorBuilder:
+                                (context, error, stackTrace) => const Icon(
+                                  CupertinoIcons.person,
+                                  size: 100,
+                                ),
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 16,
+                          vertical: 16,
+                        ),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: CupertinoColors.white,
+                            borderRadius: BorderRadius.circular(16),
+                            boxShadow: [
+                              BoxShadow(
+                                color: CupertinoColors.black.withValues(
+                                  alpha: .1,
+                                ),
+                                blurRadius: 10,
+                                offset: const Offset(0, 4),
+                              ),
+                            ],
+                          ),
+                          child: Column(
+                            children: [
+                              _buildCustomTabBar(),
+                              Container(
+                                color: CupertinoColors.systemGrey6,
+                                height: 2,
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(16),
+                                child: _buildTabContent(),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
       ),
     );
+  }
+
+  Widget _buildCustomTabBar() {
+    final tabs = ['About', 'Stats', 'Skills', 'Eidolons'];
+
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 16),
+      decoration: BoxDecoration(
+        color: CupertinoColors.white,
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: List.generate(tabs.length, (index) {
+          return _buildTabButton(
+            label: tabs[index],
+            index: index,
+            isSelected: _selectedTab == index,
+          );
+        }),
+      ),
+    );
+  }
+
+  Widget _buildTabButton({
+    required String label,
+    required int index,
+    required bool isSelected,
+  }) {
+    return GestureDetector(
+      onTap: () => setState(() => _selectedTab = index),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+        child: Text(
+          label,
+          style: TextStyle(
+            color:
+                isSelected ? CupertinoColors.activeBlue : CupertinoColors.black,
+            fontSize: 16,
+            fontWeight: isSelected ? FontWeight.bold : FontWeight.w500,
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildTabContent() {
+    final characterName = characterDetail['name'];
+    final characterFaction = characterDetail['fetter']['faction'];
+    final characterDescription = characterDetail['fetter']['description'];
+    print(characterDetail);
+
+    switch (_selectedTab) {
+      case 0:
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          spacing: 8,
+          children: [
+            Text(
+              characterName,
+              style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            ),
+            Text(characterFaction, style: const TextStyle(fontSize: 16)),
+            Text(
+              characterDescription,
+              style: const TextStyle(
+                fontSize: 14,
+                color: CupertinoColors.secondaryLabel,
+                height: 1.25,
+              ),
+            ),
+          ],
+        );
+      case 1:
+        return const Text("Stats");
+      case 2:
+        return const Text("Skills");
+      case 3:
+        return const Text("Eidolons");
+      default:
+        return const SizedBox();
+    }
   }
 }
