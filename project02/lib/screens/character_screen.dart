@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:fl_chart/fl_chart.dart';
 import 'package:project02/core/shared_pref.dart';
 import 'package:project02/core/yatta.dart';
 import 'package:project02/widgets/favorite_icon.dart';
@@ -195,6 +196,62 @@ class _CharacterScreenState extends State<CharacterScreen> {
     );
   }
 
+  Widget _buildStatChart(dynamic characterUpgrades) {
+    final titles = [
+      'Attack',
+      'Defence',
+      'HP',
+      'Speed',
+      'Crit Chance',
+      'Crit Damage',
+      'Aggro',
+    ];
+
+    final dataEntries = [
+      RadarEntry(value: (characterUpgrades['attackBase']).toDouble()),
+      RadarEntry(value: (characterUpgrades['defenceBase']).toDouble()),
+      RadarEntry(value: (characterUpgrades['hPBase']).toDouble()),
+      RadarEntry(value: (characterUpgrades['speedBase']).toDouble()),
+      RadarEntry(value: (characterUpgrades['criticalChance']) * 100),
+      RadarEntry(value: (characterUpgrades['criticalDamage']) * 100),
+      RadarEntry(value: (characterUpgrades['baseAggro']).toDouble()),
+    ];
+
+    return SizedBox(
+      height: 275,
+      child: RadarChart(
+        RadarChartData(
+          radarShape: RadarShape.circle,
+          dataSets: [
+            RadarDataSet(
+              fillColor: CupertinoColors.activeBlue.withOpacity(0.2),
+              borderColor: CupertinoColors.activeBlue,
+              borderWidth: 2,
+              dataEntries: dataEntries,
+            ),
+          ],
+          radarBorderData: const BorderSide(
+            color: CupertinoColors.systemGrey,
+            width: 1,
+          ),
+          getTitle: (index, angle) {
+            return RadarChartTitle(text: titles[index]);
+          },
+          ticksTextStyle: const TextStyle(
+            color: CupertinoColors.secondaryLabel,
+            fontSize: 12,
+          ),
+          tickCount: 5,
+          titleTextStyle: const TextStyle(
+            color: CupertinoColors.black,
+            fontSize: 14,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
+      ),
+    );
+  }
+
   Widget _buildCustomTabBar() {
     final tabs = ['About', 'Stats', 'Skills', 'Eidolons'];
 
@@ -243,6 +300,8 @@ class _CharacterScreenState extends State<CharacterScreen> {
     final characterName = characterDetail['name'];
     final characterFaction = characterDetail['fetter']['faction'];
     final characterDescription = characterDetail['fetter']['description'];
+    final characterSkills = characterDetail['traces']['mainSkills'];
+    final characterUpgrades = characterDetail['upgrade'][0]['skillBase'];
     final characterEidolons = characterDetail['eidolons'];
 
     switch (_selectedTab) {
@@ -267,7 +326,7 @@ class _CharacterScreenState extends State<CharacterScreen> {
           ],
         );
       case 1:
-        return const Text("Stats");
+        return _buildStatChart(characterUpgrades);
       case 2:
         return const Text("Skills");
       case 3:
