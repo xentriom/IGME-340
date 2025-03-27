@@ -4,11 +4,11 @@ import 'package:http/http.dart' as http;
 ///
 /// Yatta API class
 /// Simplifies fetching data from sr.yatta.moe
-/// 
+///
 /// author: Jason Chen
 /// version: 1.0.0
 /// since: 2025-03-27
-/// 
+///
 
 class Yatta {
   static const String _baseUrl = 'https://sr.yatta.moe/';
@@ -89,5 +89,10 @@ class Yatta {
   /// Get URL for character type icon (combative)
   String getTypeIcon(String name) {
     return '$_baseUrl$_assetPath/attribute/$name.png';
+  }
+
+  /// Get URL for character skill icon
+  String getSkillIcon(String name) {
+    return '$_baseUrl$_assetPath/skill/$name.png';
   }
 }

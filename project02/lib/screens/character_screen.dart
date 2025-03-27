@@ -205,6 +205,7 @@ class _CharacterScreenState extends State<CharacterScreen> {
     );
   }
 
+  /// Build radar chart for character stats
   Widget _buildStatChart(dynamic characterUpgrades) {
     final titles = [
       'Attack',
@@ -263,6 +264,7 @@ class _CharacterScreenState extends State<CharacterScreen> {
     );
   }
 
+  /// Build custom tab bar, sorry cupertino tab bar is extremely ugly
   Widget _buildCustomTabBar() {
     final tabs = ['About', 'Stats', 'Skills', 'Eidolons'];
 
@@ -285,6 +287,7 @@ class _CharacterScreenState extends State<CharacterScreen> {
     );
   }
 
+  /// Build tab button
   Widget _buildTabButton({
     required String label,
     required int index,
@@ -307,6 +310,11 @@ class _CharacterScreenState extends State<CharacterScreen> {
     );
   }
 
+  /// Build tab content
+  /// 0: About
+  /// 1: Stats
+  /// 2: Skills
+  /// 3: Eidolons
   Widget _buildTabContent() {
     final characterName = characterDetail['name'];
     final characterFaction = characterDetail['fetter']['faction'];
@@ -350,7 +358,6 @@ class _CharacterScreenState extends State<CharacterScreen> {
             children:
                 characterEidolons.entries.map<Widget>((entry) {
                   final eidolon = entry.value;
-                  final name = eidolon['name'];
                   final description = formatDescription(
                     eidolon['description'],
                     eidolon['params'],
@@ -369,12 +376,17 @@ class _CharacterScreenState extends State<CharacterScreen> {
                         Row(
                           spacing: 4,
                           children: [
-                            const Icon(CupertinoIcons.star, size: 24),
-                            Text(
-                              name,
-                              style: const TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
+                            Image.network(
+                              yatta.getSkillIcon(eidolon['icon']),
+                              width: 24,
+                            ),
+                            Expanded(
+                              child: Text(
+                                eidolon['name'],
+                                style: const TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
                             ),
                           ],
