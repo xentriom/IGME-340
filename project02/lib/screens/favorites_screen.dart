@@ -83,19 +83,7 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return CupertinoPageScaffold(
-      navigationBar: CupertinoNavigationBar(
-        middle: Text(
-          SharedState.currentUser.value != null &&
-                  SharedState.favoriteIds.value.isNotEmpty
-              ? 'Interastral Guide'
-              : '',
-        ),
-        backgroundColor: CupertinoColors.secondarySystemBackground,
-        border: null,
-      ),
-      child: SafeArea(child: _buildContent()),
-    );
+    return CupertinoPageScaffold(child: SafeArea(child: _buildContent()));
   }
 
   Widget _buildContent() {

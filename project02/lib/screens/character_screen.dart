@@ -150,53 +150,56 @@ class _CharacterScreenState extends State<CharacterScreen> {
         child:
             isLoading
                 ? const Center(child: CupertinoActivityIndicator())
-                : Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    ClipRRect(
-                      child: Image.network(
-                        yatta.getGachaIconUrl(widget.id),
-                        width: double.infinity,
-                        height: 300,
-                        fit: BoxFit.cover,
+                : Container(
+                  color: CupertinoColors.systemGroupedBackground,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      ClipRRect(
+                        child: Image.network(
+                          yatta.getGachaIconUrl(widget.id),
+                          width: double.infinity,
+                          height: 300,
+                          fit: BoxFit.cover,
+                        ),
                       ),
-                    ),
-                    Flexible(
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 16),
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: CupertinoColors.white,
-                            borderRadius: BorderRadius.circular(16),
-                            boxShadow: [
-                              BoxShadow(
-                                color: CupertinoColors.black.withValues(
-                                  alpha: .1,
+                      Flexible(
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 16),
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: CupertinoColors.white,
+                              borderRadius: BorderRadius.circular(16),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: CupertinoColors.black.withValues(
+                                    alpha: .1,
+                                  ),
+                                  blurRadius: 10,
+                                  offset: const Offset(0, 4),
                                 ),
-                                blurRadius: 10,
-                                offset: const Offset(0, 4),
-                              ),
-                            ],
-                          ),
-                          child: Column(
-                            children: [
-                              _buildCustomTabBar(),
-                              Container(
-                                color: CupertinoColors.systemGrey6,
-                                height: 2,
-                              ),
-                              Expanded(
-                                child: Padding(
-                                  padding: const EdgeInsets.all(16),
-                                  child: _buildTabContent(),
+                              ],
+                            ),
+                            child: Column(
+                              children: [
+                                _buildCustomTabBar(),
+                                Container(
+                                  color: CupertinoColors.systemGrey6,
+                                  height: 2,
                                 ),
-                              ),
-                            ],
+                                Expanded(
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(16),
+                                    child: _buildTabContent(),
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
       ),
     );
@@ -224,7 +227,7 @@ class _CharacterScreenState extends State<CharacterScreen> {
     ];
 
     return SizedBox(
-      height: 275,
+      height: 300,
       child: RadarChart(
         RadarChartData(
           radarShape: RadarShape.circle,
