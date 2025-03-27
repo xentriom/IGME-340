@@ -1,5 +1,17 @@
 import 'package:flutter/cupertino.dart';
 
+///
+/// Custom widget to toggle between list and grid view
+/// 
+/// @param isListView: current view state
+/// @param onToggle: callback function to toggle view
+/// @return ToggleViewButtons widget
+/// 
+/// @author: Jason Chen
+/// @version: 1.0.0
+/// @since: 2025-03-27
+/// 
+
 class ToggleViewButtons extends StatefulWidget {
   final bool isListView;
   final ValueChanged<bool> onToggle;

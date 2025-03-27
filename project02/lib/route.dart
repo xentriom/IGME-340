@@ -22,19 +22,11 @@ class RouteGenerator {
       case '/settings':
         return CupertinoPageRoute(builder: (_) => SettingsScreen());
       case '/character':
-        final id = settings.arguments as String?; // Extract id from arguments
-        if (id != null) {
-          return CupertinoPageRoute(
-            builder: (_) => CharacterScreen(id: id),
-            settings: settings,
-          );
-        }
-        // Fallback if no id is provided
+        // extract id and pass it to character route
+        final id = settings.arguments as String;
         return CupertinoPageRoute(
-          builder:
-              (_) => const CupertinoPageScaffold(
-                child: Center(child: Text('Character ID not provided')),
-              ),
+          builder: (_) => CharacterScreen(id: id),
+          settings: settings,
         );
       default:
         return CupertinoPageRoute(builder: (_) => ExploreScreen());

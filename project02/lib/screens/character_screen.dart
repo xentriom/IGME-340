@@ -4,6 +4,18 @@ import 'package:project02/core/shared_pref.dart';
 import 'package:project02/core/yatta.dart';
 import 'package:project02/widgets/favorite_icon.dart';
 
+///
+/// Character Screen
+/// Displays detailed information about a character
+/// Includes character stats, skills, and eidolons
+/// 
+/// @param id: character ID
+/// 
+/// author: Jason Chen
+/// version: 1.0.0
+/// since: 2025-03-27
+/// 
+
 class CharacterScreen extends StatefulWidget {
   final String id;
 

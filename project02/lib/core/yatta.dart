@@ -1,6 +1,15 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
+///
+/// Yatta API class
+/// Simplifies fetching data from sr.yatta.moe
+/// 
+/// author: Jason Chen
+/// version: 1.0.0
+/// since: 2025-03-27
+/// 
+
 class Yatta {
   static const String _baseUrl = 'https://sr.yatta.moe/';
   static const String _apiPath = 'api/v2/en';
