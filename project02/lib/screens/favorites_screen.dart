@@ -25,13 +25,16 @@ class FavoritesScreen extends StatefulWidget {
 }
 
 class _FavoritesScreenState extends State<FavoritesScreen> {
+  // Initialize shared preferences and Yatta API
   final SharedPref sharedPref = SharedPref();
   final Yatta yatta = Yatta();
 
+  // Initialize character variables
   List<dynamic> allCharacters = [];
   List<dynamic> filteredFavoriteCharacters = [];
   bool isLoading = false;
 
+  // Initialize view variables
   String searchQuery = '';
   bool isListView = true;
 

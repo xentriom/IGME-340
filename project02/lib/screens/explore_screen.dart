@@ -87,11 +87,11 @@ class _ExploreScreenState extends State<ExploreScreen> {
   @override
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
-      navigationBar: const CupertinoNavigationBar(
-        middle: Text('Interastral Guide'),
-        backgroundColor: CupertinoColors.secondarySystemBackground,
-        border: null,
-      ),
+      // navigationBar: const CupertinoNavigationBar(
+      //   middle: Text('Interastral Guide'),
+      //   backgroundColor: CupertinoColors.secondarySystemBackground,
+      //   border: null,
+      // ),
       child: SafeArea(
         child: Container(
           color: CupertinoColors.systemGroupedBackground,

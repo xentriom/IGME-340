@@ -8,13 +8,13 @@ import 'package:project02/widgets/favorite_icon.dart';
 /// Character Screen
 /// Displays detailed information about a character
 /// Includes character stats, skills, and eidolons
-/// 
+///
 /// @param id: character ID
-/// 
+///
 /// author: Jason Chen
 /// version: 1.0.0
 /// since: 2025-03-27
-/// 
+///
 
 class CharacterScreen extends StatefulWidget {
   final String id;
@@ -52,6 +52,7 @@ class _CharacterScreenState extends State<CharacterScreen> {
     }
   }
 
+  /// Format description with optional parameters
   RichText formatDescription(
     String description,
     List<dynamic>? params, {
@@ -149,29 +150,20 @@ class _CharacterScreenState extends State<CharacterScreen> {
         child:
             isLoading
                 ? const Center(child: CupertinoActivityIndicator())
-                : SingleChildScrollView(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Center(
-                        child: Padding(
-                          padding: const EdgeInsets.all(16),
-                          child: Image.network(
-                            yatta.getGachaIconUrl(widget.id),
-                            fit: BoxFit.contain,
-                            errorBuilder:
-                                (context, error, stackTrace) => const Icon(
-                                  CupertinoIcons.person,
-                                  size: 100,
-                                ),
-                          ),
-                        ),
+                : Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    ClipRRect(
+                      child: Image.network(
+                        yatta.getGachaIconUrl(widget.id),
+                        width: double.infinity,
+                        height: 300,
+                        fit: BoxFit.cover,
                       ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 16,
-                          vertical: 16,
-                        ),
+                    ),
+                    Flexible(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
                         child: Container(
                           decoration: BoxDecoration(
                             color: CupertinoColors.white,
@@ -193,16 +185,18 @@ class _CharacterScreenState extends State<CharacterScreen> {
                                 color: CupertinoColors.systemGrey6,
                                 height: 2,
                               ),
-                              Padding(
-                                padding: const EdgeInsets.all(16),
-                                child: _buildTabContent(),
+                              Expanded(
+                                child: Padding(
+                                  padding: const EdgeInsets.all(16),
+                                  child: _buildTabContent(),
+                                ),
                               ),
                             ],
                           ),
                         ),
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
       ),
     );
@@ -236,8 +230,10 @@ class _CharacterScreenState extends State<CharacterScreen> {
           radarShape: RadarShape.circle,
           dataSets: [
             RadarDataSet(
-              fillColor: CupertinoColors.activeBlue.withOpacity(0.2),
-              borderColor: CupertinoColors.activeBlue,
+              fillColor: CupertinoTheme.of(
+                context,
+              ).primaryColor.withValues(alpha: 0.2),
+              borderColor: CupertinoTheme.of(context).primaryColor,
               borderWidth: 2,
               dataEntries: dataEntries,
             ),
@@ -338,36 +334,39 @@ class _CharacterScreenState extends State<CharacterScreen> {
           ],
         );
       case 1:
-        return _buildStatChart(characterUpgrades);
+        return Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [_buildStatChart(characterUpgrades)],
+        );
       case 2:
         return const Text("Skills");
       case 3:
-        return Column(
-          children:
-              characterEidolons.entries.map<Widget>((entry) {
-                final eidolon = entry.value;
-                final name = eidolon['name'];
-                final description = formatDescription(
-                  eidolon['description'],
-                  eidolon['params'],
-                );
+        return SingleChildScrollView(
+          child: Column(
+            children:
+                characterEidolons.entries.map<Widget>((entry) {
+                  final eidolon = entry.value;
+                  final name = eidolon['name'];
+                  final description = formatDescription(
+                    eidolon['description'],
+                    eidolon['params'],
+                  );
 
-                return Container(
-                  margin: const EdgeInsets.only(bottom: 12),
-                  padding: const EdgeInsets.all(12),
-                  decoration: BoxDecoration(
-                    color: CupertinoColors.systemGrey6,
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Icon(CupertinoIcons.star, size: 40),
-                      const SizedBox(width: 12),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                  return Container(
+                    margin: const EdgeInsets.only(bottom: 12),
+                    padding: const EdgeInsets.all(12),
+                    decoration: BoxDecoration(
+                      color: CupertinoColors.systemGrey6,
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Column(
+                      spacing: 4,
+                      children: [
+                        Row(
+                          spacing: 4,
                           children: [
+                            const Icon(CupertinoIcons.star, size: 24),
                             Text(
                               name,
                               style: const TextStyle(
@@ -375,15 +374,14 @@ class _CharacterScreenState extends State<CharacterScreen> {
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
-                            const SizedBox(height: 4),
-                            description,
                           ],
                         ),
-                      ),
-                    ],
-                  ),
-                );
-              }).toList(),
+                        description,
+                      ],
+                    ),
+                  );
+                }).toList(),
+          ),
         );
       default:
         return const SizedBox();
