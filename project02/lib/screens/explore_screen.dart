@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:project02/core/constants.dart';
 import 'package:project02/core/shared_pref.dart';
+import 'package:project02/core/shared_state.dart';
 import 'package:project02/core/yatta.dart';
 import 'package:project02/widgets/grid_builder.dart';
 import 'package:project02/widgets/list_builder.dart';
@@ -86,91 +87,93 @@ class _ExploreScreenState extends State<ExploreScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return CupertinoPageScaffold(
-      // navigationBar: const CupertinoNavigationBar(
-      //   middle: Text('Interastral Guide'),
-      //   backgroundColor: CupertinoColors.secondarySystemBackground,
-      //   border: null,
-      // ),
-      child: SafeArea(
-        child: Container(
-          color: CupertinoColors.systemGroupedBackground,
-          child: Column(
-            spacing: 2,
-            children: [
-              SizedBox(height: 10),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: CupertinoSearchTextField(
-                  placeholder: 'Search...',
-                  onChanged: (value) {
-                    setState(() {
-                      searchQuery = value;
-                      _filterCharacters();
-                    });
-                  },
-                ),
-              ),
-              const SizedBox(height: 8),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  spacing: 8,
-                  children: [
-                    Expanded(
-                      child: _buildDropdownButton(
-                        context,
-                        selectedType!,
-                        constants.types,
-                        (value) {
-                          setState(() {
-                            selectedType = value;
-                            _filterCharacters();
-                          });
-                        },
-                      ),
+    // listens for changes in currentUser (to show/hide favorite icon)
+    return ValueListenableBuilder(
+      valueListenable: SharedState.currentUser,
+      builder: (context, user, child) {
+        return CupertinoPageScaffold(
+          child: SafeArea(
+            child: Container(
+              color: CupertinoColors.systemGroupedBackground,
+              child: Column(
+                spacing: 2,
+                children: [
+                  SizedBox(height: 10),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    child: CupertinoSearchTextField(
+                      placeholder: 'Search...',
+                      onChanged: (value) {
+                        setState(() {
+                          searchQuery = value;
+                          _filterCharacters();
+                        });
+                      },
                     ),
-                    Expanded(
-                      child: _buildDropdownButton(
-                        context,
-                        selectedPath!,
-                        constants.paths,
-                        (value) {
-                          setState(() {
-                            selectedPath = value;
-                            _filterCharacters();
-                          });
-                        },
-                      ),
-                    ),
-                    ToggleViewButtons(
-                      isListView: isListView,
-                      onToggle: (value) => setState(() => isListView = value),
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(height: 4),
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  child:
-                      isListView
-                          ? BuildListView(
-                            filteredCharacters: filteredCharacters,
-                            isLoading: isLoading,
-                          )
-                          : BuildGridView(
-                            filteredCharacters: filteredCharacters,
-                            isLoading: isLoading,
+                  ),
+                  const SizedBox(height: 8),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      spacing: 8,
+                      children: [
+                        Expanded(
+                          child: _buildDropdownButton(
+                            context,
+                            selectedType!,
+                            constants.types,
+                            (value) {
+                              setState(() {
+                                selectedType = value;
+                                _filterCharacters();
+                              });
+                            },
                           ),
-                ),
+                        ),
+                        Expanded(
+                          child: _buildDropdownButton(
+                            context,
+                            selectedPath!,
+                            constants.paths,
+                            (value) {
+                              setState(() {
+                                selectedPath = value;
+                                _filterCharacters();
+                              });
+                            },
+                          ),
+                        ),
+                        ToggleViewButtons(
+                          isListView: isListView,
+                          onToggle:
+                              (value) => setState(() => isListView = value),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 4),
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      child:
+                          isListView
+                              ? BuildListView(
+                                filteredCharacters: filteredCharacters,
+                                isLoading: isLoading,
+                              )
+                              : BuildGridView(
+                                filteredCharacters: filteredCharacters,
+                                isLoading: isLoading,
+                              ),
+                    ),
+                  ),
+                ],
               ),
-            ],
+            ),
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 

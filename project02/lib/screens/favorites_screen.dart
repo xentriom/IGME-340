@@ -87,9 +87,11 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
   }
 
   Widget _buildContent() {
+    // Listen to current user
     return ValueListenableBuilder<String?>(
       valueListenable: SharedState.currentUser,
       builder: (context, user, child) {
+        // Not logged in, show message
         if (user == null) {
           return _buildMessage(
             assetUrl: 'assets/images/AglaeaCross.jpeg',
@@ -97,6 +99,8 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
           );
         }
 
+        // Logged in
+        // Listen to favoriteIds
         return ValueListenableBuilder<List<String>>(
           valueListenable: SharedState.favoriteIds,
           builder: (context, favoriteIds, child) {
@@ -104,6 +108,7 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
               return const Center(child: CupertinoActivityIndicator());
             }
 
+            // No favorites, show message
             if (favoriteIds.isEmpty) {
               return _buildMessage(
                 assetUrl: 'assets/images/ThertaHat.jpeg',
@@ -111,6 +116,7 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
               );
             }
 
+            // Display favorites
             _filterFavorites();
             return _buildFavoritesList();
           },
