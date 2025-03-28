@@ -47,10 +47,12 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
   Future<void> _fetchCharactersAndFavorites() async {
     try {
       setState(() => isLoading = true);
+      // get values from shared preferences
       final username = await sharedPref.getUsername();
-      final characters = await yatta.getCharacters();
       final favs = await sharedPref.getFavorites();
+      final characters = await yatta.getCharacters();
 
+      // update state
       setState(() {
         SharedState.currentUser.value = username;
         SharedState.favoriteIds.value = favs;
@@ -66,11 +68,13 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
   void _filterFavorites() {
     filteredFavoriteCharacters =
         allCharacters
+            // show only favorite characters
             .where(
               (character) => SharedState.favoriteIds.value.contains(
                 character['id'].toString(),
               ),
             )
+            // filter by search query
             .where(
               (character) =>
                   searchQuery.isEmpty ||
@@ -87,11 +91,11 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
   }
 
   Widget _buildContent() {
-    // Listen to current user
+    // listen to current user
     return ValueListenableBuilder<String?>(
       valueListenable: SharedState.currentUser,
       builder: (context, user, child) {
-        // Not logged in, show message
+        // not logged in, show message
         if (user == null) {
           return _buildMessage(
             assetUrl: 'assets/images/AglaeaCross.jpeg',
@@ -99,8 +103,8 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
           );
         }
 
-        // Logged in
-        // Listen to favoriteIds
+        // logged in
+        // listen to favoriteIds
         return ValueListenableBuilder<List<String>>(
           valueListenable: SharedState.favoriteIds,
           builder: (context, favoriteIds, child) {
@@ -108,7 +112,7 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
               return const Center(child: CupertinoActivityIndicator());
             }
 
-            // No favorites, show message
+            // no favorites, show message
             if (favoriteIds.isEmpty) {
               return _buildMessage(
                 assetUrl: 'assets/images/ThertaHat.jpeg',

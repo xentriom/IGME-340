@@ -142,6 +142,7 @@ class _CharacterScreenState extends State<CharacterScreen> {
     final characterName = characterDetail['name'] ?? 'Character';
 
     return CupertinoPageScaffold(
+      // Navigation bar for character name and favorite icon
       navigationBar: CupertinoNavigationBar(
         middle: Text(characterName),
         trailing: FavoriteIcon(id: widget.id, sharedPref: sharedPref),

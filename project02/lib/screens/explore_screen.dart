@@ -66,15 +66,18 @@ class _ExploreScreenState extends State<ExploreScreen> {
     setState(() {
       filteredCharacters =
           characters.where((character) {
+            // filter by search query
             final name = character['name'].toString().toLowerCase();
             final matchesSearch =
                 searchQuery.isEmpty || name.contains(searchQuery.toLowerCase());
 
+            // filter by type
             final type = character['types']['combatType'] as String;
             final convertedType = constants.typesMap[type];
             final matchesType =
                 selectedType == 'Elements' || convertedType == selectedType;
 
+            // filter by path
             final path = character['types']['pathType'] as String;
             final convertedPath = constants.pathsMap[path];
             final matchesPath =

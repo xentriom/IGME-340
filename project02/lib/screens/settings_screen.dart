@@ -117,9 +117,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
         ),
       ),
       child: SafeArea(
+        // Listen to current user
         child: ValueListenableBuilder<String?>(
           valueListenable: SharedState.currentUser,
           builder: (context, username, child) {
+            // Show loading if still loading
+            // Show logged-in UI if user is logged in
+            // Show login UI if not logged in
+            // Show register UI if not logged in
             return _isLoading
                 ? const Center(child: CupertinoActivityIndicator())
                 : username != null
