@@ -29,13 +29,19 @@ Future<void> _initializeDummyUsers() async {
   final SharedPref sharedPref = SharedPref();
   final List<Map<String, dynamic>> dummyUsers = [
     {
+      'username': 'test',
+      'password': 'test',
+      'favorites': ['1005', '1306', '1401'],
+      'theme': ThemeMode.light,
+    },
+    {
       'username': 'xentriom',
       'password': 'hello123',
       'favorites': ['1006', '1307', '1402'],
       'theme': ThemeMode.dark,
     },
     {
-      'username': 'galactic baseballer',
+      'username': 'trailblazer',
       'password': 'password',
       'favorites': ['1001', '1002', '1003', '1004'],
       'theme': ThemeMode.system,
