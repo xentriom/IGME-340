@@ -6,7 +6,7 @@ export default function Home() {
       {/* Hero Section */}
       <section className="text-center max-w-2xl">
         <h1 className="text-4xl md:text-5xl font-bold mb-6">
-          Interstellar Guides
+          Interstellar Guide
         </h1>
         <p className="text-lg text-indigo-700 mb-8">
           Your ultimate companion for exploring the universe of Honkai: Star Rail
