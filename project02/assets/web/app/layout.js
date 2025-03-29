@@ -15,7 +15,7 @@ const geistMono = Geist_Mono({
 
 export const metadata = {
   title: {
-    default: "Interstellar Guide",
+    default: "Interstellar Guide - The Ultimate Companion App for Honkai: Star Rail",
     template: "%s | Interstellar Guide",
   },
   description: "A Honkai: Star Rail companion app for all your needs. Made for IGME 340's project02.",

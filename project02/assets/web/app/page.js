@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 
 export default function Home() {
   return (
@@ -12,11 +13,12 @@ export default function Home() {
           Your ultimate companion for exploring the universe of Honkai: Star Rail
         </p>
         <div className="flex gap-4 justify-center">
-          <Link href="/features" className="px-6 py-3 bg-indigo-600 text-white rounded-lg hover:bg-blue-500 transition-colors duration-300">
-            Explore Features
+          <Link href="/docs" className="px-6 py-3 bg-indigo-600 text-white rounded-lg hover:bg-blue-500 transition-colors duration-300">
+            Documentation
           </Link>
-          <Link href="/features" className="px-6 py-3 bg-transparent border border-indigo-600 text-indigo-600 rounded-lg hover:bg-blue-100 transition-colors duration-300">
-            View Docs
+          <Link href="https://github.com/xentriom/IGME-340/tree/main/project02" className="px-2 md:px-6 md:py-3 bg-transparent border border-indigo-600 text-indigo-600 rounded-lg hover:bg-blue-100 transition-colors duration-300 flex items-center justify-center">
+            <Image src="/logo-github.svg" alt="GitHub" width={24} height={24} className="pr-2" />
+            View on GitHub
           </Link>
         </div>
       </section>
