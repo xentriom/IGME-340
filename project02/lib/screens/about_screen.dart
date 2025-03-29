@@ -6,11 +6,11 @@ import 'package:webview_flutter/webview_flutter.dart';
 /// This screen is used to display the about page of the app.
 /// It contains a webview that loads the about page of the app.
 /// For the source code, it is located in assets/web/
-/// 
+///
 /// author: Jason Chen
 /// version: 1.0.0
 /// since: 2025-03-29
-/// 
+///
 
 class AboutScreen extends StatefulWidget {
   const AboutScreen({super.key});
@@ -28,7 +28,7 @@ class _AboutScreenState extends State<AboutScreen> {
     _controller =
         WebViewController()
           ..setJavaScriptMode(JavaScriptMode.unrestricted)
-          ..loadRequest(Uri.parse("https://flutter.dev"));
+          ..loadRequest(Uri.parse("https://jc5892-340-p2.vercel.app"));
   }
 
   @override
