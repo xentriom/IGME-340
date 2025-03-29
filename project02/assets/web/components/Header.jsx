@@ -68,15 +68,11 @@ export function Header() {
 
       {/* Sidebar & Overlay */}
       <div
-        className={`${sidebarClasses.overlay} ${
-          isOpen ? "opacity-100 visible" : "opacity-0 invisible"
-        }`}
+        className={`${sidebarClasses.overlay} ${isOpen ? "opacity-100 visible" : "opacity-0 invisible"}`}
         onClick={() => setIsOpen(false)}
       >
         <div
-          className={`${sidebarClasses.sidebar} ${
-            isOpen ? "translate-x-0" : "-translate-x-full"
-          }`}
+          className={`${sidebarClasses.sidebar} ${isOpen ? "translate-x-0" : "-translate-x-full"}`}
           onClick={(e) => e.stopPropagation()}
         >
           {/* Sidebar Header */}
