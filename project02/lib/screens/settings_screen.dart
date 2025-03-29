@@ -217,7 +217,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     ),
                     title: const Text('About'),
                     trailing: const CupertinoListTileChevron(),
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.of(
+                        context,
+                        rootNavigator: true,
+                      ).pushNamed('/about');
+                    },
                   ),
                   CupertinoListTile(
                     leading: Container(
