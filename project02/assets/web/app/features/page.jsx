@@ -41,7 +41,7 @@ export default function FeaturesPage() {
         {features.map((feature, index) => (
           <div
             key={index}
-            className="group relative bg-white/80 backdrop-blur-md rounded-xl p-6 
+            className="group relative bg-blue-100/80 backdrop-blur-md rounded-xl p-6 
             border border-gray-200/50 shadow-lg hover:shadow-xl transition-all duration-300
             hover:-translate-y-1"
           >

@@ -30,7 +30,7 @@ export default function Home() {
           { title: "Character Preview", desc: "Explore detailed insights for every character" },
           { title: "Bookmarking", desc: "Save your favorite characters for future adventures" }
         ].map(({ title, desc }, index) => (
-          <div key={index} className="p-6 bg-blue-100 rounded-lg shadow-md hover:shadow-lg transition-shadow">
+          <div key={index} className="p-6 bg-blue-100/80 rounded-lg shadow-md hover:shadow-lg transition-shadow">
             <h3 className="text-xl font-semibold mb-2">{title}</h3>
             <p className="text-indigo-600">{desc}</p>
           </div>
