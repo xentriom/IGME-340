@@ -19,7 +19,7 @@ export default function CreditsPage() {
             <li>Framework - Flutter (Cupertino Design)</li>
             <li>API - sr.yatta.moe</li>
             <li>Tutorials - Dower Chin, 340 professor</li>
-            <li>Resources -
+            <li>Resources -{" "}
               <Link href="https://docs.flutter.dev/ui/widgets/cupertino" className="hover:underline">Flutter Cupertino Widgets Doc</Link>
             </li>
           </ul>
@@ -30,11 +30,11 @@ export default function CreditsPage() {
           <h2 className="text-2xl font-semibold text-indigo-800 mb-4">Web Assets & Resources</h2>
           <ul className="space-y-2 text-indigo-700">
             <li>Framework -&nbsp;
-              <Link href="https://nextjs.org" className="hover:underline">Next.js</Link> &&nbsp;
+              <Link href="https://nextjs.org" className="hover:underline">Next.js</Link> &{" "}
               <Link href="https://tailwindcss.com" className="hover:underline">Tailwind CSS</Link>
             </li>
-            <li>Typeface - <Link href="https://vercel.com/geist/icons" className="hover:underline">Geist Sans</Link>&nbsp;by Vercel</li>
-            <li>Icons - <Link href="https://vercel.com/font" className="hover:underline">Geist Icon Set</Link>&nbsp;by Vercel</li>
+            <li>Typeface - <Link href="https://vercel.com/geist/icons" className="hover:underline">Geist Sans</Link>{" "}by Vercel</li>
+            <li>Icons - <Link href="https://vercel.com/font" className="hover:underline">Geist Icon Set</Link>{" "}by Vercel</li>
           </ul>
         </section>
 
