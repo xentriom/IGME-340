@@ -34,7 +34,7 @@ class _AboutScreenState extends State<AboutScreen> {
   @override
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
-      navigationBar: const CupertinoNavigationBar(middle: Text('About')),
+      navigationBar: const CupertinoNavigationBar(middle: Text(' ')),
       child: SafeArea(child: WebViewWidget(controller: _controller)),
     );
   }
