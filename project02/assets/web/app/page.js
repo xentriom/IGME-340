@@ -12,10 +12,10 @@ export default function Home() {
           Your ultimate companion for exploring the universe of Honkai: Star Rail
         </p>
         <div className="flex gap-4 justify-center">
-          <Link href="/features" className="px-6 py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors duration-300">
+          <Link href="/features" className="px-6 py-3 bg-indigo-600 text-white rounded-lg hover:bg-blue-500 transition-colors duration-300">
             Explore Features
           </Link>
-          <Link href="/features" className="px-6 py-3 bg-transparent border border-indigo-600 text-indigo-600 rounded-lg hover:bg-indigo-50 transition-colors duration-300">
+          <Link href="/features" className="px-6 py-3 bg-transparent border border-indigo-600 text-indigo-600 rounded-lg hover:bg-blue-100 transition-colors duration-300">
             View Docs
           </Link>
         </div>
@@ -28,7 +28,7 @@ export default function Home() {
           { title: "Character Preview", desc: "Explore detailed insights for every character" },
           { title: "Bookmarking", desc: "Save your favorite characters for future adventures" }
         ].map(({ title, desc }, index) => (
-          <div key={index} className="p-6 bg-orange-50 rounded-lg shadow-md hover:shadow-lg transition-shadow">
+          <div key={index} className="p-6 bg-blue-50 rounded-lg shadow-md hover:shadow-lg transition-shadow">
             <h3 className="text-xl font-semibold mb-2">{title}</h3>
             <p className="text-indigo-600">{desc}</p>
           </div>
