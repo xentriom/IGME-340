@@ -13,14 +13,14 @@ export function Header() {
   }, [isOpen]);
 
   return (
-    <nav className="flex items-center justify-between w-full px-4 bg-indigo-300 relative">
-      <Link href="/" className="text-lg font-bold p-4">
+    <nav className="flex items-center justify-between w-full px-4 py-3 bg-indigo-300 relative">
+      <Link href="/" className="text-lg font-bold">
         Interstellar Guide
       </Link>
 
       {/* Mobile Menu Button */}
       <button
-        className="md:hidden p-2 rounded-lg bg-indigo-600 text-white relative w-10 h-10 flex items-center justify-center"
+        className="md:hidden p-2"
         onClick={() => setIsOpen(!isOpen)}
       >
         <Image
@@ -34,27 +34,40 @@ export function Header() {
 
       {/* Sidebar & Overlay */}
       <div
-        className={`fixed inset-0 bg-opacity-50 z-50 transition-opacity duration-300 ${isOpen ? "opacity-100 visible" : "opacity-0 invisible"
+        className={`fixed inset-0 z-50 transition-all duration-300 ease-in-out ${isOpen ? "opacity-100 visible" : "opacity-0 invisible"
           }`}
         onClick={() => setIsOpen(false)}
       >
         <div
-          className={`fixed top-0 left-0 w-64 h-full bg-indigo-300 shadow-lg transition-transform duration-300 ease-in-out transform ${isOpen ? "translate-x-0" : "-translate-x-full"
-            } relative`}
+          className={`fixed top-0 left-0 w-72 h-full bg-indigo-400 shadow-2xl transition-transform duration-300 ease-in-out transform ${isOpen ? "translate-x-0" : "-translate-x-full"
+            }`}
           onClick={(e) => e.stopPropagation()}
         >
-          {/* Sidebar Links */}
-          <div className="flex flex-col p-6 space-y-4">
-            <Link href="/" className="text-lg font-bold p-4">
+          {/* Sidebar Header */}
+          <div className="flex items-center justify-between p-4 border-b border-indigo-100">
+            <Link href="/" className="text-lg font-bold">
               Interstellar Guide
             </Link>
-            <Link href="/about" className="px-4 py-2 text-sm bg-indigo-600 text-white rounded-lg hover:bg-blue-500 transition-colors duration-300">
+          </div>
+
+          {/* Sidebar Links */}
+          <div className="flex flex-col p-4 space-y-3">
+            <Link
+              href="/about"
+              className="px-3 py-2 text-lg text-white bg-indigo-600 rounded-lg transition-colors duration-200 ease-in-out"
+            >
               About
             </Link>
-            <Link href="/docs" className="px-4 py-2 text-sm bg-indigo-600 text-white rounded-lg hover:bg-blue-500 transition-colors duration-300">
+            <Link
+              href="/docs"
+              className="px-3 py-2 text-lg text-white bg-indigo-600 rounded-lg transition-colors duration-200 ease-in-out active:bg-blue-700"
+            >
               Docs
             </Link>
-            <Link href="/features" className="px-4 py-2 text-sm bg-indigo-600 text-white rounded-lg hover:bg-blue-500 transition-colors duration-300">
+            <Link
+              href="/features"
+              className="px-3 py-2 text-lg text-white bg-indigo-600 rounded-lg transition-colors duration-200 ease-in-out active:bg-blue-700"
+            >
               Features
             </Link>
           </div>
@@ -63,13 +76,22 @@ export function Header() {
 
       {/* Desktop Menu */}
       <div className="hidden md:flex gap-4">
-        <Link href="/about" className="px-4 py-2 text-sm bg-indigo-600 text-white rounded-lg hover:bg-blue-500 transition-colors duration-300">
+        <Link
+          href="/about"
+          className="px-4 py-2 text-sm bg-indigo-600 text-white rounded-lg hover:bg-blue-500 transition-colors duration-300 ease-in-out"
+        >
           About
         </Link>
-        <Link href="/docs" className="px-4 py-2 text-sm bg-indigo-600 text-white rounded-lg hover:bg-blue-500 transition-colors duration-300">
+        <Link
+          href="/docs"
+          className="px-4 py-2 text-sm bg-indigo-600 text-white rounded-lg hover:bg-blue-500 transition-colors duration-300 ease-in-out"
+        >
           Docs
         </Link>
-        <Link href="/features" className="px-4 py-2 text-sm bg-indigo-600 text-white rounded-lg hover:bg-blue-500 transition-colors duration-300">
+        <Link
+          href="/features"
+          className="px-4 py-2 text-sm bg-indigo-600 text-white rounded-lg hover:bg-blue-500 transition-colors duration-300 ease-in-out"
+        >
           Features
         </Link>
       </div>
