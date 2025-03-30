@@ -93,12 +93,30 @@ export default async function DocsDetailPage({ params }) {
 
       <article
         className="bg-blue-100/80 backdrop-blur-md rounded-xl p-6 border border-gray-200/50 
-          shadow-lg"
+          shadow-lg mb-6"
       >
         <div className="text-indigo-700 max-w-none flex flex-col gap-4">
           <MarkdownWithImages content={processedContent} images={doc.images} />
         </div>
       </article>
+
+      <nav className="flex justify-center items-center gap-4 text-sm">
+        <Link
+          href={`/docs/${doc.prevKey}`}
+          className="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-blue-500 transition-colors duration-300"
+        >
+          Previous
+        </Link>
+        <span className="text-indigo-700">
+          Page {doc.id} of {doc.total}
+        </span>
+        <Link
+          href={`/docs/${doc.nextKey}`}
+          className="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-blue-500 transition-colors duration-300"
+        >
+          Next
+        </Link>
+      </nav>
     </div>
   );
 }

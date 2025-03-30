@@ -20,5 +20,18 @@ export async function GET(request, { params }) {
     );
   }
 
-  return NextResponse.json(doc, { status: 200 });
+  const total = docs.length;
+  const currentIndex = docs.findIndex((d) => d.key === key);
+  const prevKey = currentIndex === 0 ? docs[total - 1].key : docs[currentIndex - 1].key;
+  const nextKey = currentIndex === total - 1 ? docs[0].key : docs[currentIndex + 1].key;
+
+  const response = {
+    total,
+    prevKey,
+    nextKey,
+    ...doc,
+  };
+  console.log(response);
+
+  return NextResponse.json(response, { status: 200 });
 }

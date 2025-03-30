@@ -30,7 +30,8 @@
     "title": "3",
     "date": "March 09, 2025",
     "excerpt": "3",
-    "content": "3"
+    "content": "3",
+    "images": []
   },
   {
     "id": 4,
@@ -38,7 +39,8 @@
     "title": "4",
     "date": "March 22, 2025",
     "excerpt": "4",
-    "content": "4"
+    "content": "4",
+    "images": []
   },
   {
     "id": 5,
@@ -46,7 +48,8 @@
     "title": "5",
     "date": "March 27, 2025",
     "excerpt": "5",
-    "content": "5"
+    "content": "5",
+    "images": []
   },
   {
     "id": 6,
@@ -54,7 +57,8 @@
     "title": "6",
     "date": "March 29, 2025",
     "excerpt": "6",
-    "content": "6"
+    "content": "6",
+    "images": []
   },
   {
     "id": 7,
@@ -62,6 +66,7 @@
     "title": "7",
     "date": "March 30, 2025",
     "excerpt": "7",
-    "content": "7"
+    "content": "7",
+    "images": []
   }
 ]
