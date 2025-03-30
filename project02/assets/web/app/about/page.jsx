@@ -9,7 +9,7 @@ export default function AboutPage() {
     <div className="container mx-auto px-4 py-12 max-w-5xl">
       {/* Hero Section */}
       <section className="text-center mb-12">
-        <h1 className="text-4xl md:text-5xl font-bold mb-4 animate-in fade-in">
+        <h1 className="text-3xl md:text-5xl font-bold mb-4 animate-in fade-in">
           About Interstellar Guide
         </h1>
         <p className="text-lg text-indigo-700 max-w-2xl mx-auto animate-in fade-in duration-700 delay-100">
