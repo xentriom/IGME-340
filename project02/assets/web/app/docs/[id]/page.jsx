@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { formatMarkdown } from "@/lib/formatMarkdown";
+import ReactMarkdown from "react-markdown";
 
 export async function generateMetadata({ params }) {
   const { id } = await params;
@@ -52,9 +52,7 @@ export default async function DocsDetailPage({ params }) {
         <p className="text-indigo-700 leading-relaxed mb-4">{doc.excerpt}</p>
 
         <div className="text-indigo-700 prose max-w-none">
-          <p>
-            {formatMarkdown(doc.content)}
-          </p>
+          <ReactMarkdown>{doc.content}</ReactMarkdown>
         </div>
       </article>
     </div>
