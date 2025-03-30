@@ -29,26 +29,28 @@ export default async function DocsPage() {
       </section>
 
       <div className="space-y-8">
-        {docs.map((entry) => (
-          <form
-            key={entry.key}
-            action={handleDocClick}
-            className="bg-blue-100/80 backdrop-blur-md rounded-xl border border-gray-200/50 
+        {docs
+          .sort((a, b) => (a.id > b.id ? -1 : 1))
+          .map((entry) => (
+            <form
+              key={entry.key}
+              action={handleDocClick}
+              className="bg-blue-100/80 backdrop-blur-md rounded-xl border border-gray-200/50 
               shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
-          >
-            <input type="hidden" name="docId" value={entry.key} />
-            <button
-              type="submit"
-              className="w-full p-6 text-left focus:outline-none cursor-pointer"
             >
-              <h2 className="text-xl font-semibold text-indigo-900 mb-2">
-                {entry.title}
-              </h2>
-              <p className="text-sm text-indigo-600 mb-4">{entry.date}</p>
-              <p className="text-indigo-700 leading-relaxed">{entry.excerpt}</p>
-            </button>
-          </form>
-        ))}
+              <input type="hidden" name="docId" value={entry.key} />
+              <button
+                type="submit"
+                className="w-full p-6 text-left focus:outline-none cursor-pointer"
+              >
+                <h2 className="text-xl font-semibold text-indigo-900 mb-2">
+                  {entry.title}
+                </h2>
+                <p className="text-sm text-indigo-600 mb-4">{entry.date}</p>
+                <p className="text-indigo-700 leading-relaxed">{entry.excerpt}</p>
+              </button>
+            </form>
+          ))}
       </div>
     </div>
   );
