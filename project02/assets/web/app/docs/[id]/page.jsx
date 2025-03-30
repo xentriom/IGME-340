@@ -1,5 +1,6 @@
 import Link from "next/link";
 import ReactMarkdown from "react-markdown";
+import rehypeRaw from "rehype-raw";
 
 export async function generateMetadata({ params }) {
   const { id } = await params;
@@ -60,7 +61,9 @@ export default async function DocsDetailPage({ params }) {
         <p className="text-indigo-700 leading-relaxed mb-4">{doc.excerpt}</p>
 
         <div className="text-indigo-700 prose max-w-none">
-          <ReactMarkdown>{processedContent}</ReactMarkdown>
+          <ReactMarkdown rehypePlugins={[rehypeRaw]}>
+            {processedContent}
+          </ReactMarkdown>
         </div>
       </article>
     </div>
