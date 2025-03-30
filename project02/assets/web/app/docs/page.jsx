@@ -11,7 +11,10 @@ export const metadata = {
 };
 
 export default async function DocsPage() {
-  const data = await fetch("https://jc5892-340-p2.vercel.app/api/docs", { cache: "no-store" });
+  const apiUrl = process.env.NODE_ENV === "development"
+    ? `http://localhost:3000/api/docs`
+    : `https://jc5892-340-p2.vercel.app/api/docs`;
+  const data = await fetch(apiUrl, { cache: "no-store" });
   const docs = await data.json();
 
   return (

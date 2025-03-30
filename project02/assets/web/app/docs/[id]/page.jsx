@@ -1,10 +1,51 @@
 import Link from "next/link";
+import Image from "next/image";
 import ReactMarkdown from "react-markdown";
 import rehypeRaw from "rehype-raw";
 
+function MarkdownWithImages({ content, images }) {
+  function ImageRenderer({ src, alt, ...props }) {
+    const imageData = props["data-key"]
+      ? images.find((img) => img.key === props["data-key"])
+      : { src, alt };
+    return (
+      <Image
+        src={imageData.src}
+        alt={imageData.alt}
+        width={imageData.width || 200}
+        height={imageData.height || 600}
+        className="max-w-full h-auto rounded-lg mx-auto block my-4"
+      />
+    );
+  }
+
+  return (
+    <ReactMarkdown
+      rehypePlugins={[rehypeRaw]}
+      components={{ img: ImageRenderer }}
+    >
+      {content}
+    </ReactMarkdown>
+  );
+}
+
+function replaceImagePlaceholders(content, images = []) {
+  let updatedContent = content;
+  images.forEach((image) => {
+    const placeholder = `{{${image.key}}}`;
+    const imgTag = `<img src="${image.src}" alt="${image.alt}" data-key="${image.key}" />`;
+    updatedContent = updatedContent.replace(placeholder, imgTag);
+  });
+  return updatedContent;
+}
+
 export async function generateMetadata({ params }) {
   const { id } = await params;
-  const data = await fetch(`https://jc5892-340-p2.vercel.app/api/docs/${id}`, { cache: "no-store" });
+  const apiUrl =
+    process.env.NODE_ENV === "development"
+      ? `http://localhost:3000/api/docs/${id}`
+      : `https://jc5892-340-p2.vercel.app/api/docs/${id}`;
+  const data = await fetch(apiUrl, { cache: "no-store" });
   const doc = await data.json();
   if (!doc || !doc.id) {
     return {
@@ -17,19 +58,13 @@ export async function generateMetadata({ params }) {
   };
 }
 
-function replaceImagePlaceholders(content, images = []) {
-  let updatedContent = content;
-  images.forEach((image) => {
-    const placeholder = `{{${image.key}}}`;
-    const imgTag = `<img src="${image.src}" alt="${image.alt}" class="max-w-full h-auto rounded-lg" />`;
-    updatedContent = updatedContent.replace(placeholder, imgTag);
-  });
-  return updatedContent;
-}
-
 export default async function DocsDetailPage({ params }) {
   const { id } = await params;
-  const data = await fetch(`https://jc5892-340-p2.vercel.app/api/docs/${id}`, { cache: "no-store" });
+  const apiUrl =
+    process.env.NODE_ENV === "development"
+      ? `http://localhost:3000/api/docs/${id}`
+      : `https://jc5892-340-p2.vercel.app/api/docs/${id}`;
+  const data = await fetch(apiUrl, { cache: "no-store" });
   const doc = await data.json();
   if (!doc || !doc.id) {
     return (
@@ -47,23 +82,20 @@ export default async function DocsDetailPage({ params }) {
 
   return (
     <div className="container mx-auto px-4 py-12 max-w-4xl">
-      <section className="mb-12">
+      <section className="mb-6">
         <h1 className="text-3xl md:text-5xl font-bold text-indigo-900 mb-4">
           {doc.title}
         </h1>
         <p className="text-sm text-indigo-600 mb-4">{doc.date}</p>
+        <p className="text-indigo-700 leading-relaxed mb-4">{doc.excerpt}</p>
       </section>
 
       <article
         className="bg-blue-100/80 backdrop-blur-md rounded-xl p-6 border border-gray-200/50 
           shadow-lg"
       >
-        <p className="text-indigo-700 leading-relaxed mb-4">{doc.excerpt}</p>
-
-        <div className="text-indigo-700 prose max-w-none">
-          <ReactMarkdown rehypePlugins={[rehypeRaw]}>
-            {processedContent}
-          </ReactMarkdown>
+        <div className="text-indigo-700 max-w-none flex flex-col gap-4">
+          <MarkdownWithImages content={processedContent} images={doc.images} />
         </div>
       </article>
     </div>
