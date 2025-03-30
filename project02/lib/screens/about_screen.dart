@@ -3,6 +3,10 @@ import 'package:webview_flutter/webview_flutter.dart';
 
 ///
 /// About screen
+/// 
+/// DISCLAIMER: I made this since i was making a demo for Nextjs to teach a 
+/// few people, this will be used as a demo as well.
+/// 
 /// This screen is used to display the about page of the app.
 /// It contains a webview that loads the about page of the app.
 /// For the source code, it is located in assets/web/
