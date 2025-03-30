@@ -3,7 +3,9 @@ export const metadata = {
 };
 
 export default async function DocsPage() {
-  const data = await fetch("https://jc5892-340-p2.vercel.app/api/docs");
+  const data = await fetch("https://jc5892-340-p2.vercel.app/api/docs", {
+    cache: "no-store",
+  });
   const docs = await data.json();
 
   return (
