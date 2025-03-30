@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import { getDocs } from '@/lib/getDocs';
 
 export async function GET(request, { params }) {
-  const { id } = await params; console.log(id);
+  const { key } = await params;
   const docs = await getDocs();
 
   if (docs.message) {
@@ -12,7 +12,7 @@ export async function GET(request, { params }) {
     );
   }
 
-  const doc = docs.find((doc) => doc.id === id);
+  const doc = docs.find((doc) => doc.key === key);
   if (!doc) {
     return NextResponse.json(
       { message: "Document not found." },

@@ -31,12 +31,12 @@ export default async function DocsPage() {
       <div className="space-y-8">
         {docs.map((entry) => (
           <form
-            key={entry.id}
+            key={entry.key}
             action={handleDocClick}
             className="bg-blue-100/80 backdrop-blur-md rounded-xl border border-gray-200/50 
               shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
           >
-            <input type="hidden" name="docId" value={entry.id} />
+            <input type="hidden" name="docId" value={entry.key} />
             <button
               type="submit"
               className="w-full p-6 text-left focus:outline-none cursor-pointer"

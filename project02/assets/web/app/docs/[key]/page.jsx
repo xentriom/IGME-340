@@ -40,14 +40,14 @@ function replaceImagePlaceholders(content, images = []) {
 }
 
 export async function generateMetadata({ params }) {
-  const { id } = await params;
+  const { key } = await params;
   const apiUrl =
     process.env.NODE_ENV === "development"
-      ? `http://localhost:3000/api/docs/${id}`
-      : `https://jc5892-340-p2.vercel.app/api/docs/${id}`;
+      ? `http://localhost:3000/api/docs/${key}`
+      : `https://jc5892-340-p2.vercel.app/api/docs/${key}`;
   const data = await fetch(apiUrl, { cache: "no-store" });
   const doc = await data.json();
-  if (!doc || !doc.id) {
+  if (!doc || !doc.key) {
     return {
       title: "Document Not Found",
     };
@@ -59,18 +59,19 @@ export async function generateMetadata({ params }) {
 }
 
 export default async function DocsDetailPage({ params }) {
-  const { id } = await params;
+  const { key } = await params;
+  console.log(key);
   const apiUrl =
     process.env.NODE_ENV === "development"
-      ? `http://localhost:3000/api/docs/${id}`
-      : `https://jc5892-340-p2.vercel.app/api/docs/${id}`;
+      ? `http://localhost:3000/api/docs/${key}`
+      : `https://jc5892-340-p2.vercel.app/api/docs/${key}`;
   const data = await fetch(apiUrl, { cache: "no-store" });
   const doc = await data.json();
-  if (!doc || !doc.id) {
+  if (!doc || !doc.key) {
     return (
       <div className="container mx-auto px-4 py-12 max-w-4xl text-center">
         <h1 className="text-4xl font-bold text-indigo-900 mb-4">Document Not Found</h1>
-        <p className="text-indigo-700">Sorry, we couldn't find documentation with ID: {id}</p>
+        <p className="text-indigo-700">Sorry, we couldn't find documentation with key: {key}</p>
         <Link href="/docs" className="mt-4 inline-block px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-blue-500 transition-colors duration-300">
           Back to Documentation
         </Link>
