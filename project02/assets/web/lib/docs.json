@@ -1,10 +1,17 @@
 [
   {
     "id": "vqukRXpML31Q",
-    "title": "1",
-    "date": "1",
-    "excerpt": "1",
-    "content": "This is **bold**, *italic*\n\n`inline code`, and ```code block```."
+    "title": "The Beginnings",
+    "date": "March 07, 2025",
+    "excerpt": "The start to Interstellar Guide - A journey through the stars.",
+    "content": "Today is the day it all begins. I started out creating a few figma mockups for the app. I have a few ideas in mind, but I want to keep it simple and clean. I want to focus on the content and make sure that it is easy to read and navigate. I am excited to see where this journey takes me.\n\n{{figmamockups}}\n\nI decided to start building and about a few minutes in, I decided i will challenge myself",
+    "images": [
+      {
+        "key": "figmamockups",
+        "src": "/mockups.jpg",
+        "alt": "Early Figma rendering of the app"
+      }
+    ]
   },
   {
     "id": "2Z4J6J8uZyVR",

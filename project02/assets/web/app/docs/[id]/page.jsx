@@ -3,9 +3,7 @@ import ReactMarkdown from "react-markdown";
 
 export async function generateMetadata({ params }) {
   const { id } = await params;
-  const data = await fetch(`https://jc5892-340-p2.vercel.app/api/docs/${id}`, {
-    cache: "no-store",
-  });
+  const data = await fetch(`https://jc5892-340-p2.vercel.app/api/docs/${id}`, { cache: "no-store" });
   const doc = await data.json();
   if (!doc || !doc.id) {
     return {
@@ -18,11 +16,19 @@ export async function generateMetadata({ params }) {
   };
 }
 
+function replaceImagePlaceholders(content, images = []) {
+  let updatedContent = content;
+  images.forEach((image) => {
+    const placeholder = `{{${image.key}}}`;
+    const imgTag = `<img src="${image.src}" alt="${image.alt}" class="max-w-full h-auto rounded-lg" />`;
+    updatedContent = updatedContent.replace(placeholder, imgTag);
+  });
+  return updatedContent;
+}
+
 export default async function DocsDetailPage({ params }) {
   const { id } = await params;
-  const data = await fetch(`https://jc5892-340-p2.vercel.app/api/docs/${id}`, {
-    cache: "no-store",
-  });
+  const data = await fetch(`https://jc5892-340-p2.vercel.app/api/docs/${id}`, { cache: "no-store" });
   const doc = await data.json();
   if (!doc || !doc.id) {
     return (
@@ -35,6 +41,8 @@ export default async function DocsDetailPage({ params }) {
       </div>
     );
   }
+
+  const processedContent = replaceImagePlaceholders(doc.content, doc.images);
 
   return (
     <div className="container mx-auto px-4 py-12 max-w-4xl">
@@ -52,7 +60,7 @@ export default async function DocsDetailPage({ params }) {
         <p className="text-indigo-700 leading-relaxed mb-4">{doc.excerpt}</p>
 
         <div className="text-indigo-700 prose max-w-none">
-          <ReactMarkdown>{doc.content}</ReactMarkdown>
+          <ReactMarkdown>{processedContent}</ReactMarkdown>
         </div>
       </article>
     </div>
