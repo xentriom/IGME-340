@@ -27,7 +27,7 @@ const sidebarClasses = {
  */
 const getLinkClass = (path, currentPath) => {
   const base = linkClasses.mobile.base;
-  return path === currentPath
+  return path.split("/")[1] === currentPath.split("/")[1]
     ? `${base} ${linkClasses.mobile.active}`
     : `${base} ${linkClasses.mobile.inactive}`;
 };

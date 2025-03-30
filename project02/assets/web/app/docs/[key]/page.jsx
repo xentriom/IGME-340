@@ -60,7 +60,6 @@ export async function generateMetadata({ params }) {
 
 export default async function DocsDetailPage({ params }) {
   const { key } = await params;
-  console.log(key);
   const apiUrl =
     process.env.NODE_ENV === "development"
       ? `http://localhost:3000/api/docs/${key}`

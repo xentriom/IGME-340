@@ -31,7 +31,6 @@ export async function GET(request, { params }) {
     nextKey,
     ...doc,
   };
-  console.log(response);
 
   return NextResponse.json(response, { status: 200 });
 }

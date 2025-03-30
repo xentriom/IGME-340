@@ -12,7 +12,7 @@ export default function AboutPage() {
         <h1 className="text-3xl md:text-5xl font-bold mb-4 animate-in fade-in">
           About Interstellar Guide
         </h1>
-        <p className="text-lg text-indigo-700 max-w-2xl mx-auto animate-in fade-in duration-700 delay-100">
+        <p className="text-lg text-indigo-700 max-w-xl mx-auto animate-in fade-in duration-700 delay-100">
           A solo passion project created to enhance your Honkai: Star Rail experience.
         </p>
       </section>
@@ -20,7 +20,7 @@ export default function AboutPage() {
       {/* About Me Section */}
       <section className="grid md:grid-cols-2 gap-8 mb-12">
         <div className="bg-blue-100/80 backdrop-blur-md rounded-xl p-6 border border-gray-200/50 shadow-lg">
-          <h2 className="text-2xl font-semibold text-indigo-800 mb-2">The Story</h2>
+          <h2 className="text-xl font-semibold text-indigo-800 mb-2">The Story</h2>
           <p className="text-indigo-700 leading-relaxed">
             This app as part of IGME 340 Project 02. My goal was to build a companion tool that will assist players as they continue to learn about the game and characters.
           </p>

@@ -18,12 +18,12 @@ export default async function DocsPage() {
   const docs = await data.json();
 
   return (
-    <div className="container mx-auto px-4 py-12 max-w-4xl">
+    <div className="container mx-auto px-4 py-12 max-w-3xl">
       <section className="text-center mb-12">
         <h1 className="text-3xl md:text-5xl font-bold text-indigo-900 mb-4">
           Documentation
         </h1>
-        <p className="text-xl text-indigo-700 max-w-2xl mx-auto">
+        <p className="text-lg text-indigo-700 max-w-xl mx-auto">
           A peek into the development of Interstellar Guide
         </p>
       </section>
@@ -41,7 +41,7 @@ export default async function DocsPage() {
               type="submit"
               className="w-full p-6 text-left focus:outline-none cursor-pointer"
             >
-              <h2 className="text-2xl font-semibold text-indigo-900 mb-2">
+              <h2 className="text-xl font-semibold text-indigo-900 mb-2">
                 {entry.title}
               </h2>
               <p className="text-sm text-indigo-600 mb-4">{entry.date}</p>

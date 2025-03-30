@@ -32,7 +32,7 @@ export default function FeaturesPage() {
         <h1 className="text-3xl md:text-5xl font-bold mb-4">
           App Features
         </h1>
-        <p className="text-lg text-indigo-700 max-w-2xl mx-auto">
+        <p className="text-lg text-indigo-700 max-w-xl mx-auto">
           Discover the powerful features that makes my app your ultimate companion
         </p>
       </div>
@@ -45,7 +45,7 @@ export default function FeaturesPage() {
             border border-gray-200/50 shadow-lg hover:shadow-xl transition-all duration-300
             hover:-translate-y-1"
           >
-            <div className="text-4xl mb-4">{feature.icon}</div>
+            <div className="text-3xl mb-4">{feature.icon}</div>
             <h2 className="text-xl font-semibold text-indigo-900 mb-2">
               {feature.title}
             </h2>

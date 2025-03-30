@@ -6,7 +6,7 @@ export const metadata = {
 
 export default function CreditsPage() {
   return (
-    <div className="container mx-auto px-4 py-12 max-w-4xl">
+    <div className="container mx-auto px-4 py-12 max-w-3xl">
       <h1 className="text-3xl md:text-5xl font-bold text-indigo-900 mb-8 text-center">
         Credits & Acknowledgments
       </h1>
@@ -14,7 +14,7 @@ export default function CreditsPage() {
       <div className="space-y-4">
         {/* App Section */}
         <section className="bg-blue-100/80 rounded-xl p-6 shadow-sm border border-gray-200/50">
-          <h2 className="text-2xl font-semibold text-indigo-800 mb-4">App Assets & Resources</h2>
+          <h2 className="text-xl font-semibold text-indigo-800 mb-4">App Assets & Resources</h2>
           <ul className="space-y-2 text-indigo-700">
             <li>Framework - Flutter (Cupertino Design)</li>
             <li>API - sr.yatta.moe</li>
@@ -27,7 +27,7 @@ export default function CreditsPage() {
 
         {/* Web Section */}
         <section className="bg-blue-100/80 rounded-xl p-6 shadow-sm border border-gray-200/50">
-          <h2 className="text-2xl font-semibold text-indigo-800 mb-4">Web Assets & Resources</h2>
+          <h2 className="text-xl font-semibold text-indigo-800 mb-4">Web Assets & Resources</h2>
           <ul className="space-y-2 text-indigo-700">
             <li>Framework -&nbsp;
               <Link href="https://nextjs.org" className="hover:underline">Next.js</Link> &{" "}
