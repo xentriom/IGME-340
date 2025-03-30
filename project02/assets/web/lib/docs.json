@@ -3,9 +3,9 @@
     "id": 1,
     "key": "vqukRXpML31Q",
     "title": "The Beginnings",
-    "date": "March 07, 2025",
+    "date": "March 07, 2025 - March 08, 2025",
     "excerpt": "Kicking off the Interstellar Guide journey! From initial Figma mockups to tackling Cupertino widgets and Shared Preferences, today was all about learning, experimenting, and pushing boundaries. Excited to see where this adventure leads!",
-    "content": "### Today is the day it all begins.\n\nI started by creating a few Figma mockups for the app. I have a few ideas in mind, but I want to keep the design simple and clean. My focus is on the content, making sure it's easy to read and navigate. Curious to see how this all comes together.\n\n{{figmamockups}}\n\n### Diving Into Cupertino Widgets\n\nI got started with development and, after a few minutes, decided to challenge myself by using **Cupertino widgets** for the entire app. That might have been a mistake. There isn't much documentation or many examples out there, so I had to figure things out on my own. I ended up leaning on my Material Design knowledge since there are some similarities.\n\nThe first thing I did was create all the files I thought I would need. Having everything structured from the start helps keep things organized and makes it easier to piece everything together.\n\n### Setting Up Shared Preferences\n\nA few hours in, and I'm finally getting the hang of things. I moved on to implementing **Shared Preferences**, which handles saving user data. Now, the app can keep track of login states and store user favorites.\n\nWith that working, I started focusing on the **login and register screens**. That got me thinking about routing, which we haven't covered in class yet. I found a solution on Stack Overflow and ended up using a router suggested by NiklasPor. Here's the link: [click here](https://stackoverflow.com/questions/51663793/how-to-use-cupertinopageroute-and-named-routes-in-flutter).\n\n### Refining the Login & Register UI\n\nI made good progress, took a break, then came back to tweak the **login and register UI** inside the settings screen. I remember seeing a native login/register screen somewhere, and I've been trying to recreate it from memory. This is about as close as I can get.\n\n{{loginregister}}\n\n### API Integration and Explore Screen\n\nNext, I worked on getting the API set up and integrating it with the explore screen. Without core functionality, the app wouldn't be much of a project. \n\n- First, I created a **class to handle API requests and data fetching** to keep things clean.\n- Then, I used placeholder data in the explore screen to get the UI layout sorted.\n- Once that was ready, I swapped out the placeholder data for actual API responses.\n\nWith that done, I started working on the **three-controller requirement**, which included:\n- A search bar\n- Two dropdown menus\n- A radio button selector\n\n### Fighting the Navigation Bar\n\nWhile researching, I came across the `CupertinoNavigationBar` class, which does what it describes but doesn't quite align with Apple's app design language. Looking at Apple's apps, they use the `CupertinoSliverNavigationBar` class, which provides a large header that transitions into a standard `CupertinoNavigationBar` when scrolled. \n\nI tried implementing it, but after multiple attempts, I couldn't get it to format properly - even after turning to *ChatGPT* out of frustration. It couldn't solve the issue either so I decided to remove it.\n\n### Wrapping Up\n\nWith two of the three main features in place, I spent the rest of the day **cleaning up, organizing, and adding comments** to make the code more readable. Not a bad start—looking forward to seeing how this all comes together.",
+    "content": "### Today is the day it all begins.\n\nI started by creating a few Figma mockups for the app. I have a few ideas in mind, but I want to keep the design simple and clean. My focus is on the content, making sure it's easy to read and navigate. Curious to see how this all comes together.\n\n{{figmamockups}}\n\n### Diving Into Cupertino Widgets\n\nI got started with development and, after a few minutes, decided to challenge myself by using **Cupertino widgets** for the entire app. That might have been a mistake. There isn't much documentation or many examples out there, so I had to figure things out on my own. I ended up leaning on my Material Design knowledge since there are some similarities.\n\nThe first thing I did was create all the files I thought I would need. Having everything structured from the start helps keep things organized and makes it easier to piece everything together.\n\n### Setting Up Shared Preferences\n\nA few hours in, and I'm finally getting the hang of things. I moved on to implementing **Shared Preferences**, which handles saving user data. Now, the app can keep track of login states and store user favorites.\n\nWith that working, I started focusing on the **login and register screens**. That got me thinking about routing, which we haven't covered in class yet. I found a solution on Stack Overflow and ended up using a router suggested by NiklasPor. Here's the link: [click here](https://stackoverflow.com/questions/51663793/how-to-use-cupertinopageroute-and-named-routes-in-flutter).\n\n### Refining the Login & Register UI\n\nI made good progress, took a break, then came back to tweak the **login and register UI** inside the settings screen. I remember seeing a native login/register screen somewhere, and I've been trying to recreate it from memory. This is about as close as I can get.\n\n{{loginregister}}\n\n### API Integration and Explore Screen\n\nNext, I worked on getting the API set up and integrating it with the explore screen. Without core functionality, the app wouldn't be much of a project. \n\n- First, I created a **class to handle API requests and data fetching** to keep things clean.\n- Then, I used placeholder data in the explore screen to get the UI layout sorted.\n- Once that was ready, I swapped out the placeholder data for actual API responses.\n\nWith that done, I started working on the **three-controller requirement**, which included:\n- A search bar\n- Two dropdown menus\n- A radio button selector\n\n### Fighting the Navigation Bar\n\nWhile researching, I came across the `CupertinoNavigationBar` class, which does what it describes but doesn't quite align with Apple's app design language. Looking at Apple's apps, they use the `CupertinoSliverNavigationBar` class, which provides a large header that transitions into a standard `CupertinoNavigationBar` when scrolled. \n\nI tried implementing it, but after multiple attempts, I couldn't get it to format properly - even after turning to *ChatGPT* out of frustration. It couldn't solve the issue either so I decided to remove it.\n\n### Wrapping Up\n\nWith two of the three main features in place, I spent the rest of the day **cleaning up, organizing, and adding comments** to make the code more readable. Not a bad start - looking forward to seeing how this all comes together.",
     "images": [
       {
         "key": "figmamockups",
@@ -23,56 +23,63 @@
   },
   {
     "id": 2,
-    "key": "2Z4J6J8uZyVR",
-    "title": "2",
-    "date": "March 08, 2025",
-    "excerpt": "2",
-    "content": "2",
+    "key": "rhhuJaD1eDo7",
+    "title": "A Renewal of Hope",
+    "date": "March 09, 2025",
+    "excerpt": "A fresh start with a new approach! I rebranded favorites to bookmarks, thinking it would be simple - turns out, it wasn't. From tackling state management issues to refining the UI, today was all about problem - solving and making the app feel more polished. Progress is happening, one challenge at a time!",
+    "content": "### A Fresh Perspective\n\nAfter thinking about the app some more overnight and throughout the day, I decided to rename the **Favorites** tab to **Bookmarks** to better align with what it actually does - keeping a character for easier access later on.\n\n### The Bookmarking Struggle\n\nI assumed implementing the `Bookmarks` tab would be easy. It sounds simple, right? Just take the `favoritesId` and display it. But it turned out to be more complicated than I expected.\n\nI ran into multiple issues, the biggest one being **state changes**:\n- When I bookmarked a character in **Explore**, the JSON data saved correctly, but the **Bookmarks** tab wouldn't update.\n- Bookmarking is only allowed when logged in, but logging in and out didn't update the state either.\n\n### Finding a Solution\n\nThis turned into a whole research dilemma. I initially found that using a **provider package** would be the simplest solution, but I wasn't sure if that was allowed. So, I kept looking until I found the `ValueListenableBuilder` class, which listens for value changes. After finally getting that to work, I moved on to improving the UI now that all the screens were interconnected.\n\n### UI & Refinements\n\nWith bookmarking finally working, I focused on **polishing the user experience**:\n- Added a simple **splash message** in the Bookmarks tab for when a user isn't logged in or has no bookmarks.\n- Updated the **custom list/grid view builder** and made **visual tweaks** to better align items.\n- Attempted to implement **dark and light mode**, but that's a future-me problem.\n\nOverall, today was a mix of frustration and progress, but at least the **Bookmarks** feature is in place now.",
     "images": []
   },
   {
     "id": 3,
-    "key": "rhhuJaD1eDo7",
-    "title": "3",
-    "date": "March 09, 2025",
-    "excerpt": "3",
-    "content": "3",
-    "images": []
+    "key": "OBCOwlsoqH35",
+    "title": "Formatting Nightmare",
+    "date": "March 22, 2025",
+    "excerpt": "Spent the day battling formatting issues on the character screen. From struggling with segmented controls to wrestling with regex, nothing seemed to go smoothly. At least I got a cool radar chart working - small wins count!",
+    "content": "### Tackling the Character Screen\n\nToday was all about refining the **character screen**, which appears when clicking a character in **Explore** or **Bookmarks**. Getting the data was easy, but formatting it? A total nightmare.\n\n### Custom Segmented Control\n\nI originally wanted to use `CupertinoSlidingSegmentedControl`, but no matter how much I tried, I couldn't get it to format the way I needed. After hours of frustration, I scrapped it and built my **own custom segmented control** instead.\n\n### Regex Frustrations\n\nThe real struggle, though, was the **description data**. It contained dynamic parameters that had to be manually replaced. Luckily, I have past regex experience, but even then, it felt like the formatting had a mind of its own. Some things just refused to work, and debugging it was painfully slow.\n\n```\nfinal regex = RegExp(r'<unbreak>#(\\d+)\\[i\\]</unbreak>');\ntext = text.replaceAllMapped(regex, (match) {\n  final paramIndex = int.parse(match.group(1)!) - 1;\n  if (paramIndex >= 0 && paramIndex < params.length) {\n    return params[paramIndex].toString();\n    }\n  return match[0]!;\n});\n```\n\nAfter hours of trial and error, I finally got it working... *sometimes*. Good enough for now.\n\n### A Small Win: Radar Chart\n\nOne highlight of the day was finding a **package to generate a radar/web chart** for character stats. It fit in perfectly, and I was pretty proud of how it turned out.\n\n### Wrapping Up\n\nAfter that, I spent most of my time **commenting and polishing up the code**. Not the most fun day, but at least I made progress. Hopefully, tomorrow brings fewer headaches.\n\n{{character}}",
+    "images": [
+      {
+        "key": "character",
+        "src": "/character-screen.png",
+        "alt": "Radar chart of character stats",
+        "width": 700
+      }
+    ]
   },
   {
     "id": 4,
-    "key": "OBCOwlsoqH35",
-    "title": "4",
-    "date": "March 22, 2025",
-    "excerpt": "4",
-    "content": "4",
+    "key": "seHEgdgl6eok",
+    "title": "// Comments",
+    "date": "March 27, 2025",
+    "excerpt": "A slower, more relaxed day - focused on adding comments, refining code, and making small UI adjustments. The character screen got some tweaks, and the tab view now scrolls more naturally. Small changes, but they make a difference!",
+    "content": "### Refining & Commenting the Code\n\nToday was a pretty relaxing day. I spent most of it going through the code and adding more **comments** based on feedback from the prototype. Clarity is key, and I wanted to make sure everything was easy to understand if I (or anyone else) revisit it later.\n\n### UI Adjustments & Fine-Tuning\n\nAlongside commenting, I made some **minor UI adjustments** across various screens, including the **character screen**. The biggest improvement was to the **tab view**:\n\n- Instead of wrapping the entire page in a `SingleChildScrollView`, I only wrapped the **tabbed content**.\n- This way, only the actual information scrolls while keeping the overall layout stable.\n- Makeing the UI feel much cleaner and more cohesive since everything fits nicely on a single page.\n\nNot a major feature update, but these small tweaks definitely improve the overall experience.",
     "images": []
   },
   {
     "id": 5,
-    "key": "seHEgdgl6eok",
-    "title": "5",
-    "date": "March 27, 2025",
-    "excerpt": "5",
-    "content": "5",
+    "key": "wjC2lLQU2L4y",
+    "title": "Dummy Data",
+    "date": "March 28, 2025",
+    "excerpt": "With the app nearing completion, I added dummy data for easier testing. Just log in with 'test' as both the username and password! Also spent some time adding more comments to keep the code clear and organized.",
+    "content": "### Adding Dummy Data for Testing\n\nWith the app **wrapping up**, I added some **dummy data** to make testing easier. Now, all you have to do is log in and see everything in action! \n\n- The dummy data is stored in the `main.dart` file.\n- Want to test it yourself? Just enter `test` as both the **username** and **password**!\n\n### More Comments & Final Touches\n\nAside from the test data, I also went through and added **more comments** to the code. Keeping things well-documented should make it easier to maintain or expand in the future.\n\nNot much else to say - just polishing things up as the project nears completion!",
     "images": []
   },
   {
     "id": 6,
-    "key": "wjC2lLQU2L4y",
-    "title": "6",
+    "key": "Bo4hJXWvVv6I",
+    "title": "Web Design is my Passion",
     "date": "March 29, 2025",
-    "excerpt": "6",
-    "content": "6",
+    "excerpt": "What started as a simple documentation site quickly became an all-out project. Spent the entire day working on the 'about' page using Next.js and TailwindCSS, turning it into a sleek, modern website with its own backend!",
+    "content": "### A Passion for Web Design\n\nCreating the **documentation site** for the `about` page turned out to be more fun than I expected. So much so that I ended up investing way more time than I originally planned. In fact, I spent the entire day working on it, scaling up the design and features.\n\nWasn't this supposed to just be a simple **SPA**? Apparently not! I ended up using **Next.js v15 App Router** and **TailwindCSS v4** to bring the site to life. My plan was to keep it minimal with a clean color palette and simple containers, while still giving it that modern **SaaS**-like feel. After all, who wouldn't want to buy the app after browsing the site?\n\n### Mobile-Friendly Design\n\nI mostly tested the site on a browser but made sure it works well on **mobile view**, since that's how the professor would be judging it. With how much I was getting into the design, I couldn't just stop there.\n\n### Going Above & Beyond\n\nWhat started as a documentation site quickly grew into a **full-fledged website**. I even added a backend to stream the data. Now you can fetch the bog-styled doc at `api/docs`! I might have gone a bit overboard, but I'm extremely pleased with how it turned out.\n\nThis has been an incredibly satisfying project, and I can't wait to see how it continues to evolve. What can I say except, \"I am extremely chuffed to bits with this\".",
     "images": []
   },
   {
     "id": 7,
-    "key": "Bo4hJXWvVv6I",
-    "title": "7",
+    "key": "LaS11c4lJWT8",
+    "title": "Blogger",
     "date": "March 30, 2025",
-    "excerpt": "7",
-    "content": "7",
+    "excerpt": "Writing the content for the blog-style documentation page was more challenging than expected. But, I finally got a smooth system in place for formatting the docs with MDX. Almost done with this project, just a final check before submission!",
+    "content": "### The Challenge of Writing Blog Content\n\nFilling up the **blog-styled documentation page** turned out to be more of a chore than I anticipated. Writing has never been my passion, and finding the right balance between an excited tone for the **excerpt** and a neutral tone for the content was not as easy as I thought.\n\n### MDX Formatter to the Rescue\n\nDespite the challenges, I did manage to get an **MDX formatter** working, which has made a huge difference in how I can write and format the docs. Now, each entry is a single-line string in a **JSON object**, and by using **markdown** in the text, it's automatically formatted when viewed on the web. This has made writing the blog much smoother.\n\n### The Blog JSON Structure\n\nThe blogs follow a very simple JSON structure. Each blog entry is stored in a JSON object with keys like `id`, `title`, `date`, `excerpt`, `content`, and `images`. Here's an example of the structure:\n\n```json\n{\n  \"id\": 7,\n  \"key\": \"LaS11c4lJWT8\",\n  \"title\": \"Blogger\",\n  \"date\": \"March 30, 2025\",\n  \"excerpt\": \"Writing the content for the blog-style documentation page was more challenging than expected...\",\n  \"content\": \"The Challenge of Writing Blog Content...\"\n  \"images\": [\n    {\n      \"key\": \"\",\n      \"src\": \"\",\n      \"alt\": \"\",\n      \"width\": ,\n      \"height\": ,\n    }\n  ]\n}\n```\n\nThis structure is super simple and easy to follow. Each entry is just a single string in a JSON object, and all the necessary metadata is included. Using this system has made it really easy to format, display, and even manipulate the data for the blog. Plus, it integrates well with the MDX system to render everything neatly in the final output.\n\n### Wrapping Up the Project\n\nOverall, not much else happened today except for writing blog content. I think I'm pretty much done with this project now—I'll give it a final **rubric check** tomorrow before I submit it. Despite the writing challenges, this **web mini side project** was a lot of fun, and I'm really happy with how it turned out.",
     "images": []
   }
 ]

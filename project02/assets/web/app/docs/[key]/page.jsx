@@ -52,6 +52,11 @@ function MarkdownWithImages({ content, images }) {
     code: ({ children }) => (
       <code className="bg-indigo-200 text-zinc-950 px-1 py-0.5 rounded text-sm">{children}</code>
     ),
+    pre: ({ children }) => (
+      <pre className="bg-indigo-200 text-zinc-950 p-4 rounded text-sm overflow-x-auto">
+        {children}
+      </pre>
+    ),
   };
 
   return (
@@ -142,7 +147,7 @@ export default async function DocsDetailPage({ params }) {
           Previous
         </Link>
         <span className="text-indigo-700">
-          Page {doc.id} of {doc.total}
+          Entry {doc.id} of {doc.total}
         </span>
         <Link
           href={`/docs/${doc.nextKey}`}
