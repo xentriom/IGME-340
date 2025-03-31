@@ -10,6 +10,7 @@ import 'package:project02/screens/settings_screen.dart';
 ///
 /// Main App
 /// https://github.com/xentriom/IGME-340/tree/main/project02
+/// Docs viewable at https://jc5892-340-p2.vercel.app
 ///
 /// @author: Jason Chen
 /// @version: 1.0.0

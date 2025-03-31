@@ -82,6 +82,7 @@ class SharedPref {
     await prefs.remove('isLoggedIn');
   }
 
+  /// Removes the current user and all associated data
   Future<void> clearUsername() async {
     final prefs = await SharedPreferences.getInstance();
     final String? currentUser = await getUsername();
@@ -138,6 +139,7 @@ class SharedPref {
     await prefs.setString(currentUser, jsonEncode(userData));
   }
 
+  /// Clears the favorites list of the character
   Future<void> clearFavorites() async {
     final prefs = await SharedPreferences.getInstance();
     final String? currentUser = await getUsername();

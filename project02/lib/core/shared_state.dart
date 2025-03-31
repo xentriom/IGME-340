@@ -78,17 +78,19 @@ class SharedState {
     favoriteIds.value = updatedFavorites;
   }
 
-  // SharedPref isFavorite wrapper
+  /// SharedPref isFavorite wrapper
   static Future<bool> isFavorite(String id) async {
     return _sharedPref.isFavorite(id);
   }
 
+  /// SharedPred clearFavorites wrapper
   static Future<void> clearFavorites() async {
     if (currentUser.value == null) return;
     await _sharedPref.clearFavorites();
     favoriteIds.value = [];
   }
 
+  /// SharedPref clearUsername wrapper
   static Future<void> clearUsername() async {
     if (currentUser.value == null) return;
     await _sharedPref.clearUsername();

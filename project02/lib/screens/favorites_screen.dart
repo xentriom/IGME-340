@@ -87,46 +87,52 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return CupertinoPageScaffold(child: SafeArea(child: _buildContent()));
-  }
-
-  Widget _buildContent() {
-    // listen to current user
+    // listen for user change
     return ValueListenableBuilder<String?>(
       valueListenable: SharedState.currentUser,
       builder: (context, user, child) {
-        // not logged in, show message
-        if (user == null) {
-          return _buildMessage(
-            assetUrl: 'assets/images/AglaeaCross.jpeg',
-            message: 'Log in to view your bookmarks.',
-          );
-        }
-
-        // logged in
-        // listen to favoriteIds
-        return ValueListenableBuilder<List<String>>(
+        // listen for favorites change
+        return ValueListenableBuilder(
           valueListenable: SharedState.favoriteIds,
-          builder: (context, favoriteIds, child) {
-            if (isLoading) {
-              return const Center(child: CupertinoActivityIndicator());
-            }
-
-            // no favorites, show message
-            if (favoriteIds.isEmpty) {
-              return _buildMessage(
-                assetUrl: 'assets/images/ThertaHat.jpeg',
-                message: 'No bookmarks found~',
-              );
-            }
-
-            // Display favorites
-            _filterFavorites();
-            return _buildFavoritesList();
+          builder: (context, favorites, child) {
+            return CupertinoPageScaffold(
+              backgroundColor:
+                  (user == null || favorites.isEmpty)
+                      ? CupertinoColors.systemBackground
+                      : CupertinoColors.systemGroupedBackground,
+              child: SafeArea(child: _buildContent(user, favorites)),
+            );
           },
         );
       },
     );
+  }
+
+  /// build content based on user and favorites status
+  Widget _buildContent(String? user, List<String> favorites) {
+    // not logged in, show message
+    if (user == null) {
+      return _buildMessage(
+        assetUrl: 'assets/images/AglaeaCross.jpeg',
+        message: 'Log in to view your bookmarks.',
+      );
+    }
+
+    if (isLoading) {
+      return const Center(child: CupertinoActivityIndicator());
+    }
+
+    // no favorites, show message
+    if (favorites.isEmpty) {
+      return _buildMessage(
+        assetUrl: 'assets/images/ThertaHat.jpeg',
+        message: 'No bookmarks found~',
+      );
+    }
+
+    // Display favorites
+    _filterFavorites();
+    return _buildFavoritesList();
   }
 
   /// Helper to display message with image

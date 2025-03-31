@@ -88,6 +88,20 @@ class _SettingsScreenState extends State<SettingsScreen> {
     setState(() => _isLoading = false);
   }
 
+  /// Handle bookmark resets
+  Future<void> _handleReset() async {
+    setState(() => _isLoading = true);
+    await SharedState.clearFavorites();
+    setState(() => _isLoading = false);
+  }
+
+  /// Handle account deletion
+  Future<void> _handleDelete() async {
+    setState(() => _isLoading = true);
+    await SharedState.clearUsername();
+    setState(() => _isLoading = false);
+  }
+
   /// Show error message
   void _showError(String message) {
     showCupertinoDialog(
@@ -107,34 +121,29 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return CupertinoPageScaffold(
-      navigationBar: CupertinoNavigationBar(
-        middle: ValueListenableBuilder<String?>(
-          valueListenable: SharedState.currentUser,
-          builder: (context, username, child) {
-            return Text(username != null ? 'Interastral Guide' : '');
-          },
-        ),
-      ),
-      child: SafeArea(
-        // Listen to current user
-        child: ValueListenableBuilder<String?>(
-          valueListenable: SharedState.currentUser,
-          builder: (context, username, child) {
-            // Show loading if still loading
-            // Show logged-in UI if user is logged in
-            // Show login UI if not logged in
-            // Show register UI if not logged in
-            return _isLoading
-                ? const Center(child: CupertinoActivityIndicator())
-                : username != null
-                ? _buildLoggedInUI()
-                : _showLogin
-                ? _buildLoginUI()
-                : _buildRegisterUI();
-          },
-        ),
-      ),
+    return ValueListenableBuilder(
+      valueListenable: SharedState.currentUser,
+      builder: (context, username, child) {
+        return CupertinoPageScaffold(
+          backgroundColor:
+              username == null
+                  ? CupertinoColors.systemBackground
+                  : CupertinoColors.systemGroupedBackground,
+          navigationBar: CupertinoNavigationBar(
+            middle: Text(username != null ? 'Interastral Guide' : ''),
+          ),
+          child: SafeArea(
+            child:
+                _isLoading
+                    ? const Center(child: CupertinoActivityIndicator())
+                    : username != null
+                    ? _buildLoggedInUI()
+                    : _showLogin
+                    ? _buildLoginUI()
+                    : _buildRegisterUI(),
+          ),
+        );
+      },
     );
   }
 
@@ -255,7 +264,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   ),
                   color: CupertinoColors.white,
                   borderRadius: BorderRadius.circular(10),
-                  onPressed: () async {},
+                  onPressed: _handleReset,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
@@ -276,7 +285,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   ),
                   color: CupertinoColors.white,
                   borderRadius: BorderRadius.circular(10),
-                  onPressed: () {},
+                  onPressed: _handleDelete,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: const [

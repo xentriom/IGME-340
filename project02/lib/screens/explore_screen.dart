@@ -95,6 +95,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
       valueListenable: SharedState.currentUser,
       builder: (context, user, child) {
         return CupertinoPageScaffold(
+          backgroundColor: CupertinoColors.systemGroupedBackground,
           child: SafeArea(
             child: Container(
               color: CupertinoColors.systemGroupedBackground,
