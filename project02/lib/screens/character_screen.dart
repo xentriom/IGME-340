@@ -352,7 +352,148 @@ class _CharacterScreenState extends State<CharacterScreen> {
           children: [_buildStatChart(characterUpgrades)],
         );
       case 2:
-        return const Text("Skills");
+        return SingleChildScrollView(
+          child: Column(
+            children:
+                characterSkills.entries.map<Widget>((entry) {
+                  final skill = entry.value;
+                  final skillList = skill['skillList'];
+                  final skillData = skillList.entries.first.value;
+
+                  return Container(
+                    margin: const EdgeInsets.only(bottom: 12),
+                    padding: const EdgeInsets.all(12),
+                    decoration: BoxDecoration(
+                      color: CupertinoColors.systemGrey6,
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Column(
+                      spacing: 4,
+                      children: [
+                        Row(
+                          spacing: 8,
+                          children: [
+                            Image.network(
+                              yatta.getSkillIcon(skillData['icon']),
+                              width: 24,
+                            ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              spacing: 2,
+                              children: [
+                                Text(
+                                  '${skillData["type"]}: ${skillData["name"]}',
+                                ),
+                                Text(
+                                  '[${skillData["tag"]}]',
+                                  style: const TextStyle(
+                                    color: CupertinoColors.secondaryLabel,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                        if (skillData["skillPoints"] != null ||
+                            skillData["weaknessBreak"] != null)
+                          Container(
+                            decoration: BoxDecoration(
+                              color: CupertinoColors.white,
+                              borderRadius: BorderRadius.circular(8),
+                              border: Border.all(
+                                color: CupertinoColors.systemGrey4,
+                                width: 1,
+                              ),
+                            ),
+                            child: Table(
+                              children: [
+                                if (skillData["skillPoints"] != null &&
+                                    skillData["skillPoints"]["base"] != null)
+                                  TableRow(
+                                    decoration: BoxDecoration(
+                                      border: Border(
+                                        bottom: BorderSide(
+                                          color: CupertinoColors.systemGrey5,
+                                          width: 1,
+                                        ),
+                                      ),
+                                    ),
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                          horizontal: 8,
+                                          vertical: 6,
+                                        ),
+                                        child: Text("Energy"),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                          horizontal: 8,
+                                          vertical: 6,
+                                        ),
+                                        child: Text(
+                                          skillData["skillPoints"]["base"]
+                                              .toString(),
+                                          textAlign: TextAlign.right,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                if (skillData["weaknessBreak"] != null &&
+                                    (skillData["weaknessBreak"]["one"] !=
+                                            null ||
+                                        skillData["weaknessBreak"]["spread"] !=
+                                            null ||
+                                        skillData["weaknessBreak"]["all"] !=
+                                            null))
+                                  TableRow(
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                          horizontal: 8,
+                                          vertical: 6,
+                                        ),
+                                        child: Text("Weakness Break"),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                          horizontal: 8,
+                                          vertical: 6,
+                                        ),
+                                        child: Text(
+                                          [
+                                            if (skillData["weaknessBreak"]["one"] !=
+                                                null)
+                                              "Single: ${skillData["weaknessBreak"]["one"]}",
+                                            if (skillData["weaknessBreak"]["spread"] !=
+                                                null)
+                                              "Spread: ${skillData["weaknessBreak"]["spread"]}",
+                                            if (skillData["weaknessBreak"]["all"] !=
+                                                null)
+                                              "AoE: ${skillData["weaknessBreak"]["all"]}",
+                                          ].join(" / ").trim(),
+                                          textAlign: TextAlign.right,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                              ],
+                            ),
+                          ),
+                        Text(
+                          skillData['description'],
+                          style: const TextStyle(
+                            fontSize: 14,
+                            color: CupertinoColors.secondaryLabel,
+                            height: 1.25,
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
+                }).toList(),
+          ),
+        );
       case 3:
         return SingleChildScrollView(
           child: Column(
