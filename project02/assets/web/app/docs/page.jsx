@@ -24,7 +24,7 @@ export default async function DocsPage() {
           Documentation
         </h1>
         <p className="text-lg text-indigo-700 max-w-xl mx-auto">
-          A peek into the development of Interstellar Guide
+          A peek into the development of Interstellar Guide - Click on any of the entries below to learn more about the project.
         </p>
       </section>
 
