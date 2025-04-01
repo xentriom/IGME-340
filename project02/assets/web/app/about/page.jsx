@@ -30,7 +30,6 @@ export default function AboutPage() {
             <h3 className="text-xl font-semibold mb-4">Quick Facts</h3>
             <ul className="space-y-2 text-left">
               <li>• Started: March 07, 2025</li>
-              <li>• Creator: Jason Chen</li>
               <li>• Version: 1.0.0</li>
             </ul>
           </div>
