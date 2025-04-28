@@ -28,7 +28,7 @@ class _AboutScreenState extends State<AboutScreen> {
     _controller =
         WebViewController()
           ..setJavaScriptMode(JavaScriptMode.unrestricted)
-          ..loadRequest(Uri.parse("https://jc5892-340-p2.vercel.app"));
+          ..loadRequest(Uri.parse("https://jc5892-340p2.vercel.app"));
   }
 
   @override
